@@ -33,7 +33,7 @@ class Page_lists extends SS_Controller {
         }else{ 
             $this->links($page,$func); 
         }
-    } 
+    }
 
     private function links($p, $func){
         $this->data_pages = $p;
@@ -114,6 +114,9 @@ class Page_lists extends SS_Controller {
         }elseif($this->controller == 'users'){
             $this->jsCustom = 6;
             $this->users_add();
+        }elseif($this->controller == 'customers'){
+            $this->jsCustom = 6;
+            $this->users_add();
         }
 
     }
@@ -125,6 +128,9 @@ class Page_lists extends SS_Controller {
         }elseif($this->controller == 'users'){
             $this->jsCustom = 6;
             $this->users_edit();
+        }elseif($this->controller == 'customers'){
+            $this->jsCustom = 6;
+            $this->customer_edit();
         }
     }
 
@@ -133,6 +139,24 @@ class Page_lists extends SS_Controller {
             $this->jsCustom = 5;
             $this->student_view();
         }
+    }
+
+    private function customer_edit(){
+        $data['system'] = 'Moikzz Application';
+        $v = $this->controller;
+        $data['breadcrumbs'] = '<li class="breadcrumb-item"><a href="'.base_url().'client/page/'.$v.'/">'.ucfirst($v).'</a></li><li class="breadcrumb-item active"> Edit </li>';
+        $data['pages'] = 'updating';
+        $data['pagetitle'] = 'Update User Info';
+        $this->filter = array('');
+        // graph , table, form, modal - CSS and JS
+        $data['filter_css_js'] = $this->filter;
+        $data['title'] = 'User';
+        
+
+        $data['jsCustom'] = $this->jsCustom;
+        $data['bodyClass'] = $v;
+        $data['pageclass'] = 'update-info'.$v;        
+        $this->template->load( 'back/template', 'back/forms/customer_form.html', $data); 
     }
 
     private function users_add(){

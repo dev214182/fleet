@@ -142,8 +142,19 @@ class General_pages extends SS_Controller {
         $this->template_display();
     }
 
-    private function users(){
-        
+    private function customers(){ 
+        // graph , table, form, modal - CSS and JS
+        $this->filter = array('table');
+        $this->namespace = 'customers';
+        $this->pageTitle = 'All Customers';
+        $this->bodyClass = 'lists-customers';
+        $this->pageClass = 'lists-customers';  
+        $this->page = 'templates/contents/back/'.$this->namespace;
+        $this->jsCustom = 1;
+        $this->template_display();
+    }
+
+    private function users(){ 
         // graph , table, form, modal - CSS and JS
         $this->filter = array('table');
         $this->namespace = 'users';

@@ -11,18 +11,14 @@
 
 	if (!function_exists('file_common_dir_front')) { 
 
-		function file_common_dir_front( $file ){ 
-
-			return  base_url().'x_moikzz_assets/front/'.$file; 
-
+		function file_common_dir_front( $file ){
+			return  base_url().'x_moikzz_assets/front/'.$file;
 		} 
 	}
 
 	if (!function_exists('imgs_dir')) {
 		function imgs_dir( $file ){
-
 			return base_url().'x_moikzz_assets/images/'.$file;
-
 		}
 	}
 
@@ -246,7 +242,27 @@
 
 	                return "<p class='text-success msg-inline'>Active</p>";
 
-	                break;	
+					break;
+				case 18:
+
+	                return "<p class='text-success msg-inline'>Authenticated</p>";
+
+					break;
+				case 19:
+
+	                return "<p class='text-default msg-inline'>Normal</p>";
+
+					break;	
+				case 20:
+
+	                return "<p class='text-info msg-inline'>Advance</p>";
+
+					break;
+				case 21:
+
+	                return "<p class='text-success msg-inline'>Premium</p>";
+
+					break;		
 			    default:
 
 			        echo "Preview";
@@ -346,7 +362,28 @@
 
 	                return "Delayed";
 
-	                break;	
+					break;	
+				case 17: 
+	                return "Active";
+
+					break;
+				case 18: 
+	                return "Authenticated";
+
+					break;
+				case 19:
+
+	                return "Normal";
+
+					break;	
+				case 20:
+
+	                return "Advance";
+
+					break;
+				case 21:
+
+	                return "Premium";
 			    default:
 
 			        return "Preview";
@@ -355,7 +392,30 @@
 
 			}  
 		}  
-	} 
+	}
+
+	if (!function_exists('user_types_clean')) {  
+		function user_types_clean($key) {   
+			switch($key){ 
+			    case "admin": 
+			        return "Administrator"; 
+					break;
+				case "editor": 
+			        return "Editor"; 
+					break;
+				case "seo_editor": 
+			        return "SEO Editor"; 
+					break;
+				case "staff": 
+			        return "Admin Staff"; 
+					break; 
+				default: 
+			        return "Customers"; 
+			        break;
+
+			}  
+		}
+	}
 
 if (!function_exists('secondsToTime')) {
 

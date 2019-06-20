@@ -322,22 +322,29 @@ class Viewing_callbacks extends SS_Controller {
                                     'zusername',
                                     'zfullname',
                                     'zemail', 
+                                    'ztype', 
                                     'zemail'
             );
 
-            $this->query = array(   'where' =>  'uss.zid = prof.zparent AND uss.zstatus != 2 AND uss.ztype != 1'.$datas,
+
+            //$_GET['c'] show all clients only
+            $sv = @$_GET['c'] ? $clients_only = 'AND uss.ztype = 6': $clients_only = 'AND uss.ztype != 6';
+
+            $this->query = array(   'where' =>  'uss.zid = prof.zparent AND uss.zstatus != 2 '.$clients_only.'  AND uss.ztype != 1'.$datas,
                                     'fields_listing' => array(
                                                         'zstatus',
                                                         'zusername',
                                                         'zfirstname',
-                                                        'zemail'
+                                                        'zemail',
+                                                        'ztype'
                                     ),
                                     'fields' => array( 'uss.zid',
                                                         'uss.zstatus',  
                                                         'uss.zusername',
                                                         'prof.zfirstname',
                                                         'prof.zlastname',
-                                                        'prof.zemail')
+                                                        'prof.zemail',
+                                                        'uss.ztype')
                                     );
         }
 
@@ -452,6 +459,11 @@ class Viewing_callbacks extends SS_Controller {
                         } else {
                             $output[$k]['zvalue'] = $v->zvalue;
                         }
+                    }
+
+                    if(@$v->ztype){
+                        $output[$k]['ztypeID'] = $v->ztype;
+                        $output[$k]['ztype'] = user_types_clean($this->global_get_title('mz_users_type',array('zid' => $v->ztype),'ztitle'));
                     }
 
                     if(@$v->zstatus){
