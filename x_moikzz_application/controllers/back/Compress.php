@@ -18,7 +18,7 @@ class Compress extends CI_Controller {
         
         /*  Style.css cannot be added */
          
-        $css =  $css1; 
+        $css =  $css1;
         $css .= "\n"; 
         $css .=  $css2;    
         

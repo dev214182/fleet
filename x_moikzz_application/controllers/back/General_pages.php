@@ -6,7 +6,6 @@
  */
 class General_pages extends SS_Controller { 
 
-    protected $pg; 
     protected $pages;
     protected $namespace;
     protected $breadcrumbs;
@@ -35,21 +34,20 @@ class General_pages extends SS_Controller {
 		$this->page_not_found();
 
 	}
- 
+
     public function view($page='dashboard'){
            
         if (!method_exists($this, $page)){
             $this->page_not_found();
             return false;
         }else{
-            $this->pg = $page;
-            $this->links();
+            $this->links($page);
         }
     }
 
-    private function links(){
-        $this->data_pages = $this->pg;
-        return $this->{$this->data_pages}(); 
+    private function links($p){
+        $this->data_pages = $p;
+        return $this->{$this->data_pages}();
     }
 
     
@@ -138,22 +136,9 @@ class General_pages extends SS_Controller {
         $this->bodyClass = 'lists-students';
         $this->pageClass = 'lists-students';  
         $this->page = 'templates/contents/back/'.$this->namespace;
-        $this->jsCustom = 1;
-        $this->template_display();
-    }
-
-    private function users(){
-        
-        // graph , table, form, modal - CSS and JS
-        $this->filter = array('table');
-        $this->namespace = 'users';
-        $this->pageTitle = 'All Users';
-        $this->bodyClass = 'lists-users';
-        $this->pageClass = 'lists-users';  
-        $this->page = 'templates/contents/back/'.$this->namespace;
-        $this->jsCustom = 1;
-        $this->template_display();
-    }
+        $this->jsCustom = 1; 
+        $this->template_display(); 
+    } 
 
     private function settings(){
         $this->namespace = 'settings';
@@ -166,31 +151,57 @@ class General_pages extends SS_Controller {
         $this->template_display(); 
     } 
 
-    private function system(){
-        $this->namespace = 'system';
-        $this->pageTitle = 'Admin System Settings';
-        $this->bodyClass = 'sys-settings';
-        $this->pageClass = 'sys-settings';  
-        $this->jsCustom = 9; 
-        $this->pageHeaderz = "Web Information";
-        $this->page = 'templates/contents/back/'.$this->namespace;
-        $this->template_display(); 
-    }
-
-    private function template_display(){ 
+    private function template_display(){
+        
         $data['breadcrumbs'] = '<li class="breadcrumb-item active">'.ucfirst($this->namespace).'</li>';
         $data['filter_css_js'] = $this->filter;
         $data['pages'] =  $this->namespace;
-        $data['title'] = $this->pageTitle;
         $data['pagetitle'] = $this->pageTitle;
         $data['bodyClass'] = $this->bodyClass;
         $data['pageclass'] = $this->pageClass;
         $data['pageHeader'] = $this->pageHeaderz;
         
         $data['jsCustom'] = $this->jsCustom;
-        $data['system'] = 'Moikzz Application';
       
         $this->template->load( 'back/template', $this->page, $data); 
     }
+
+
+    
+
+    /**
+     * Pages - @mel
+     */
+    public function pages(){
+        $this->namespace = 'pages';
+        $this->pageTitle = 'Pages';
+        $this->bodyClass = 'page';
+        $this->pageClass = 'page';  
+        $this->jsCustom = 1; 
+        $this->pageHeaderz = "Pages";
+        $this->page = 'templates/contents/back/'.$this->namespace;
+        $this->template_display(); 
+    }
+    public function posts(){
+        $this->namespace = 'posts';
+        $this->pageTitle = 'Posts';
+        $this->bodyClass = 'post';
+        $this->pageClass = 'post';  
+        $this->jsCustom = 1; 
+        $this->pageHeaderz = "Posts";
+        $this->page = 'templates/contents/back/'.$this->namespace;
+        $this->template_display(); 
+    }
+    public function menus(){
+        $this->namespace = 'menus';
+        $this->pageTitle = 'Menus';
+        $this->bodyClass = 'menu';
+        $this->pageClass = 'menu';  
+        $this->jsCustom = 1; 
+        $this->pageHeaderz = "Menus";
+        $this->page = 'templates/contents/back/'.$this->namespace;
+        $this->template_display(); 
+    }
+
     
 }

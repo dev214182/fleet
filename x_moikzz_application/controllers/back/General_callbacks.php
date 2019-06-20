@@ -35,21 +35,7 @@ class General_callbacks extends SS_Controller {
     protected $_table_history = 'mz_history AS hist';
     protected $_table_contactform = 'mz_contactform AS cont';
     protected $_table_comments = 'mz_comments AS comm';
-    
-    /*** QUERY string
-      * 
-      *    $query = array( 'fields_listing' => array('', '') - this is for datatable field to show
-                            'fields' => array('',''),
-                            'group_by' => '' ,
-                            'where' => array('',''),
-                            'likes' => array('',''),
-                            'orlike' => array('',''),
-                            'order_by' => '',
-                            'order' => '',
-                            'limit' => 5,
-                            'offset' => 0);
-    ***/  
-
+   
     /* 
     * $_GET['p'] for Status
     * $_GET['s'] for parent ID
@@ -91,196 +77,6 @@ class General_callbacks extends SS_Controller {
     private function links($p){
         $this->data_pages = $p;
         return $this->{$this->data_pages}();
-    }
-
-    /* Update Profile Information to DB */
-    private function userInfos(){
-		header('Content-type: application/json; charset=utf-8');
-        
-        $success = false;
-        $userID = false;
-        $msg = '';
-        $email = $this->input->post('profile_email');
-
-        $options = [
-            'moikzz' => 12,
-        ];
-
-        if(!$email) return;
-
-                $type = $this->input->post('formtype');
-                if(!$type) return;
-               
-                $fname = $this->input->post('profile_name');  
-                $web = $this->input->post('profile_website'); 
-                $phone = $this->input->post('profile_phone'); 
-                $cnty = $this->input->post('profile_country'); 
-                $state = $this->input->post('profile_state');
-                $address = $this->input->post('profile_address'); 
-                $postal = $this->input->post('profile_postal_code');
-                
-                $user = $this->input->post('profile_username');
-                $pass = $this->input->post('profile_password');
-                $status = $this->input->post('profile_status');
-                $ptypes = $this->input->post('profile_types');
-
-                $cur_date = date('Y-m-d H:i:s');
-                $arr_name = explode(" ", $fname);
-                $arr_name1 = current($arr_name);
-                $lname = end($arr_name);
-                
-                if($type == 'addnew'){
-
-                    $password = password_hash($pass, PASSWORD_DEFAULT, $options); 
-                    $data = array('zusername' => $user, 'zpassword' => $password, 'ztype' => $ptypes, 'zstatus' => $status); 
-                    $field1 = array('zusername' =>$user);
-                   
-                    $chking =  $this->global_func_query('mz_users', $field1,null,'check_duplicate');
-                    if($chking) {
-                        echo json_encode(array('success'=>$success,'message' => 'Username is already been registered.'));
-                        return;
-                    }
-
-                    $field1 = array('zemail' =>$email);
-                    $chking =  $this->global_func_query('mz_profile', $field1,null,'check_duplicate');
-                    if($chking) {
-                        echo json_encode(array('success'=>$success,'message' => 'Email is already been registered.')); 
-                        return;
-                    }
-
-                    $userID =  $this->global_func_query('mz_users', $data,false, 'insert_single');
-
-                    if(!$userID) return;
-
-                    $data1 = array('zparent' => $userID, 'zemail'=> $email, 'zstatus' => $status, 'zfirstname' => $arr_name1, 'zlastname' => $lname, 'zdate_published' => $cur_date,
-                                    'zwebsite' => $web,   'zphone_num' => $phone, 'zcountry' => $cnty, 'zstate' => $state, 'zpostal_code' => $postal, 'zaddress' => $address);
-
-                    $rs =   $this->global_func_query('mz_profile', $data1,false, 'insert_single');
-                    
-                    $success = true;
-                    
-                    if(!$rs) {
-                        $this->global_remove_data('mz_users', array('zid' => $userID));
-                        $success = false;
-                        $msg = 'Error on Submission! kindly refresh the page!';
-                    }
-                   
-                }else{
-                    $profile_only = false;
-                    $user_only = false;
-
-                    $old_fname = $this->input->post('old_profile_name');  
-                    $old_email = $this->input->post('old_profile_email'); 
-                    $old_web = $this->input->post('old_profile_website'); 
-                    $old_phone = $this->input->post('old_profile_phone'); 
-                    $old_cnty = $this->input->post('old_profile_country'); 
-                    $old_state = $this->input->post('old_profile_state');
-                    $old_address = $this->input->post('old_profile_address'); 
-                    $old_postal = $this->input->post('old_profile_postal_code');   
-                
-                    $old_status = $this->input->post('old_profile_status');
-                    $old_ptypes = $this->input->post('old_profile_types');
-
-                    if($old_fname == $fname && $old_email == $email && $old_web == $web && $old_phone == $phone && $old_cnty == $cnty && $old_state == $state && $old_address == $address && $old_postal == $postal &&
-                    $old_status == $status && $old_ptypes == $ptypes && (!$pass)){
-                        echo json_encode(array('success'=>$success,'message' => 'You did not change anything....')); 
-                        return;
-                    }
-
-                    if($old_fname == $fname && $old_email == $email && $old_web == $web && $old_phone == $phone && $old_cnty == $cnty && $old_state == $state && $old_address == $address && $old_postal == $postal){
-                        $profile_only = true;
-                    }
-                    if($old_status == $status && $old_ptypes == $ptypes && (!$pass)){
-                        $user_only = true;
-                    }
-                   
-                    $userID = $this->input->post('userID');
-
-                    if(!$userID) return;
-
-                    if(!$profile_only){
-
-                            $field1 = 'zemail ="'.$email. '" AND zparent !='.$userID;
-                            
-                            $chking =  $this->global_func_query('mz_profile', $field1,null,'check_duplicate');
-                            if($chking) {
-                                echo json_encode(array('success'=>$success,'message' => 'Email is already been registered.')); 
-                                return;
-                            }
-
-                            $data1 = array('zparent' => $userID, 'zemail'=> $email, 'zstatus' => $status, 'zfirstname' => $arr_name1, 'zlastname' => $lname, 'zdate_published' => $cur_date,
-                                            'zwebsite' => $web,   'zphone_num' => $phone, 'zcountry' => $cnty, 'zstate' => $state, 'zpostal_code' => $postal, 'zaddress' => $address);
-                            
-                            $where = array('zparent' => $userID);
-                            $this->global_func_query('mz_profile', $data1, $where, 'update_single');
-                            $success = true;
-                    }
-                    
-                    if(!$user_only){
-                        if($pass){
-                            $password = password_hash($pass, PASSWORD_DEFAULT, $options); 
-                            $data = array('zpassword' => $password, 'ztype' => $ptypes, 'zstatus' => $status); 
-                        }else{
-                            $data = array('ztype' => $ptypes, 'zstatus' => $status); 
-                        }
-
-                        $where1 = array('zid' => $userID);
-                        $this->global_func_query('mz_users', $data, $where1, 'update_single');
-                        $success = true;
-                    }    
-                   
-                }
-
-           
-        echo json_encode(array('success'=>$success,'id'=>$userID, 'message' => $msg)); 
-    }
-
-      /* Saving cart to DB */
-    private function sys_modules(){
-        header('Content-type: application/json; charset=utf-8');
-        $ID = $this->input->post('sys-id');
-        if(!$ID){ return; }
-
-        $success = false;
-        
-        $addelete    = @$this->input->post('addelete') ? $addelete = 'addelete' : $addelete = '';
-        $view        = @$this->input->post('view') ? $view = 'view' : $view = '';
-        $edit        = @$this->input->post('edit') ? $edit = 'edit' : $edit = '';
-
-        $dashboard      = @$this->input->post('dashboard') ? $dashboard = 'dashboard' : $dashboard = '';
-        $inquiries      = @$this->input->post('inquiries') ? $inquiries = 'inquiries' : $inquiries = '';
-        $trucks         = @$this->input->post('trucks')  ? $trucks = 'trucks' : $trucks = '';
-        $posts          = @$this->input->post('posts') ? $posts = 'posts' : $posts = '';
-        $pages          = @$this->input->post('pages') ? $pages = 'pages' : $pages = '';
-        $cf             = @$this->input->post('contact_form') ? $contact_form = 'contact_form' : $contact_form = '';
-        $menus          = @$this->input->post('menus') ? $menus = 'menus' : $menus = '';
-        $media          = @$this->input->post('media') ? $media = 'media' : $media = '';
-        $settings       = @$this->input->post('settings') ? $settings = 'settings' : $settings = '';
-        $testimonials   = @$this->input->post('testimonials') ? $testimonials = 'testimonials' : $testimonials = '';
-        $products       = @$this->input->post('products') ? $products = 'products' : $products = '';
-        $categories     = @$this->input->post('categories') ? $categories = 'categories' : $categories = '';
-        $payments       = @$this->input->post('payments') ? $payments = 'payments' : $payments = '';
-        $orders         = @$this->input->post('orders') ? $orders = 'orders' : $orders = '';
-        $history        = @$this->input->post('history') ? $history = 'history' : $history = '';
-        
-
-        $item1 = array($dashboard, $inquiries, $trucks, $posts, $pages, $cf, $menus, $media, $settings, $testimonials, $products, $categories, $payments, $orders, $history);
-        $item1 = array_values(array_filter($item1));
-        
-        $item2 = array($addelete, $edit, $view);
-        $item2 = array_values(array_filter($item2));
-
-        $data2  = array('pages' => $item1, 'options' => $item2);
-        $data2 = serialize($data2);
-        $data = array('zvalue' => $data2);
-        $where = array('zid' => $ID);
-        $query = $this->global_func_query('mz_users_type',$data, $where, 'update_single');
-
-        if($query){
-            $success = true;
-        }
-
-        echo json_encode(array('success'=>$query,'message'=>$data));
     }
 
     /* Saving cart to DB */
@@ -447,6 +243,426 @@ class General_callbacks extends SS_Controller {
 
         }        
         echo json_encode(array('success'=>$success,'id'=>$studID)); 
+    }
+
+    /* This is for ordered Menu */
+    private function _mealOrders(){
+        global $_GET;
+        
+        $datas = '';
+
+        $id = $this->userID;  
+
+        $this->query_table =  $this->_table_orders .' , '. $this->_table_order_details; 
+        // Display specific student order
+        if(@$_GET['s']){
+            $datas = "ords.zauthor = ".$id." AND ords.zid = ordd.zorder_id AND ords.zorder_to =".$_GET['s'];
+        }else{
+            $datas = "ords.zauthor = ".$id;
+        }
+
+        $this->query = array( 'where' =>  $datas);
+
+        $this->jsons();
+    }
+    
+    private function get_meal_schedule($t,$w,$f){
+        $getDate = $this->global_get_title($t,$w,$f); 
+        return $getDate;
+    }
+
+    /***
+            $query = array( 'fields_listing' => array('', '') - this is for datatable field to show
+                            'fields' => array('',''),
+                            'group_by' => '' ,
+                            'where' => array('',''),
+                            'likes' => array('',''),
+                            'orlike' => array('',''),
+                            'order_by' => '',
+                            'order' => '',
+                            'limit' => 5,
+                            'offset' => 0);
+    ***/  
+
+    private function _site_settings(){
+        $this->query_table =  $this->_table_system;
+        $this->jsons();
+    }
+
+    private function _testimonials(){
+        $this->query_table =  $this->_table_testimonials;
+        $this->jsons();
+    }
+
+    private function _comments(){
+        $this->query_table =  $this->_table_comments;
+        $this->jsons();
+    }
+
+    private function _history(){
+        $this->query_table =  $this->_table_history;
+        $this->jsons();
+    }
+
+    private function _products(){
+        global $_GET;
+
+        $datas = '';
+        $currentDate = date('Y-m-d');
+        
+        // Display published products
+        if(@$_GET['p'] && @$_GET['p'] == 9 && @$_GET['o']){
+
+            $this->query = array( 'where' =>  'cats.zid = prod.zcategory AND prod.zstatus = 9 AND cats.zstatus = 9 AND prod.zorganization = "'.$_GET['o'].'" AND cats.ztype = "product" AND prod.zdate_display >= "'.$currentDate.'"',
+                                    'fields' => 'prod.*');
+        
+        // Display ALL draft, review, pending, published - all status except deleted (2)
+        }elseif(@$_GET['p'] && @$_GET['p'] == 99 && @$_GET['o']){
+
+            $this->query = array( 'where' =>  'cats.zid = prod.zcategory AND prod.zstatus != 2 AND prod.zorganization = "'.$_GET['o'].'" AND cats.zstatus = 9 AND cats.ztype = "product"',
+                                    'fields' => 'prod.*');
+        
+        // Display EITHER draft, review, pending - specific
+        }elseif(@$_GET['p'] && @$_GET['p'] <> 2 && @$_GET['o']){
+
+            $this->query = array( 'where' =>  'cats.zid = prod.zcategory AND prod.zstatus = "'.$_GET['p'].'" AND prod.zorganization = "'.$_GET['o'].'" AND cats.zstatus = 9 AND cats.ztype = "product" AND prod.zdate_display >= "'.$currentDate.'"',
+                                    'fields' => 'prod.*');
+        
+        }elseif(@$_GET['p'] && @$_GET['p'] == 'administrator'){
+            
+            // for admin
+            // Display all products except deleted
+            $this->query = array( 'where' => 'cats.zid = prod.zcategory AND prod.zstatus != 2 AND cats.ztype = "product"',
+                                    'fields' => 'prod.*');
+        }else{
+            return false;
+        }
+
+        // prod, cats
+        $this->query_table =  $this->_table_products .','. $this->_table_categories;
+        $this->jsons();
+    }
+
+    private function _orders(){
+            global $_GET;
+            $this->query_table =  $this->_table_orders .' , '. $this->_table_order_details;
+            $datas = ' AND ords.zstatus != 2';
+
+            // Display specific student order
+            if(@$_GET['s']){
+                $datas .= " AND ords.zorder_to =".$_GET['s'];
+            }
+
+            // Display all orders from children
+            if(@$_GET['x']){
+                $datas = " AND ords.zauthor =".$_GET['x'];
+            }
+
+            $this->lists =  array(  'zorder_to',
+                                    'zorganization',  
+                                    'zproduct',
+                                    'zprice',
+                                    'zdate_published',
+                                    'zstatus'
+                            );
+
+            $this->query = array( 'fields_listing' => array( 
+                                                'zorder_to',
+                                                'zorganization',  
+                                                'zproduct',
+                                                'zprice',
+                                                'zdate_published',
+                                                'zstatus'
+                                                ),
+                    'fields' => '*',
+                    'where' =>  'ords.zid = ordd.zorder_id '.$datas,
+                    'order_by' => 'LENGTH(zdate_published),zdate_published',
+                                'order' => 'DESC'); 
+            
+            $this->jsons();
+    }
+
+    // Display All organization data
+    private function _orgs($item=null,$fld=null){
+            global $_GET;
+            $this->query_table =  $this->_table_organization .' , '. $this->_table_orgsmeta;
+            $datas = ' AND orgs.zstatus != 2';
+
+            // Display specific organization data
+            if(@$_GET['s']){
+                $datas .= " AND orgs.zid =".$_GET['s'];
+            }
+
+            //For Admin - All by types - sc / comp / dept / pos / gr / sec / div
+            if(@$_GET['x']){
+                $datas .= ' AND orgs.ztype = "'.$_GET['x'].'"';
+            }
+
+            // For User/Client - Display published status
+            if(@$_GET['p'] == 9){
+                $datas .= ' AND orgs.zstatus = '.$_GET['p'];
+            }
+
+            $ntz = '';
+            $gtz = '';
+
+            if($item){
+                $ntz = ' AND orgs.zid = '.$item;
+                $fields = $fld;
+                $order_by = $fld;
+            }else{
+                $fields = 'orgs.zid AS ID, orgs.ztitle AS title, orgs.zcontent AS content, orgs.zdate_published AS published_date, orgs.zauthor AS author, orgs.zparent AS parents, orgs.zstatus AS zstatus,
+                orgm.zcountry AS country, orgm.zaddress AS address, orgm.zlink AS link, orgm.zcomp_license AS license, orgm.zcomp_vat AS vat';
+                $order_by = 'LENGTH(title),title';
+            }
+
+            if(@$_GET['g']){
+                $gtz = ' AND orgs.zparent = '.$_GET['g'];
+            }
+
+            $this->query = array( 'where' =>  'orgs.zid = orgm.zorganization '.$datas.$ntz.$gtz,
+                                'fields' => $fields,
+                                'order_by' => $order_by,
+                                'order' => 'ASC');
+
+            if($item){
+                $data =  $this->global_func_query($this->query_table, $this->query);
+                return $data[0]->$fields;
+            }else{
+                $this->jsons();
+            }
+    }
+
+    // get login profile
+    private function _profile(){
+        global $_GET;
+        $callback = '';  
+
+        $id = $this->userID;
+        $stats = 0;
+        if(@$_GET['p'] == 9){
+            $stats = $_GET['p'];
+        }
+        /* Get single profile */
+        $this->query = array( 'where' => array('zparent' => $id, 'zstatus' => $stats));
+        $this->query_table =  $this->_table_profile;
+        $this->jsons();
+    }
+
+    // display all users - profile
+    private function _users(){
+        global $_GET;
+
+        if(@$_GET['tz'] <> 214){
+            return false;
+        }
+        //uss - prof
+        $this->query_table =  $this->_table_profile .' , '. $this->_table_users;
+        $datas = '';
+
+        // Display specific user data
+        if(@$_GET['s']){
+            $datas = " AND uss.zid =".$_GET['s'];
+        }else{
+            $datas = " AND uss.zid =".$this->userID;
+        }
+
+        $this->query = array( 'where' =>  'uss.zid = prof.zparent AND uss.zstatus != 2'.$datas);
+        $this->jsons();
     } 
+
+     // display all active complimentaries
+     private function _xtras(){
+        global $_GET;
+
+        if(@$_GET['tz'] <> 214 && !$_GET['tp']){
+            return false;
+        }
+        //uss - prof
+        $this->query_table =  $this->_table_extras;
+        $datas = array('zstatus' => 9,'ztype'=>$_GET['tp']); 
+
+        $this->query = array( 'where' =>  $datas);
+        $this->jsons();
+    } 
+
+    // display all students
+    private function _students(){
+        global $_GET;
+        $callback = '';
+        $datas = '';
+
+        $this->studz = @$_GET['z']; // for datatables
+
+        $id = $this->userID;
+
+         // Display specific user data
+        if(@$_GET['s']){ 
+            $datas = 'zid = '.$_GET['s'].' AND zparent ='.$id.' AND zstatus != 2';
+        }else{
+            $datas = 'zparent ='.$id.' AND zstatus != 2';
+        }
+
+        $this->lists =  array(  'zid',
+                                'zstatus',
+                                'zfullname',
+                                'zorganization',
+                                'zgrade',
+                                'zstate',
+                                'zvalid_id',
+                                'zbalance',
+                                'zorgID',
+                                'zdivision',
+                                'zsection',
+                                'zgradeID',
+                                'zsectionID',
+                                'zdivisionID'                               
+                                
+        );
+
+        $this->query = array( 'fields_listing' => array( 
+                                                        'zstatus',
+                                                        'zfirstname',  
+                                                        'zorganization',
+                                                        'zgrade',
+                                                        'zstate',
+                                                        'zvalid_id',
+                                                        'zbalance', 
+                                                        'zorganization'
+                                                        ),
+                              'fields' => '*',
+                              'where' => $datas);
+        $this->query_table =  $this->_table_subprofile;
+        $this->jsons();
+    }
+
+    private function jsons(){
+        $data =  $this->global_func_query($this->query_table, $this->query, $this->lists);  
+        $this->output( $data ); 
+    }   
+
+    private function output( $o ){
+        $this->output->set_content_type('application/json'); 
+        
+        $output = [];
+        $data1 = [];
+        $data2 = [];
+        $parZ =  $o;
+        $tz = [];
+         /* Run on DataTables */
+        if($o && $this->lists){
+            foreach($o['data'] as $k => $aRow){ 
+  
+                $data1[] =  (object)$aRow;
+            }
+
+            $o =$data1;
+        }
+        
+         /* Run on All */
+         if($o){
+          
+                foreach($o AS $k => $v){ 
+                    foreach($v AS $t => $z){
+                        $output[$k][$t] = $v->$t; 
+                    }
+                    if(@$v->zstatus){
+                        $output[$k]['zstatus'] = status_info_clean($v->zstatus);
+                    }else{
+                        $output[$k]['zstatus'] = '';
+                    }
+                    if(@$v->zorganization){
+                        $output[$k]['zorgID'] =  $v->zorganization;
+                        $output[$k]['zorganization'] = $this->global_get_title('mz_organization',array('zid' => $v->zorganization),'ztitle');
+
+                        /* For databales lists */
+                        if($this->studz){
+                            $output[$k]['zstate'] = $this->_orgs($v->zorganization, 'zstate');
+                        } 
+                    }else{
+                        $output[$k]['zorganization'] = '';
+                    }
+                    
+                    if(@$v->zorder_to){ 
+                        $getName = $this->global_get_title('mz_subprofile',array('zid' => $v->zorder_to),array('zfirstname','zlastname'));
+                        $output[$k]['zorder_to'] = $getName[0]->zfirstname. ' '. $getName[0]->zlastname;
+                    }
+
+                    if(@$v->zproduct){ 
+                        $output[$k]['zproductID'] = $v->zproduct;
+                        $output[$k]['zproduct'] =  $this->global_get_title('mz_products',array('zid' => $v->zproduct),'ztitle');
+                    }
+
+                    if(@$v->zgrade){
+                        $output[$k]['zgradeID'] =  $v->zgrade;
+                        $output[$k]['zgrade'] =  $this->global_get_title('mz_organization',array('zid' => $v->zgrade),'ztitle');
+                    }else{
+                        $output[$k]['zgrade'] = '';
+                        $output[$k]['zgradeID'] = '';
+                    }
+                    if(@$v->zdivision){
+                        $output[$k]['zdivisionID'] =  $v->zdivision;
+                        $output[$k]['zdivision'] = $this->global_get_title('mz_organization',array('zid' => $v->zdivision),'ztitle');
+                    }else{
+                        $output[$k]['zdivision'] = '';
+                        $output[$k]['zdivisionID'] = '';
+                    }
+                    if(@$v->zsection){
+                        $output[$k]['zsectionID'] =  $v->zsection;
+                        $output[$k]['zsection'] = $this->global_get_title('mz_organization',array('zid' => $v->zsection),'ztitle');
+                    }else{
+                        $output[$k]['zsection'] = '';
+                        $output[$k]['zsectionID'] = '';
+                    }
+                    if(@$v->zcompany){
+                        $output[$k]['zcompany'] = $this->global_get_title('mz_organization',array('zid' => $v->zcompany),'ztitle');
+                    }else{
+                        $output[$k]['zcompany'] = '';
+                    }
+                    if(@$v->zdepartment){
+                        $output[$k]['zdepartment'] = $this->global_get_title('mz_organization',array('zid' => $v->zdepartment),'ztitle');
+                    }else{
+                        $output[$k]['zdepartment'] = '';
+                    }
+                    if(@$v->zposition){
+                        $output[$k]['zposition'] = $this->global_get_title('mz_organization',array('zid' => $v->zposition),'ztitle');
+                    }else{
+                        $output[$k]['zposition'] = '';
+                    }
+                    if(@$v->zcategory){
+                        $output[$k]['zcategory'] = $this->global_get_title('mz_categories',array('zid' => $v->zcategory),'ztitle');
+                    }else{
+                        $output[$k]['zcategory'] = '';
+                    }
+                    
+                    if(@$v->zfirstname){ 
+                        $output[$k]['zfullname'] =  ucwords($v->zfirstname . " ". $v->zlastname);
+                    }                
+                }
+        }
+           
+        /* Run on DataTables */
+        if($o && $this->lists){  
+            
+            foreach($output as $k => $aRow){
+                
+                 $row = array();
+                
+                foreach ($this->lists as $col) {
+                    $row[] = $aRow[$col];
+                }
+    
+                $data2[] = $row;
+            }
+           
+            $output = array( "draw"             =>  $parZ['draw'],  
+                            "recordsTotal"      =>  $parZ['recordsTotal'],  
+                            "recordsFiltered"   =>  $parZ['recordsFiltered'],  
+                            "data"              =>  $data2  );
+        }
+        
+        $json = json_encode($output); 
+        echo $json;
+    }
      
 }
