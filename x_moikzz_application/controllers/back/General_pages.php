@@ -136,9 +136,39 @@ class General_pages extends SS_Controller {
         $this->bodyClass = 'lists-students';
         $this->pageClass = 'lists-students';  
         $this->page = 'templates/contents/back/'.$this->namespace;
+<<<<<<< HEAD
         $this->jsCustom = 1; 
         $this->template_display(); 
     } 
+=======
+        $this->jsCustom = 1;
+        $this->template_display();
+    }
+
+    private function customers(){ 
+        // graph , table, form, modal - CSS and JS
+        $this->filter = array('table');
+        $this->namespace = 'customers';
+        $this->pageTitle = 'All Customers';
+        $this->bodyClass = 'lists-customers';
+        $this->pageClass = 'lists-customers';  
+        $this->page = 'templates/contents/back/'.$this->namespace;
+        $this->jsCustom = 1;
+        $this->template_display();
+    }
+
+    private function users(){ 
+        // graph , table, form, modal - CSS and JS
+        $this->filter = array('table');
+        $this->namespace = 'users';
+        $this->pageTitle = 'All Users';
+        $this->bodyClass = 'lists-users';
+        $this->pageClass = 'lists-users';  
+        $this->page = 'templates/contents/back/'.$this->namespace;
+        $this->jsCustom = 1;
+        $this->template_display();
+    }
+>>>>>>> moikzz
 
     private function settings(){
         $this->namespace = 'settings';

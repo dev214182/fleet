@@ -201,8 +201,13 @@ var app = {
     }else if(bodyClass == 'orders'){
           zapi = app.displayOrdersApi + '?'+app.keyApi;
           colDef = [];
-    }else if(bodyClass == 'users'){
-          zapi = app.profileApi + '?'+app.keyApi+'&tz=214';
+    }else if(bodyClass == 'users' || bodyClass == 'customers'){
+          var cst = '';
+          if(bodyClass == 'customers'){
+              cst = '&c=1';
+          }
+          zapi = app.profileApi + '?'+app.keyApi+'&tz=214'+cst;
+         
           colDef = [{
                       className: "hidden acc-id",
                       "targets": [0],
@@ -265,7 +270,7 @@ var app = {
             }).data().each(function (g, i) {
               
               /* remove action buttons if status is not published */
-              if($(rows).eq(i).children().first().text() != ('Published' || 'Active')){ 
+              if($(rows).eq(i).children().first().text() != ('Published' || 'Active' || 'Pending' || 'Authenticated')){ 
                   $(rows).eq(i).children('td.action').children('.btn-rev').remove();
               }
 

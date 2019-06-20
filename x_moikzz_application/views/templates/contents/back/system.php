@@ -1,5 +1,4 @@
-
-<?php $menus = array('Dashboard', 'Inquiries', 'Trucks', 'Posts', 'Pages', 'Contact Form', 'Menus', 'Media', 'Settings', 'Testimonials', 'Products', 'Categories', 'Payments','Orders', 'History');?>
+<?php $menus = array('Dashboard', 'Inquiries', 'Trucks', 'Posts', 'Pages', 'Contact Form', 'Menus', 'Media', 'Settings', 'Testimonials', 'Products', 'Categories', 'Payments','Orders','Customers', 'History');?>
 <?php $options = array('addelete' => 'Add/Delete Item', 'edit' => 'Edit Item', 'view' => 'View Item');?>
 
 <div class="col-md-6">

@@ -29,6 +29,7 @@
                                 <th>Username</th>
                                 <th>Name</th>
                                 <th>Email</th>
+                                <th>Type</th>
                                 <th></th>
                                 <th>Actions</th> 
                             </tr>
@@ -40,6 +41,7 @@
                                 <th>Username</th>
                                 <th>Name</th>
                                 <th>Email</th>
+                                <th>Type</th>
                                 <th></th>
                                 <th>Actions</th> 
                             </tr>

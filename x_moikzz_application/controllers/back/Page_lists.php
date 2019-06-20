@@ -33,7 +33,7 @@ class Page_lists extends SS_Controller {
         }else{ 
             $this->links($page,$func); 
         }
-    } 
+    }
 
     private function links($p, $func){
         $this->data_pages = $p;
@@ -107,12 +107,21 @@ class Page_lists extends SS_Controller {
         if($this->controller == 'students'){
             $this->jsCustom = 5;
             $this->student_add();
+<<<<<<< HEAD
         }elseif($this->controller == 'pages'){
             $this->jsCustom = 5;
             $this->add_page();
         }elseif($this->controller == 'posts'){
             $this->jsCustom = 5;
             $this->add_post();
+=======
+        }elseif($this->controller == 'users'){
+            $this->jsCustom = 6;
+            $this->users_add();
+        }elseif($this->controller == 'customers'){
+            $this->jsCustom = 6;
+            $this->users_add();
+>>>>>>> moikzz
         }
     }
 
@@ -120,12 +129,21 @@ class Page_lists extends SS_Controller {
         if($this->controller == 'students'){
             $this->jsCustom = 5;
             $this->student_edit();
+<<<<<<< HEAD
         }elseif($this->controller == 'pages'){
             $this->jsCustom = 5;
             $this->edit_page();
         }elseif($this->controller == 'posts'){
             $this->jsCustom = 5;
             $this->edit_post();
+=======
+        }elseif($this->controller == 'users'){
+            $this->jsCustom = 6;
+            $this->users_edit();
+        }elseif($this->controller == 'customers'){
+            $this->jsCustom = 6;
+            $this->customer_edit();
+>>>>>>> moikzz
         }
     }
 
@@ -136,6 +154,7 @@ class Page_lists extends SS_Controller {
         }
     }
 
+<<<<<<< HEAD
     /**
      * @Mel Controllers
      */
@@ -143,6 +162,28 @@ class Page_lists extends SS_Controller {
     // Pages
     public function add_page(){
         
+=======
+    private function customer_edit(){
+        $data['system'] = 'Moikzz Application';
+        $v = $this->controller;
+        $data['breadcrumbs'] = '<li class="breadcrumb-item"><a href="'.base_url().'client/page/'.$v.'/">'.ucfirst($v).'</a></li><li class="breadcrumb-item active"> Edit </li>';
+        $data['pages'] = 'updating';
+        $data['pagetitle'] = 'Update User Info';
+        $this->filter = array('');
+        // graph , table, form, modal - CSS and JS
+        $data['filter_css_js'] = $this->filter;
+        $data['title'] = 'User';
+        
+
+        $data['jsCustom'] = $this->jsCustom;
+        $data['bodyClass'] = $v;
+        $data['pageclass'] = 'update-info'.$v;        
+        $this->template->load( 'back/template', 'back/forms/customer_form.html', $data); 
+    }
+
+    private function users_add(){
+        $data['system'] = 'Moikzz Application';
+>>>>>>> moikzz
         $v = $this->controller;
         $data['breadcrumbs'] = '<li class="breadcrumb-item"><a href="'.base_url().'client/page/'.$v.'/">'.ucfirst($v).'</a></li><li class="breadcrumb-item active"> Add New </li>';
         $data['pages'] = 'addnew';
