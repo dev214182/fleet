@@ -1,5 +1,14 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-	
+
+	// @mel
+	if (!function_exists('file_front_dir')) {
+		function file_common_dir( $file ){ 
+			return  base_url().'x_moikzz_assets/'.$file; 
+		} 
+	}
+	// @mel
+
+
 	if (!function_exists('file_common_dir_back')) { 
 
 		function file_common_dir_back( $file ){ 
