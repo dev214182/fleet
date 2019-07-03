@@ -1,21 +1,3 @@
-<section class="b-pageHeader">
-    <div class="container">
-        <!-- wow zoomInLeft  data-wow-delay="0.5s" -->
-        <h1 class="uppercase">ABOUT US</h1>
-        <!-- wow zoomInRight" data-wow-delay="0.5s" -->
-        <div class="b-pageHeader__search">
-            <h3>Your search returned 28 results</h3>
-        </div>
-    </div>
-</section><!--b-pageHeader-->
-
-<div class="b-breadCumbs s-shadow">
-    <!-- wow zoomInUp data-wow-delay="0.5s" -->
-    <div class="container">
-        <a href="<?=base_url()?>" class="b-breadCumbs__page">Home</a><span class="fa fa-angle-right"></span><span class="b-breadCumbs__page m-active">About</span>
-    </div>
-</div><!--b-breadCumbs-->
-
 <section class="b-best">
     <div class="container">
         <div class="row">

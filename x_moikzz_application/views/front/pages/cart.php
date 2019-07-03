@@ -1,18 +1,17 @@
-<section class="b-pageHeader">
+<!-- <section class="b-pageHeader">
     <div class="container">
         <h1 class=" wow zoomInLeft uppercase" data-wow-delay="0.5s">CART</h1>
         <div class="b-pageHeader__search wow zoomInRight" data-wow-delay="0.5s">
             <h3>Your have 3 items on cart</h3>
         </div>
     </div>
-</section><!--b-pageHeader-->
-    
+</section>
 <div class="b-breadCumbs s-shadow">
     <div class="container " data-wow-delay="0.5s">
         <a href="<?=base_url()?>" class="b-breadCumbs__page">Home</a><span class="fa fa-angle-right"></span><span class="b-breadCumbs__page m-active">Cart</span>
     </div>
-</div><!--b-breadCumbs-->
-      
+</div> -->
+
 <div class="b-items">
     <div class="cart-wrapper container">
         <div class="row"> 

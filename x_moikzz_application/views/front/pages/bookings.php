@@ -1,15 +1,15 @@
-<section class="b-pageHeader">
+<!-- <section class="b-pageHeader">
     <div class="container">
         <h1>Bookings</h1>
     </div>
-</section><!--b-pageHeader-->
-
+</section>
 <div class="b-breadCumbs s-shadow">
     <div class="container">
         <a href="home.html" class="b-breadCumbs__page">Home</a><span class="fa fa-angle-right"></span><a href="<?=base_url('bookings')?>" class="b-breadCumbs__page m-active">Bookings</a>
     </div>
-</div><!--b-breadCumbs-->
-<section class="b-article g-bookings">
+</div> -->
+
+<section class="b-auto g-bookings">
     <div class="container">
         <div class="row">
             <div class="col-xs-5 col-sm-4 col-md-3">

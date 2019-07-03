@@ -1,4 +1,4 @@
-    <section class="b-slider"> 
+    <!-- <section class="b-slider"> 
       <div id="carousel" class="slide carousel carousel-fade">
         <div class="carousel-inner">
           <div class="item active">
@@ -42,7 +42,8 @@
           <span class="fa fa-angle-left m-control-left"></span>
         </a>
       </div>
-    </section><!-- b-slider -->
+    </section> -->
+    <!-- b-slider -->
 
     <section class="b-search">
       <div class="container">

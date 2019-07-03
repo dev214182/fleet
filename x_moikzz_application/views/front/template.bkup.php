@@ -20,6 +20,10 @@
     <div id="page-preloader"><span class="spinner"></span></div>
     <!-- Loader end -->
 
+    <?php
+    
+    if( $bodyClass == 'contact-us' ){ ?>
+
     <!-- Main Navigation -->
     <div class="mainNav overlay" style="background-image:url('<?php echo file_common_dir('images/backgrounds/fleet-page-banner-v3.jpg');?>');">
       <header class="gal-mob-topbar">
@@ -122,28 +126,7 @@
             </div>
           </nav><!--b-nav-->
         </div><!-- .nav-fixed -->
-
-        <?php
-        if( $bodyClass === 'home m-index' ){ ?>
-          <section class="homepage-cta">
-            <div class="container">
-              <div class="col-xs-12">
-                <div class="homepage-cta-wrapper">
-                  <h1>Welcome to Gallega Global Logistics</h1>
-                  <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptas quia modi exercitationem dolorem quibusdam ad quidem excepturi maxime dolores molestiae! Culpa officiis odit earum cum vitae et tenetur delectus sed.</p>
-                  <button type="submit" class="btn m-btn">SIGNUP NOW<span class="fa fa-angle-right"></span></button>
-                </div>
-              </div>
-            </div>
-          </section><!--b-pageHeader-->
-        <?php } ?>
-
       </div><!-- .nav-overlay -->
-
-
-      <?php
-
-      if( $bodyClass !== 'home m-index' ){ ?>
 
       <section class="b-pageHeader">
         <div class="container">
@@ -160,9 +143,111 @@
         </div>
       </div><!--b-breadCumbs-->
 
-      <?php } ?>
-
     </div>
+
+    <?php }else{ ?>
+    <!-- Main Navigation -->
+    <div class="mainNav">
+      <header class="b-topBar wow" data-wow-delay="0.7s"> <!-- slideInDown -->
+        <div class="container">
+          <div class="row">
+            <div class="col-md-2 col-xs-6">
+              <div class="b-topBar__addr"> 
+                  <a href="#"><span class="fa fa-facebook-square"></span></a>
+                  <a href="#"><span class="fa fa-twitter-square"></span></a> 
+                  <a href="#"><span class="fa fa-youtube-square"></span></a> 
+              </div>
+            </div>
+            <div class="col-md-4 col-xs-6">  
+              <div class="b-topBar__tel">
+                <span class="fa fa-envelope"></span>
+                  <em>Email:  info@gallega.com</em> 
+                <span class="pull-right p-r-20">+971 48 215 099</span>
+              </div>
+            </div>
+
+            <div class="col-md-4 col-xs-6"> 
+              <nav class="b-topBar__nav">
+                <ul style="color:#FFFFFF;"> 
+                  <li><a href="#">Register</a></li>
+                  <li><a href="<?=site_url('login')?>">Login</a></li>
+                  <li><a href="<?=site_url('search')?>">Search</a></li>
+                </ul>
+              </nav>
+            </div>
+            <div class="col-md-2 col-xs-6">
+              <div class="b-topBar__lang">
+                <div class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle='dropdown'>Language</a>
+                  <a class="m-langLink dropdown-toggle" data-toggle='dropdown' href="#"><span class="b-topBar__lang-flag m-en"></span>EN<span class="fa fa-caret-down"></span></a>
+                  <ul class="dropdown-menu h-lang">
+                    <li><a class="m-langLink dropdown-toggle" data-toggle='dropdown' href="#"><span class="b-topBar__lang-flag m-en"></span>EN</a></li>
+                    <li><a class="m-langLink dropdown-toggle" data-toggle='dropdown' href="#"><span class="b-topBar__lang-flag m-es"></span>ES</a></li>
+                    <li><a class="m-langLink dropdown-toggle" data-toggle='dropdown' href="#"><span class="b-topBar__lang-flag m-de"></span>DE</a></li>
+                    <li><a class="m-langLink dropdown-toggle" data-toggle='dropdown' href="#"><span class="b-topBar__lang-flag m-fr"></span>FR</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header><!--b-topBar-->
+      <!-- style="padding: 15px 0;" -->
+      <nav class="b-nav" >
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-3 col-xs-4">
+              <div class="b-nav__logo wow" data-wow-delay="0.3s"> <!-- slideInLeft --> 
+                <a href="<?=base_url()?>">
+                  <img src="<?=file_common_dir('images/gallega-logo2.png')?>" width="61%">
+                </a>
+              </div>
+            </div>
+            <div class="col-sm-9 col-xs-8">
+              <div class="b-nav__list wow" data-wow-delay="0.3s"> <!-- slideInRight -->
+                <div class="navbar-header">
+                  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#nav">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                  </button>
+                </div>
+                <div class="collapse navbar-collapse navbar-main-slide" id="nav">
+                  <ul class="navbar-nav-menu">
+                    <li><a href="<?=base_url()?>">Home</a></li> 
+                    <li><a href="<?=base_url('about')?>">About</a></li>
+                    <li><a href="<?=base_url()?>#how-works">How it works</a></li> 
+                    <li><a href="<?=base_url('contact')?>">Contact Us</a></li> 
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav><!--b-nav-->
+      <!-- </div> -->
+      <!-- .header -->
+    </div>
+    <!-- .main-navigation -->
+
+    <section class="b-pageHeader">
+        <div class="container">
+            <h1>Contact Us</h1>
+            <div class="b-pageHeader__search">
+                <h3>Get In Touch With Us Now</h3>
+            </div>
+        </div>
+    </section><!--b-pageHeader-->
+
+    <div class="b-breadCumbs s-shadow">
+        <div class="container">
+            <a href="home.html" class="b-breadCumbs__page">Home</a><span class="fa fa-angle-right"></span><a href="<?=base_url('contact')?>" class="b-breadCumbs__page m-active">Contact Us</a>
+        </div>
+    </div><!--b-breadCumbs-->
+
+    <?php } ?>
+
 
 
     <!-- Mobile Navigation -->
@@ -174,20 +259,20 @@
     <!-- MOBILE Menu -->
     <div class="mobileNav">
       <div class="mob-user-action">
-        <a href="<?=base_url('login')?>" class="mob-user-login">LOGIN</a>
-        <a href="<?=base_url('register')?>" class="mob-user-reg">REGISTER</a>
+        <a href="#" class="mob-user-login">LOGIN</a>
+        <a href="#" class="mob-user-reg">REGISTER</a>
       </div>
       <ul class="mob-main-nav">
-        <li><a href="<?=base_url()?>">Home</a></li>
-        <li><a href="<?=base_url('about')?>">About</a></li>
-        <li><a href="<?=base_url()?>">How It Works</a></li>
-        <li><a href="<?=base_url('contact')?>">Contact Us</a></li>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">How It Works</a></li>
+        <li><a href="#">Contact Us</a></li>
       </ul>
       <ul class="mob-secondary-nav">
-        <li><a href="<?=base_url('dashboard')?>">Dashboard</a></li>
-        <li><a href="<?=base_url('bookings')?>">Bookings</a></li>
-        <li><a href="<?=base_url('profile')?>">Profile</a></li>
-        <li><a href="javascript:void(0)">Logout</a></li>
+        <li><a href="#">Dashboard</a></li>
+        <li><a href="#">Bookings</a></li>
+        <li><a href="#">Profile</a></li>
+        <li><a href="#">Logout</a></li>
       </ul>
     </div>
 

@@ -28,13 +28,13 @@ Profile:    http://themeforest.net/user/andreysokoltsov
 /*@import url('blog.css');*/
 @import url('pages.css');
 @import url('submits.css');
-@import url('responsive.css');
+
 @import url('animate.css');
 @import url('site-colors.css');
 @import url('colors-demo.css');
 @import url('colors.css');
 @import url('custom.css');
-
+@import url('responsive.css');
 
 /* PLUGIN CSS */
 @import url('../plugins/owl-carousel/owl.carousel.css');
