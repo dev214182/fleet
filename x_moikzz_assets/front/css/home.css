@@ -103,7 +103,7 @@ a.m-langLink{
 
 .h-lang li a{
     margin-left: 0!important;
-    text-align: center;
+    text-align: left;
 }
 
 .b-topBar__lang a span.fa{
@@ -1556,7 +1556,7 @@ a.m-langLink{
     margin-top:-200px;
     border-top: 3px solid #f76d2b;
     padding: 35px 0 35px 0;
-    z-index:100000;
+    z-index:10000;
 }
 
 .b-info__aside-article{

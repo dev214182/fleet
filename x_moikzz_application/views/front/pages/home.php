@@ -385,8 +385,11 @@
           </div>
         </form>
       </div>
-    </section><!--b-search-->
-  
+    </section>
+    <!--b-search-->
+
+
+
   <section class="b-featured" id="how-works">
         <div class="container">
           <div class="row">

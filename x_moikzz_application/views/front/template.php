@@ -5,6 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>Gallega Global Logistics</title>
 
+    <!-- SEO meta tags @mel -->
+    <!-- Search Engine -->
+    <meta name="description" content="Gallega Global Logistics page description">
+    <meta name="image" content="https://gallega.com/wp-content/uploads/2019/02/gallega-logistics.png">
+    <!-- Schema.org for Google -->
+    <meta itemprop="name" content="Home">
+    <meta itemprop="description" content="Gallega Global Logistics page description">
+    <meta itemprop="image" content="https://gallega.com/wp-content/uploads/2019/02/gallega-logistics.png">
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Home">
+    <meta name="twitter:description" content="Gallega Global Logistics page description">
+    <meta name="twitter:site" content="@GallegaGlobal">
+    <meta name="twitter:creator" content="@GallegaGlobal">
+    <meta name="twitter:image:src" content="https://gallega.com/wp-content/uploads/2019/02/gallega-logistics.png">
+    <meta name="twitter:player" content="https://www.youtube.com/watch?v=eYiDB4SidKk">
+    <!-- Open Graph general (Facebook, Pinterest & Google+) -->
+    <meta name="og:title" content="Home">
+    <meta name="og:description" content="Gallega Global Logistics page description">
+    <meta name="og:image" content="https://gallega.com/wp-content/uploads/2019/02/gallega-logistics.png">
+    <meta name="og:url" content="https://gallega.com/">
+    <meta name="og:site_name" content="Gallega Global Logistics">
+    <meta name="og:locale" content="en_US">
+    <meta name="og:video" content="https://www.youtube.com/watch?v=eYiDB4SidKk">
+    <meta name="fb:admins" content="156466188386798">
+    <meta name="fb:app_id" content="156466188386798">
+    <meta name="og:type" content="website">
+    <!-- SEO meta tags @mel -->
+
+    
     <link rel="shortcut icon" type="image/x-icon" href="<?=file_common_dir('images/icon-gallega.png')?>" /> 
     <link href="<?=file_common_dir('front/css/master.css')?>" rel="stylesheet"> 
     <link href="<?=file_common_dir('front/css/compare.css')?>" rel="stylesheet" type="text/css" media="all" />
@@ -53,11 +83,15 @@
           <header class="b-topBar">
             <div class="container">
               <div class="row">
-                <div class="col-md-2 col-xs-6 gal-social-container">
-                  <div class="b-topBar__addr"> 
-                      <a href="#"><span class="fa fa-facebook-square"></span></a>
-                      <a href="#"><span class="fa fa-twitter-square"></span></a> 
-                      <a href="#"><span class="fa fa-youtube-square"></span></a> 
+                <div class="col-md-2 col-xs-6">
+                  <div class="b-topBar__addr">
+                    <div class="gal-header-social-icons">  
+                      <a href="#"><span class="gi-facebook font-light"></span></a>
+                      <a href="#"><span class="gi-twitter font-light"></span></a>
+                      <a href="#"><span class="gi-instagram font-light"></span></a>
+                      <a href="#"><span class="gi-linkedin font-light"></span></a>
+                      <a href="#"><span class="gi-youtube font-light"></span></a>
+                    </div>
                   </div>
                 </div>
                 <div class="col-md-4 col-xs-6 gal-contact-container">  
@@ -131,7 +165,10 @@
                 <div class="homepage-cta-wrapper">
                   <h1>Welcome to Gallega Global Logistics</h1>
                   <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptas quia modi exercitationem dolorem quibusdam ad quidem excepturi maxime dolores molestiae! Culpa officiis odit earum cum vitae et tenetur delectus sed.</p>
-                  <button type="submit" class="btn m-btn">SIGNUP NOW<span class="fa fa-angle-right"></span></button>
+                  <div class="s-form">
+                    <button type="submit" class="btn m-btn">BOOK NOW<span class="fa fa-angle-right"></span></button>
+                    <button type="submit" class="btn m-btn">SIGNUP<span class="fa fa-angle-right"></span></button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -189,6 +226,15 @@
         <li><a href="<?=base_url('profile')?>">Profile</a></li>
         <li><a href="javascript:void(0)">Logout</a></li>
       </ul>
+      <div class="mob-social-nav">
+        <div class="gal-social-icons">  
+          <a href="#"><span class="gi-facebook font-light"></span></a>
+          <a href="#"><span class="gi-twitter font-light"></span></a>
+          <a href="#"><span class="gi-instagram font-light"></span></a>
+          <a href="#"><span class="gi-linkedin font-light"></span></a>
+          <a href="#"><span class="gi-youtube font-light"></span></a>
+        </div>
+      </div>
     </div>
 
     <?=$contents?>
@@ -316,15 +362,13 @@
             </div>
           </div>
           <div class="col-xs-8">
-            <!-- wow fadeInRight" data-wow-delay="0.3s -->
             <div class="b-footer__content">
-              <div class="b-footer__content-social">
-                <a href="#"><span class="fa fa-facebook-square"></span></a>
-                <a href="#"><span class="fa fa-twitter-squZare"></span></a>
-                <a href="#"><span class="fa fa-google-plus-square"></span></a>
-                <a href="#"><span class="fa fa-instagram"></span></a>
-                <a href="#"><span class="fa fa-youtube-square"></span></a>
-                <a href="#"><span class="fa fa-skype"></span></a>
+              <div class="gal-social-icons text-right">  
+                <a href="#"><span class="gi-facebook font-grey"></span></a>
+                <a href="#"><span class="gi-twitter font-grey"></span></a>
+                <a href="#"><span class="gi-instagram font-grey"></span></a>
+                <a href="#"><span class="gi-linkedin font-grey"></span></a>
+                <a href="#"><span class="gi-youtube font-grey"></span></a>
               </div>
               <nav class="b-footer__content-nav">
                 <ul>
@@ -374,9 +418,9 @@
       $(window).scroll(function() {    
         var scroll = $(window).scrollTop();
         if (scroll >= 400) {
-          $(".mainNav").addClass("fixedheader");
+          $("body").addClass("fixedheader");
         }else{
-          $(".mainNav").removeClass("fixedheader");  
+          $("body").removeClass("fixedheader");  
         }
      
       }); //missing );

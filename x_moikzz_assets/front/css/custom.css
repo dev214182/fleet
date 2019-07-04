@@ -154,9 +154,10 @@ body.cart .b-items__cars-one{ margin-bottom: 10px !important;}
         url('../fonts/AvenirNextLTPro-Regular.eot?#iefix') format('embedded-opentype'),
         url('../fonts/AvenirNextLTPro-Regular.woff2') format('woff2'),
         url('../fonts/AvenirNextLTPro-Regular.woff') format('woff'),
-        url('../fonts/AvenirNextLTPro-Regular.ttf') format('truetype');
+		url('../fonts/AvenirNextLTPro-Regular.ttf') format('truetype');
     font-weight: normal;
-    font-style: normal;
+	font-style: normal;
+	font-display:swap;
 }
 @font-face {
     font-family: 'Avenir';
@@ -167,8 +168,68 @@ body.cart .b-items__cars-one{ margin-bottom: 10px !important;}
         url('../fonts/AvenirNextLTPro-Bold.woff') format('woff'),
         url('../fonts/AvenirNextLTPro-Bold.ttf') format('truetype');
     font-weight: bold;
-    font-style: normal;
+	font-style: normal;
+	font-display:swap;
 }
+
+/* Font Colors */
+.font-grey{
+	color:#999;
+}
+.font-light{
+	color: #fff;
+}
+
+/* Custom Font */
+@font-face {
+	font-family: 'gal-icon';
+	src: url('../fonts/gal-icon.eot');
+	src:url('../fonts/gal-icon?#iefix') format('embedded-opentype'),
+		url('../fonts/gal-icon.woff') format('woff'),
+		url('../fonts/gal-icon.ttf') format('truetype');
+	font-weight: bold;
+	font-style: normal;
+	font-display:swap;
+}
+[class^="gi-"], [class*=" gi-"] {
+	font-family: 'gal-icon' !important;
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+    font-size: 14px;
+    margin-right: 8px;
+}
+body.fixedheader .gal-header-social-icons [class^="gi-"], body.fixedheader .gal-header-social-icons [class*=" gi-"]{
+	color: #555555;
+}
+
+.gi-linkedin:before {
+	content: "\e900";
+}
+.gi-youtube:before {
+	content: "\e901";
+}
+.gi-twitter:before {
+	content: "\e902";
+}
+.gi-whatsapp:before {
+	content: "\e903";
+}
+.gi-instagram:before {
+	content: "\e904";
+}
+.gi-facebook:before {
+	content: "\e905";
+}
+.gi-google-plus:before {
+	content: "\e906";
+}
+
 
 /* Bookings Table */
 .g-bookings .table >thead > tr > th, 
@@ -181,65 +242,65 @@ body.cart .b-items__cars-one{ margin-bottom: 10px !important;}
 }
 
 /* Main Navigation */
-.mainNav.overlay{
+body .mainNav.overlay{
 	background-position: center;
 	background-size: cover;
 	background-repeat: no-repeat;
 }
-.mainNav .nav-overlay{
+body .mainNav .nav-overlay{
 	position: relative;
     width: 100%;
 	height: 380px;
 }
-.mainNav .nav-overlay .nav-fixed{
+body .mainNav .nav-overlay .nav-fixed{
 	position: fixed;
 	width: 100%;
 	z-index: 99999;
 }
-.mainNav.overlay .b-topBar{
+body .mainNav.overlay .b-topBar{
 	border-bottom: 1px solid #666666;
 	/* background-color:#000; */
 }
-.mainNav.overlay .b-topBar__nav li a,
-.mainNav.overlay .b-topBar__nav li:last-child,
-.mainNav.overlay .b-topBar__lang,
-.mainNav.overlay .b-topBar__nav,
-.mainNav.overlay .b-topBar__tel,
-.mainNav.overlay .b-topBar__addr{
+body .mainNav.overlay .b-topBar__nav li a,
+body .mainNav.overlay .b-topBar__nav li:last-child,
+body .mainNav.overlay .b-topBar__lang,
+body .mainNav.overlay .b-topBar__nav,
+body .mainNav.overlay .b-topBar__tel,
+body .mainNav.overlay .b-topBar__addr{
 	border-color: #666666;
 }
-.mainNav.overlay .b-topBar__addr .fa,
-.mainNav.overlay .b-topBar__tel .fa,
-.mainNav.overlay .b-topBar__tel,
-.mainNav.overlay .b-topBar__nav li a,
-.mainNav.overlay .b-topBar__lang a,
-.mainNav.overlay .b-nav__list ul li a{
+body .mainNav.overlay .b-topBar__addr .fa,
+body .mainNav.overlay .b-topBar__tel .fa,
+body .mainNav.overlay .b-topBar__tel,
+body .mainNav.overlay .b-topBar__nav li a,
+body .mainNav.overlay .b-topBar__lang a,
+body .mainNav.overlay .b-nav__list ul li a{
 	color: #FFFFFF;
 	/* transition:  .3s ease-in-out; */
 }
 
 /* Fixed Header */
-.mainNav.overlay.fixedheader .b-topBar__nav li a,
-.mainNav.overlay.fixedheader .b-topBar__nav li:last-child,
-.mainNav.overlay.fixedheader .b-topBar__lang,
-.mainNav.overlay.fixedheader .b-topBar__nav,
-.mainNav.overlay.fixedheader .b-topBar__tel,
-.mainNav.overlay.fixedheader .b-topBar__addr{
+body.fixedheader .mainNav.overlay .b-topBar__nav li a,
+body.fixedheader .mainNav.overlay .b-topBar__nav li:last-child,
+body.fixedheader .mainNav.overlay .b-topBar__lang,
+body.fixedheader .mainNav.overlay .b-topBar__nav,
+body.fixedheader .mainNav.overlay .b-topBar__tel,
+body.fixedheader .mainNav.overlay .b-topBar__addr{
 	border-color: #eeeeee;
 }
-.mainNav.overlay.fixedheader .b-topBar__addr .fa,
-.mainNav.overlay.fixedheader .b-topBar__tel .fa,
-.mainNav.overlay.fixedheader .b-topBar__tel,
-.mainNav.overlay.fixedheader .b-topBar__nav li a,
-.mainNav.overlay.fixedheader .b-topBar__lang a,
-.mainNav.overlay.fixedheader .b-nav__list ul li a{
+body.fixedheader .mainNav.overlay .b-topBar__addr .fa,
+body.fixedheader .mainNav.overlay .b-topBar__tel .fa,
+body.fixedheader .mainNav.overlay .b-topBar__tel,
+body.fixedheader .mainNav.overlay .b-topBar__nav li a,
+body.fixedheader .mainNav.overlay .b-topBar__lang a,
+body.fixedheader .mainNav.overlay .b-nav__list ul li a{
 	color: #555555;
 }
-.mainNav.overlay.fixedheader .b-nav{
+body.fixedheader .mainNav.overlay .b-nav{
 	padding:10px 0;
 }
-.mainNav.overlay.fixedheader .b-topBar,	
-.mainNav.overlay.fixedheader .b-nav{
+body.fixedheader .mainNav.overlay .b-topBar,	
+body.fixedheader .mainNav.overlay .b-nav{
 	border-bottom: 1px solid #eeeeee;
 	background-color:#fff;
 }
@@ -248,12 +309,12 @@ body.cart .b-items__cars-one{ margin-bottom: 10px !important;}
 	transition: .3s ease-in-out;
 }
 /* Logos */
-.mainNav.overlay .light-logo,
-.mainNav.overlay.fixedheader .main-logo{
+body .mainNav.overlay .light-logo,
+body.fixedheader .mainNav.overlay .main-logo{
 	display: block;
 }
-.mainNav.overlay .main-logo,
-.mainNav.overlay.fixedheader .light-logo{
+body .mainNav.overlay .main-logo,
+body.fixedheader .mainNav.overlay .light-logo{
 	display: none;
 }
 
@@ -311,6 +372,7 @@ body.cart .b-items__cars-one{ margin-bottom: 10px !important;}
 	box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.4);
 	z-index: 99999;
 }
+.mob-social-nav,
 .mobileNav ul.mob-secondary-nav,
 .mobileNav ul.mob-main-nav{
 	/* position: absolute; */
@@ -348,6 +410,7 @@ body.cart .b-items__cars-one{ margin-bottom: 10px !important;}
 .mobileNav .mob-main-nav{
 	text-transform:uppercase;
 }
+.mob-social-nav,
 .mobileNav ul.mob-secondary-nav a{
 	padding: 3% 8%;
 	font-size: 13px;

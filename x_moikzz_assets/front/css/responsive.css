@@ -216,7 +216,7 @@
     .nav-overlay .b-nav{
         padding: 10px 0;
     }
-    .mainNav .nav-overlay .nav-fixed{
+    body .mainNav .nav-overlay .nav-fixed{
         position: relative;
     }
     .mainNav .nav-overlay{
