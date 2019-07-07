@@ -352,7 +352,7 @@
       <a id="to-top" href="#this-is-top"><i class="fa fa-chevron-up"></i></a>
       <div class="container">
         <div class="row">
-          <div class="col-xs-4">
+          <div class="col-xs-12 col-md-4">
             <!-- wow fadeInLeft" data-wow-delay="0.3s -->
             <div class="b-footer__company">
               <div class="b-nav__logo">
@@ -362,7 +362,7 @@
               </div>
             </div>
           </div>
-          <div class="col-xs-8">
+          <div class="col-xs-12 col-md-8">
             <div class="b-footer__content">
               <div class="gal-social-icons text-right">  
                 <a href="#"><span class="gi-facebook font-grey"></span></a>
