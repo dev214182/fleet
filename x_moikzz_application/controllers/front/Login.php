@@ -2,8 +2,7 @@
 class Login extends SS_Controller { 
     function __construct(){ 
        parent::__construct(); 
-        $this->load->model('User_Model','um');
-        //$this->load->model('Global_Model', 'gm');
+   
         $this->load->helper('form','url'); 
         $this->load->library('form_validation'); 
     }
@@ -11,7 +10,7 @@ class Login extends SS_Controller {
         if ( !$this->session->userdata('logged_in') ) {  
             $data['ci_title'] = 'Login';
             $data['pageclass'] = 'login';
-           $this->load->view('front/templates/login', $data);
+           $this->load->view('templates/inc/front/login', $data);
         }else{
             redirect('admin/dashboard');
         } 
