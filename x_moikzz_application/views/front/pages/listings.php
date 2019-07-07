@@ -67,7 +67,7 @@
                                     <div class="b-items__aside-main-body-item">
                                         <label>FROM (origin)</label>
                                         <div>
-                                            <select name="select1" class="m-select select2  rx-country form-control">
+                                            <select name="select1" id="input_origin_place" class="m-select select2  rx-country form-control">
                                                 <option value="" selected=""> - From -</option>
                                             </select>
                                             
@@ -76,7 +76,7 @@
                                     <div class="b-items__aside-main-body-item">
                                         <label>TO (destination)</label>
                                         <div>
-                                            <select name="select1" class="m-select select2  rx-country">
+                                            <select name="select1" id="input_destination_place" class="m-select select2  rx-country">
                                                 <option value="" selected="">- To -</option>
                                             </select>
                                              

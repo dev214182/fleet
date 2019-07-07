@@ -150,6 +150,34 @@ var app = {
               });
         }
     }, 
+
+    listings_view_details: function(){
+        $('body').on('click', '.listing-details', function(e){
+            e.preventDefault();
+             var t = e.target;
+            $(this).parents('.b-items__cars-one').find('.additional-notes').toggle(200, function(){
+                $(t).html($(this).is(':visible')? 'LESS DETAILS' : 'VIEW DETAILS');
+            });
+        }); 
+
+        var items = []; 
+        
+        $('body').on('click','.add-cart', function(e){ 
+
+            if($(this).is(':checked')){
+                
+                // add to localStorage
+                var data = $(this).parents('.b-items__cars-one-info-header').find('span.item-hidden_val').data('val');
+                //items = JSON.parse("[" + items + "]");  
+                app.save_item_selection(items, data);
+            }else{
+
+                //remove from localStorage
+                var data = $(this).parents('.b-items__cars-one-info-header').find('span.item-hidden_val').data('val'); 
+                app.deleteStorage(data);
+            }
+        }); 
+    },
  
 >>>>>>> Moikzz
     //------------------------------------------------------------------------///
@@ -159,6 +187,7 @@ var app = {
         app.data_country();  
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         if($('body').hasClass('search-page'))
             app.listings_view_details();  
         
@@ -166,6 +195,9 @@ var app = {
             app.items_in_cart();  
        
 =======
+=======
+        app.listings_view_details();
+>>>>>>> Updated
      
 >>>>>>> Moikzz
     }
