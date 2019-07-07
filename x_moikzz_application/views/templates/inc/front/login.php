@@ -43,7 +43,7 @@
     <!-- Main wrapper - style you can find in pages.scss -->
     <!-- ============================================================== -->
     <section id="wrapper">
-        <div class="login-register" style="background-image:url('<?=imgs_dir('backgrounds/login-register-bg.jpg')?>');">
+        <div class="login-register" style="background-image:url('<?=imgs_dir('backgrounds/login-register.jpg')?>');">
             <div class="login-box card">
                 <div class="card-body">
                     <form class="form-horizontal form-material form-login" id="loginform" method="post">

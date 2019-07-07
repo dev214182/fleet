@@ -73,7 +73,7 @@ class Pages extends CI_Controller{
     } 
     private function search(){ 
          
-        $this->filter = array('');
+        $this->filter = array('select2');
         $this->page = 'listings';
         $this->bodyClass = 'm-listingsTwo search-page';
         $this->display('truck listing');

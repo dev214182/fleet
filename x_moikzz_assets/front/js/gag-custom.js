@@ -23,6 +23,34 @@ var app = {
               });
         }
     }, 
+
+    listings_view_details: function(){
+        $('body').on('click', '.listing-details', function(e){
+            e.preventDefault();
+             var t = e.target;
+            $(this).parents('.b-items__cars-one').find('.additional-notes').toggle(200, function(){
+                $(t).html($(this).is(':visible')? 'LESS DETAILS' : 'VIEW DETAILS');
+            });
+        }); 
+
+        var items = []; 
+        
+        $('body').on('click','.add-cart', function(e){ 
+
+            if($(this).is(':checked')){
+                
+                // add to localStorage
+                var data = $(this).parents('.b-items__cars-one-info-header').find('span.item-hidden_val').data('val');
+                //items = JSON.parse("[" + items + "]");  
+                app.save_item_selection(items, data);
+            }else{
+
+                //remove from localStorage
+                var data = $(this).parents('.b-items__cars-one-info-header').find('span.item-hidden_val').data('val'); 
+                app.deleteStorage(data);
+            }
+        }); 
+    },
  
     //------------------------------------------------------------------------///
     init: function () {    
@@ -30,6 +58,7 @@ var app = {
         // country function
         app.data_country();  
 
+        app.listings_view_details();
      
     }
 }; 
