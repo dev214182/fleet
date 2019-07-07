@@ -13,7 +13,7 @@
             });
     });
 
-    $(document).bind("keydown", function(e){
+    $(document).bind("keydown", function(e){ 
         if(e.ctrlKey && e.keyCode == 80){
         e.preventDefault(); 
             printing();
@@ -34,3 +34,340 @@
     }
     </script>
 <?php } ?>
+
+<?php if(@$filter_css_js && in_array('formpicker', $filter_css_js)){ ?> 
+   <script src="<?=plugins_dir('moment/moment.js')?>"></script>
+   <script src="<?=plugins_dir('bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js')?>" type="text/javascript"></script>
+   <script src="<?=plugins_dir('select2/dist/js/select2.full.min.js')?>" type="text/javascript"></script>
+ 
+   <script type="text/javascript">
+    $('#input_origin_date').bootstrapMaterialDatePicker({ weekStart: 0, time: false });
+   $('#input_destination_date').bootstrapMaterialDatePicker({ weekStart: 0, time: false });
+    //1st part- making sure only numbers are typed
+    function isNumberKey(evt){
+        var charCode = (evt.which) ? evt.which : event.keyCode
+        if (charCode > 31 && (charCode < 48 || charCode > 57))
+    return false;
+        return true;
+    }    
+    //*ends - allowing only numbers
+    $(".select2").select2();
+    </script>
+<?php } ?>
+<?php if(@$filter_css_js && in_array('ckeditor', $filter_css_js)){ ?> 
+  <!-- CKeditor -->  
+    <script src="<?=base_url()?>ckeditor/ckeditor.js"></script>
+ 
+    <script type="text/javascript">
+        window.___c='examples';
+          
+             ! function(t, e) {
+           "use strict";
+       
+           function r(r, a, i, u, l) {
+               function f() {
+                   L = t.devicePixelRatio > 1, i = c(i), a.delay >= 0 && setTimeout(function() {
+                       s(!0)
+                   }, a.delay), (a.delay < 0 || a.combined) && (u.e = v(a.throttle, function(t) {
+                       "resize" === t.type && (w = B = -1), s(t.all)
+                   }), u.a = function(t) {
+                       t = c(t), i.push.apply(i, t)
+                   }, u.g = function() {
+                       return i = n(i).filter(function() {
+                           return !n(this).data(a.loadedName)
+                       })
+                   }, u.f = function(t) {
+                       for (var e = 0; e < t.length; e++) {
+                           var r = i.filter(function() {
+                               return this === t[e]
+                           });
+                           r.length && s(!1, r)
+                       }
+                   }, s(), n(a.appendScroll).on("scroll." + l + " resize." + l, u.e))
+               }
+       
+               function c(t) {
+                   var i = a.defaultImage,
+                       o = a.placeholder,
+                       u = a.imageBase,
+                       l = a.srcsetAttribute,
+                       f = a.loaderAttribute,
+                       c = a._f || {};
+                   t = n(t).filter(function() {
+                       var t = n(this),
+                           r = m(this);
+                       return !t.data(a.handledName) && (t.attr(a.attribute) || t.attr(l) || t.attr(f) || c[r] !== e)
+                   }).data("plugin_" + a.name, r);
+                   for (var s = 0, d = t.length; s < d; s++) {
+                       var A = n(t[s]),
+                           g = m(t[s]),
+                           h = A.attr(a.imageBaseAttribute) || u;
+                       g === N && h && A.attr(l) && A.attr(l, b(A.attr(l), h)), c[g] === e || A.attr(f) || A.attr(f, c[g]), g === N && i && !A.attr(E) ? A.attr(E, i) : g === N || !o || A.css(O) && "none" !== A.css(O) || A.css(O, "url('" + o + "')")
+                   }
+                   return t
+               }
+       
+               function s(t, e) {
+                   if (!i.length) return void(a.autoDestroy && r.destroy());
+                   for (var o = e || i, u = !1, l = a.imageBase || "", f = a.srcsetAttribute, c = a.handledName, s = 0; s < o.length; s++)
+                       if (t || e || A(o[s])) {
+                           var g = n(o[s]),
+                               h = m(o[s]),
+                               b = g.attr(a.attribute),
+                               v = g.attr(a.imageBaseAttribute) || l,
+                               p = g.attr(a.loaderAttribute);
+                           g.data(c) || a.visibleOnly && !g.is(":visible") || !((b || g.attr(f)) && (h === N && (v + b !== g.attr(E) || g.attr(f) !== g.attr(F)) || h !== N && v + b !== g.css(O)) || p) || (u = !0, g.data(c, !0), d(g, h, v, p))
+                       }
+                   u && (i = n(i).filter(function() {
+                       return !n(this).data(c)
+                   }))
+               }
+       
+               function d(t, e, r, i) {
+                   ++z;
+                   var o = function() {
+                       y("onError", t), p(), o = n.noop
+                   };
+                   y("beforeLoad", t);
+                   var u = a.attribute,
+                       l = a.srcsetAttribute,
+                       f = a.sizesAttribute,
+                       c = a.retinaAttribute,
+                       s = a.removeAttribute,
+                       d = a.loadedName,
+                       A = t.attr(c);
+                   if (i) {
+                       var g = function() {
+                           s && t.removeAttr(a.loaderAttribute), t.data(d, !0), y(T, t), setTimeout(p, 1), g = n.noop
+                       };
+                       t.off(I).one(I, o).one(D, g), y(i, t, function(e) {
+                           e ? (t.off(D), g()) : (t.off(I), o())
+                       }) || t.trigger(I)
+                   } else {
+                       var h = n(new Image);
+                       h.one(I, o).one(D, function() {
+                           t.hide(), e === N ? t.attr(C, h.attr(C)).attr(F, h.attr(F)).attr(E, h.attr(E)) : t.css(O, "url('" + h.attr(E) + "')"), t[a.effect](a.effectTime), s && (t.removeAttr(u + " " + l + " " + c + " " + a.imageBaseAttribute), f !== C && t.removeAttr(f)), t.data(d, !0), y(T, t), h.remove(), p()
+                       });
+                       var m = (L && A ? A : t.attr(u)) || "";
+                       h.attr(C, t.attr(f)).attr(F, t.attr(l)).attr(E, m ? r + m : null), h.complete && h.trigger(D)
+                   }
+               }
+       
+               function A(t) {
+                   var e = t.getBoundingClientRect(),
+                       r = a.scrollDirection,
+                       n = a.threshold,
+                       i = h() + n > e.top && -n < e.bottom,
+                       o = g() + n > e.left && -n < e.right;
+                   return "vertical" === r ? i : "horizontal" === r ? o : i && o
+               }
+       
+               function g() {
+                   return w >= 0 ? w : w = n(t).width()
+               }
+       
+               function h() {
+                   return B >= 0 ? B : B = n(t).height()
+               }
+       
+               function m(t) {
+                   return t.tagName.toLowerCase()
+               }
+       
+               function b(t, e) {
+                   if (e) {
+                       var r = t.split(",");
+                       t = "";
+                       for (var a = 0, n = r.length; a < n; a++) t += e + r[a].trim() + (a !== n - 1 ? "," : "")
+                   }
+                   return t
+               }
+       
+               function v(t, e) {
+                   var n, i = 0;
+                   return function(o, u) {
+                       function l() {
+                           i = +new Date, e.call(r, o)
+                       }
+                       var f = +new Date - i;
+                       n && clearTimeout(n), f > t || !a.enableThrottle || u ? l() : n = setTimeout(l, t - f)
+                   }
+               }
+       
+               function p() {
+                   --z, i.length || z || y("onFinishedAll")
+               }
+       
+               function y(t, e, n) {
+                   return !!(t = a[t]) && (t.apply(r, [].slice.call(arguments, 1)), !0)
+               }
+               var z = 0,
+                   w = -1,
+                   B = -1,
+                   L = !1,
+                   T = "afterLoad",
+                   D = "load",
+                   I = "error",
+                   N = "img",
+                   E = "src",
+                   F = "srcset",
+                   C = "sizes",
+                   O = "background-image";
+               "event" === a.bind || o ? f() : n(t).on(D + "." + l, f)
+           }
+       
+           function a(a, o) {
+               var u = this,
+                   l = n.extend({}, u.config, o),
+                   f = {},
+                   c = l.name + "-" + ++i;
+               return u.config = function(t, r) {
+                   return r === e ? l[t] : (l[t] = r, u)
+               }, u.addItems = function(t) {
+                   return f.a && f.a("string" === n.type(t) ? n(t) : t), u
+               }, u.getItems = function() {
+                   return f.g ? f.g() : {}
+               }, u.update = function(t) {
+                   return f.e && f.e({}, !t), u
+               }, u.force = function(t) {
+                   return f.f && f.f("string" === n.type(t) ? n(t) : t), u
+               }, u.loadAll = function() {
+                   return f.e && f.e({
+                       all: !0
+                   }, !0), u
+               }, u.destroy = function() {
+                   return n(l.appendScroll).off("." + c, f.e), n(t).off("." + c), f = {}, e
+               }, r(u, l, a, f, c), l.chainable ? a : u
+           }
+           var n = t.jQuery || t.Zepto,
+               i = 0,
+               o = !1;
+           n.fn.Lazy = n.fn.lazy = function(t) {
+               return new a(this, t)
+           }, n.Lazy = n.lazy = function(t, r, i) {
+               if (n.isFunction(r) && (i = r, r = []), n.isFunction(i)) {
+                   t = n.isArray(t) ? t : [t], r = n.isArray(r) ? r : [r];
+                   for (var o = a.prototype.config, u = o._f || (o._f = {}), l = 0, f = t.length; l < f; l++)(o[t[l]] === e || n.isFunction(o[t[l]])) && (o[t[l]] = i);
+                   for (var c = 0, s = r.length; c < s; c++) u[r[c]] = t[0]
+               }
+           }, a.prototype.config = {
+               name: "lazy",
+               chainable: !0,
+               autoDestroy: !0,
+               bind: "load",
+               threshold: 500,
+               visibleOnly: !1,
+               appendScroll: t,
+               scrollDirection: "both",
+               imageBase: null,
+               defaultImage: "data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==",
+               placeholder: null,
+               delay: -1,
+               combined: !1,
+               attribute: "data-src",
+               srcsetAttribute: "data-srcset",
+               sizesAttribute: "data-sizes",
+               retinaAttribute: "data-retina",
+               loaderAttribute: "data-loader",
+               imageBaseAttribute: "data-imagebase",
+               removeAttribute: !0,
+               handledName: "handled",
+               loadedName: "loaded",
+               effect: "show",
+               effectTime: 0,
+               enableThrottle: !0,
+               throttle: 250,
+               beforeLoad: e,
+               afterLoad: e,
+               onError: e,
+               onFinishedAll: e
+           }, n(t).on("load", function() {
+               o = !0
+           })
+       }(window);
+
+      
+/* http://prismjs.com/download.html?themes=prism&languages=markup+css+clike+javascript+bash */
+var _self="undefined"!=typeof window?window:"undefined"!=typeof WorkerGlobalScope&&self instanceof WorkerGlobalScope?self:{},Prism=function(){var e=/\blang(?:uage)?-(?!\*)(\w+)\b/i,t=_self.Prism={util:{encode:function(e){return e instanceof n?new n(e.type,t.util.encode(e.content),e.alias):"Array"===t.util.type(e)?e.map(t.util.encode):e.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/\u00a0/g," ")},type:function(e){return Object.prototype.toString.call(e).match(/\[object (\w+)\]/)[1]},clone:function(e){var n=t.util.type(e);switch(n){case"Object":var a={};for(var r in e)e.hasOwnProperty(r)&&(a[r]=t.util.clone(e[r]));return a;case"Array":return e.map&&e.map(function(e){return t.util.clone(e)})}return e}},languages:{extend:function(e,n){var a=t.util.clone(t.languages[e]);for(var r in n)a[r]=n[r];return a},insertBefore:function(e,n,a,r){r=r||t.languages;var l=r[e];if(2==arguments.length){a=arguments[1];for(var i in a)a.hasOwnProperty(i)&&(l[i]=a[i]);return l}var o={};for(var s in l)if(l.hasOwnProperty(s)){if(s==n)for(var i in a)a.hasOwnProperty(i)&&(o[i]=a[i]);o[s]=l[s]}return t.languages.DFS(t.languages,function(t,n){n===r[e]&&t!=e&&(this[t]=o)}),r[e]=o},DFS:function(e,n,a){for(var r in e)e.hasOwnProperty(r)&&(n.call(e,r,e[r],a||r),"Object"===t.util.type(e[r])?t.languages.DFS(e[r],n):"Array"===t.util.type(e[r])&&t.languages.DFS(e[r],n,r))}},plugins:{},highlightAll:function(e,n){for(var a,r=document.querySelectorAll('code[class*="language-"], [class*="language-"] code, code[class*="lang-"], [class*="lang-"] code'),l=0;a=r[l++];)t.highlightElement(a,e===!0,n)},highlightElement:function(n,a,r){for(var l,i,o=n;o&&!e.test(o.className);)o=o.parentNode;o&&(l=(o.className.match(e)||[,""])[1],i=t.languages[l]),n.className=n.className.replace(e,"").replace(/\s+/g," ")+" language-"+l,o=n.parentNode,/pre/i.test(o.nodeName)&&(o.className=o.className.replace(e,"").replace(/\s+/g," ")+" language-"+l);var s=n.textContent,u={element:n,language:l,grammar:i,code:s};if(!s||!i)return t.hooks.run("complete",u),void 0;if(t.hooks.run("before-highlight",u),a&&_self.Worker){var g=new Worker(t.filename);g.onmessage=function(e){u.highlightedCode=e.data,t.hooks.run("before-insert",u),u.element.innerHTML=u.highlightedCode,r&&r.call(u.element),t.hooks.run("after-highlight",u),t.hooks.run("complete",u)},g.postMessage(JSON.stringify({language:u.language,code:u.code,immediateClose:!0}))}else u.highlightedCode=t.highlight(u.code,u.grammar,u.language),t.hooks.run("before-insert",u),u.element.innerHTML=u.highlightedCode,r&&r.call(n),t.hooks.run("after-highlight",u),t.hooks.run("complete",u)},highlight:function(e,a,r){var l=t.tokenize(e,a);return n.stringify(t.util.encode(l),r)},tokenize:function(e,n){var a=t.Token,r=[e],l=n.rest;if(l){for(var i in l)n[i]=l[i];delete n.rest}e:for(var i in n)if(n.hasOwnProperty(i)&&n[i]){var o=n[i];o="Array"===t.util.type(o)?o:[o];for(var s=0;s<o.length;++s){var u=o[s],g=u.inside,c=!!u.lookbehind,f=0,h=u.alias;u=u.pattern||u;for(var p=0;p<r.length;p++){var d=r[p];if(r.length>e.length)break e;if(!(d instanceof a)){u.lastIndex=0;var m=u.exec(d);if(m){c&&(f=m[1].length);var y=m.index-1+f,m=m[0].slice(f),v=m.length,k=y+v,b=d.slice(0,y+1),w=d.slice(k+1),P=[p,1];b&&P.push(b);var A=new a(i,g?t.tokenize(m,g):m,h);P.push(A),w&&P.push(w),Array.prototype.splice.apply(r,P)}}}}}return r},hooks:{all:{},add:function(e,n){var a=t.hooks.all;a[e]=a[e]||[],a[e].push(n)},run:function(e,n){var a=t.hooks.all[e];if(a&&a.length)for(var r,l=0;r=a[l++];)r(n)}}},n=t.Token=function(e,t,n){this.type=e,this.content=t,this.alias=n};if(n.stringify=function(e,a,r){if("string"==typeof e)return e;if("Array"===t.util.type(e))return e.map(function(t){return n.stringify(t,a,e)}).join("");var l={type:e.type,content:n.stringify(e.content,a,r),tag:"span",classes:["token",e.type],attributes:{},language:a,parent:r};if("comment"==l.type&&(l.attributes.spellcheck="true"),e.alias){var i="Array"===t.util.type(e.alias)?e.alias:[e.alias];Array.prototype.push.apply(l.classes,i)}t.hooks.run("wrap",l);var o="";for(var s in l.attributes)o+=(o?" ":"")+s+'="'+(l.attributes[s]||"")+'"';return"<"+l.tag+' class="'+l.classes.join(" ")+'" '+o+">"+l.content+"</"+l.tag+">"},!_self.document)return _self.addEventListener?(_self.addEventListener("message",function(e){var n=JSON.parse(e.data),a=n.language,r=n.code,l=n.immediateClose;_self.postMessage(t.highlight(r,t.languages[a],a)),l&&_self.close()},!1),_self.Prism):_self.Prism;var a=document.getElementsByTagName("script");return a=a[a.length-1],a&&(t.filename=a.src,document.addEventListener&&!a.hasAttribute("data-manual")&&document.addEventListener("DOMContentLoaded",t.highlightAll)),_self.Prism}();"undefined"!=typeof module&&module.exports&&(module.exports=Prism),"undefined"!=typeof global&&(global.Prism=Prism);
+Prism.languages.markup={comment:/<!--[\w\W]*?-->/,prolog:/<\?[\w\W]+?\?>/,doctype:/<!DOCTYPE[\w\W]+?>/,cdata:/<!\[CDATA\[[\w\W]*?]]>/i,tag:{pattern:/<\/?[^\s>\/=.]+(?:\s+[^\s>\/=]+(?:=(?:("|')(?:\\\1|\\?(?!\1)[\w\W])*\1|[^\s'">=]+))?)*\s*\/?>/i,inside:{tag:{pattern:/^<\/?[^\s>\/]+/i,inside:{punctuation:/^<\/?/,namespace:/^[^\s>\/:]+:/}},"attr-value":{pattern:/=(?:('|")[\w\W]*?(\1)|[^\s>]+)/i,inside:{punctuation:/[=>"']/}},punctuation:/\/?>/,"attr-name":{pattern:/[^\s>\/]+/,inside:{namespace:/^[^\s>\/:]+:/}}}},entity:/&#?[\da-z]{1,8};/i},Prism.hooks.add("wrap",function(a){"entity"===a.type&&(a.attributes.title=a.content.replace(/&amp;/,"&"))}),Prism.languages.xml=Prism.languages.markup,Prism.languages.html=Prism.languages.markup,Prism.languages.mathml=Prism.languages.markup,Prism.languages.svg=Prism.languages.markup;
+Prism.languages.css={comment:/\/\*[\w\W]*?\*\//,atrule:{pattern:/@[\w-]+?.*?(;|(?=\s*\{))/i,inside:{rule:/@[\w-]+/}},url:/url\((?:(["'])(\\(?:\r\n|[\w\W])|(?!\1)[^\\\r\n])*\1|.*?)\)/i,selector:/[^\{\}\s][^\{\};]*?(?=\s*\{)/,string:/("|')(\\(?:\r\n|[\w\W])|(?!\1)[^\\\r\n])*\1/,property:/(\b|\B)[\w-]+(?=\s*:)/i,important:/\B!important\b/i,"function":/[-a-z0-9]+(?=\()/i,punctuation:/[(){};:]/},Prism.languages.css.atrule.inside.rest=Prism.util.clone(Prism.languages.css),Prism.languages.markup&&(Prism.languages.insertBefore("markup","tag",{style:{pattern:/<style[\w\W]*?>[\w\W]*?<\/style>/i,inside:{tag:{pattern:/<style[\w\W]*?>|<\/style>/i,inside:Prism.languages.markup.tag.inside},rest:Prism.languages.css},alias:"language-css"}}),Prism.languages.insertBefore("inside","attr-value",{"style-attr":{pattern:/\s*style=("|').*?\1/i,inside:{"attr-name":{pattern:/^\s*style/i,inside:Prism.languages.markup.tag.inside},punctuation:/^\s*=\s*['"]|['"]\s*$/,"attr-value":{pattern:/.+/i,inside:Prism.languages.css}},alias:"language-css"}},Prism.languages.markup.tag));
+Prism.languages.clike={comment:[{pattern:/(^|[^\\])\/\*[\w\W]*?\*\//,lookbehind:!0},{pattern:/(^|[^\\:])\/\/.*/,lookbehind:!0}],string:/(["'])(\\(?:\r\n|[\s\S])|(?!\1)[^\\\r\n])*\1/,"class-name":{pattern:/((?:\b(?:class|interface|extends|implements|trait|instanceof|new)\s+)|(?:catch\s+\())[a-z0-9_\.\\]+/i,lookbehind:!0,inside:{punctuation:/(\.|\\)/}},keyword:/\b(if|else|while|do|for|return|in|instanceof|function|new|try|throw|catch|finally|null|break|continue)\b/,"boolean":/\b(true|false)\b/,"function":/[a-z0-9_]+(?=\()/i,number:/\b-?(?:0x[\da-f]+|\d*\.?\d+(?:e[+-]?\d+)?)\b/i,operator:/--?|\+\+?|!=?=?|<=?|>=?|==?=?|&&?|\|\|?|\?|\*|\/|~|\^|%/,punctuation:/[{}[\];(),.:]/};
+Prism.languages.javascript=Prism.languages.extend("clike",{keyword:/\b(as|async|await|break|case|catch|class|const|continue|debugger|default|delete|do|else|enum|export|extends|false|finally|for|from|function|get|if|implements|import|in|instanceof|interface|let|new|null|of|package|private|protected|public|return|set|static|super|switch|this|throw|true|try|typeof|var|void|while|with|window|yield)\b/,number:/\b-?(0x[\dA-Fa-f]+|0b[01]+|0o[0-7]+|\d*\.?\d+([Ee][+-]?\d+)?|NaN|Infinity)\b/,"function":/[_$a-zA-Z\xA0-\uFFFF][_$a-zA-Z0-9\xA0-\uFFFF]*(?=\()/i}),Prism.languages.insertBefore("javascript","keyword",{regex:{pattern:/(^|[^/])\/(?!\/)(\[.+?]|\\.|[^/\\\r\n])+\/[gimyu]{0,5}(?=\s*($|[\r\n,.;})]))/,lookbehind:!0}}),Prism.languages.insertBefore("javascript","class-name",{"template-string":{pattern:/`(?:\\`|\\?[^`])*`/,inside:{interpolation:{pattern:/\$\{[^}]+\}/,inside:{"interpolation-punctuation":{pattern:/^\$\{|\}$/,alias:"punctuation"},rest:Prism.languages.javascript}},string:/[\s\S]+/}}}),Prism.languages.markup&&Prism.languages.insertBefore("markup","tag",{script:{pattern:/<script[\w\W]*?>[\w\W]*?<\/script>/i,inside:{tag:{pattern:/<script[\w\W]*?>|<\/script>/i,inside:Prism.languages.markup.tag.inside},rest:Prism.languages.javascript},alias:"language-javascript"}}),Prism.languages.js=Prism.languages.javascript;
+Prism.languages.bash=Prism.languages.extend("clike",{comment:{pattern:/(^|[^"{\\])#.*/,lookbehind:!0},string:{pattern:/("|')(\\?[\s\S])*?\1/,inside:{property:/\$([a-zA-Z0-9_#\?\-\*!@]+|\{[^\}]+\})/}},number:{pattern:/([^\w\.])-?(0x[\dA-Fa-f]+|\d*\.?\d+([Ee]-?\d+)?)\b/,lookbehind:!0},"function":/\b(?:alias|npm|bower|apropos|apt-get|aptitude|aspell|awk|basename|bash|bc|bg|builtin|bzip2|cal|cat|cd|cfdisk|chgrp|chmod|chown|chroot|chkconfig|cksum|clear|cmp|comm|command|cp|cron|crontab|csplit|cut|date|dc|dd|ddrescue|df|diff|diff3|dig|dir|dircolors|dirname|dirs|dmesg|du|egrep|eject|enable|env|ethtool|eval|exec|expand|expect|export|expr|fdformat|fdisk|fg|fgrep|file|find|fmt|fold|format|free|fsck|ftp|fuser|gawk|getopts|git|grep|groupadd|groupdel|groupmod|groups|gzip|hash|head|help|hg|history|hostname|htop|iconv|id|ifconfig|ifdown|ifup|import|install|jobs|join|kill|killall|less|link|ln|locate|logname|logout|look|lpc|lpr|lprint|lprintd|lprintq|lprm|ls|lsof|make|man|mkdir|mkfifo|mkisofs|mknod|more|most|mount|mtools|mtr|mv|mmv|nano|netstat|nice|nl|nohup|notify-send|nslookup|open|op|passwd|paste|pathchk|ping|pkill|popd|pr|printcap|printenv|printf|ps|pushd|pv|pwd|quota|quotacheck|quotactl|ram|rar|rcp|read|readarray|readonly|reboot|rename|renice|remsync|rev|rm|rmdir|rsync|screen|scp|sdiff|sed|seq|service|sftp|shift|shopt|shutdown|sleep|slocate|sort|source|split|ssh|stat|strace|su|sudo|sum|suspend|sync|tail|tar|tee|test|time|timeout|times|touch|top|traceroute|trap|tr|tsort|tty|type|ulimit|umask|umount|unalias|uname|unexpand|uniq|units|unrar|unshar|uptime|useradd|userdel|usermod|users|uuencode|uudecode|v|vdir|vi|vmstat|wait|watch|wc|wget|whereis|which|who|whoami|write|xargs|xdg-open|yes|zip)\b/,keyword:/\b(npm|bower|if|then|else|elif|fi|for|break|continue|while|in|case|function|select|do|done|until|echo|exit|return|set|declare)\b/}),Prism.languages.insertBefore("bash","keyword",{property:/\$([a-zA-Z0-9_#\?\-\*!@]+|\{[^}]+\})/}),Prism.languages.insertBefore("bash","comment",{important:/^#!\s*\/bin\/bash|^#!\s*\/bin\/sh/});
+
+    /* jquery-config.js */
+function strPad(a,e,s){for(a=""+a;e.length<=s;)e+=e;return e.substring(0,s-a.length)+a}function stripTime(a){return a?a.split("?t")[0]:null}$(function(){$("body").scrollspy({target:"#header",offset:400}),$(window).bind("scroll",function(){var a="home"==___c?70:30;$(window).scrollTop()>a?$("#header").addClass("navbar-fixed-top"):$("#header").removeClass("navbar-fixed-top")}).scroll(),$("header nav .dropdown a i").click(function(a){a.preventDefault();var e=$(this).parent().parent();return e.hasClass("open")?($(".dropdown-menu",e).stop(!0,!0).fadeOut("fast"),e.removeClass("open"),$("a i",e).removeClass("fa-caret-up").addClass("fa-caret-down")):($(".dropdown-menu",e).stop(!0,!0).fadeIn("fast"),e.addClass("open"),$("a i",e).removeClass("fa-caret-down").addClass("fa-caret-up")),!1}),$("header nav .dropdown-menu a").click(function(){var a=$("header nav .dropdown");$(".dropdown-menu",a).stop(!0,!0).fadeOut("fast"),a.removeClass("open"),$("a i",a).removeClass("fa-caret-up").addClass("fa-caret-down")}),$("a.scrollto").on("click",function(a){var e=this.hash,s=$(".navbar-collapse");a.preventDefault(),$("body").scrollTo(e,800,{offset:-69,axis:"y",easing:"easeOutQuad"}),s.hasClass("in")&&s.removeClass("in").addClass("collapse")})});
+    
+</script>       
+<?php } ?>
+ 
+<?php if(@$filter_css_js && in_array('nested', $filter_css_js)){ ?> 
+<!-- @Mel Scripts -->
+    
+    <!-- Nestable js -->
+    <!-- ============================================================== -->
+    <script src="<?=plugins_dir('nestable/jquery.nestable.js')?>"></script>
+    <script type="text/javascript">    
+    /**
+     * Custom JS - @mel
+     */
+    (function($){ 
+        /**
+         * Add Page - SEO
+         */
+        $( ".text-counter" ).each(function( i, el ){
+            var textInput = $(this).children(".input-text");
+            var textLimit = $(this).children(".input-text").data("limit"); 
+            var textCount = $(this).find(".count-text"); 
+            var textLength = textInput.val().length;
+            // Initiali count that will read the input value
+            textCount.html(textLength);
+            if( textLength > textLimit || textLength == '' ){
+                textCount.addClass("text-danger");
+            }
+            // when Change
+            textInput.keyup(function() {
+                var newTextLength = textInput.val().length;
+                textCount.html(newTextLength);
+                if( newTextLength > textLimit || newTextLength == '' ){
+                    textCount.removeClass("text-success").addClass("text-danger");
+                }else{
+                    textCount.removeClass("text-danger");
+                }
+            });
+        });
+        // Nestable
+        var updateOutput = function(e) {
+            var list = e.length ? e : $(e.target),
+                output = list.data('output');
+            if (window.JSON) {
+                output.val(window.JSON.stringify(list.nestable('serialize')));
+            } else {
+                output.val('JSON browser support required for this demo.');
+            }
+        };
+        var nestable = $('#nestable');
+        if( nestable.length ){
+            $('#nestable').nestable({
+                group: 1
+            }).on('change', updateOutput);
+            
+            updateOutput($('#nestable').data('output', $('#nestable-output'))); 
+            
+            // Add to Navigation
+            $('body').on("click", '.cms-nav-select', function(e){
+                e.preventDefault();
+                var navTitle = $(this).data('navtitle');
+                var id = $(this).data('id');
+                var theSelectedNav = '<li class="dd-item" data-id="'+id+'" data-title="'+navTitle+'"><div class="dd-handle">'+navTitle+'</div><i class="mdi mdi-close float-right cms-nav-remove" style="position:absolute;right:10px;top:10px;cursor:pointer;"></i></li>';
+                $('#cmsSelectedNav').append(theSelectedNav);
+            });            
+            $('body').on('click', '.cms-nav-remove', function(e){
+                e.preventDefault();
+                $(this).parent().remove(); 
+            }); 
+        }
+    })(jQuery);
+    </script>
+    <!-- @Mel Scripts -->
+<?php } ?>  

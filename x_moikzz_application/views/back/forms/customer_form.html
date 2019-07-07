@@ -12,7 +12,7 @@ $profile_license  = 'profile_license';
 
 $profile_username = 'profile_username';
 $profile_types = 'profile_types';
-$puser = array('id' => 'inputUsername', 'placeholder' => '', 'class' => 'form-control', 'required'=> 'required');
+$puser = array('id' => 'inputUsername', 'placeholder' => '', 'class' => 'form-control', 'required'=> 'required', 'autocomplete'=>"username");
 
 $padd = array('id' => 'inputAddress', 'placeholder' => 'Enter Address', 'class' => 'form-control');
 $pcode = array('id' => 'inputLicense', 'placeholder' => 'Enter Trade License', 'class' => 'form-control');
@@ -29,9 +29,9 @@ $pcode = array('id' => 'inputLicense', 'placeholder' => 'Enter Trade License', '
                 <div class="form-row">
                 <div class="col-md-6">
                         <div class="form-group row">
-                            <label for="inputFirst" class="col-sm-3 text-right control-label col-form-label">Name</label>
+                            <label for="inputFirst" class="col-sm-3 label-right control-label col-form-label">Name</label>
                             <div class="col-sm-9">
-                                    <label class="control-label col-form-label" id="inputFirst">Name</label> 
+                                    <label class="control-label col-form-label b-b" id="inputFirst"></label> 
                                 <?php if(@$_GET['id']){  ?>
                                 <input type="hidden" class="hidden" value="<?=$_GET['id']?>" name='userID' required>
                                 <?php } ?>
@@ -39,55 +39,56 @@ $pcode = array('id' => 'inputLicense', 'placeholder' => 'Enter Trade License', '
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="profemail" class="col-sm-3 text-right control-label col-form-label">Email</label>
+                            <label for="profemail" class="col-sm-3 label-right control-label col-form-label">Email</label>
                             <div class="col-sm-9">  
-                                <label class="control-label col-form-label" id="profemail">Email</label> 
+                                    <input hidden type="hidden" id="profemail" class="form-control hidden" name="<?=$profile_email?>">
+                                <label class="control-label col-form-label b-b" id="profemail"></label> 
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="inputPhone" class="col-sm-3 text-right control-label col-form-label">Phone</label>
+                            <label for="inputPhone" class="col-sm-3 label-right control-label col-form-label">Phone</label>
                             <div class="col-sm-9"> 
-                                <label class="control-label col-form-label" id="inputPhone">Phone</label> 
+                                <label class="control-label col-form-label b-b" id="inputPhone"></label> 
                             </div>
                         </div> 
                         <div class="form-group row">
-                            <label for="inputWeb" class="col-sm-3 text-right control-label col-form-label">Company</label>
+                            <label for="inputCompany" class="col-sm-3 label-right control-label col-form-label">Company</label>
                             <div class="col-sm-9">
-                                    <label class="control-label col-form-label" id="inputWeb">Company</label> 
+                                    <label class="control-label col-form-label b-b" id="inputCompany"></label> 
                             </div>  
                         </div>  
                        
                     </div>
                     <div class="col-md-6">
                     <div class="form-group row">
-                            <label for="inputCountry" class="col-sm-3 text-right control-label col-form-label">Country</label>
-                            <div class="col-sm-9">
-                                    <label class="control-label col-form-label" id="inputCountry">Country</label> 
+                            <label for="inputCountry" class="col-sm-3 label-right control-label col-form-label">Country</label>
+                            <div class="col-sm-9 b-b">
+                                    <label class="control-label col-form-label " id="inputCountry"></label> 
                             </div>
                         </div> 
                         <div class="form-group row">
-                            <label for="inputState" class="col-sm-3 text-right control-label col-form-label">State</label>
+                            <label for="inputState" class="col-sm-3 label-right control-label col-form-label">State</label>
                           
-                            <div class="col-sm-9">
-                                    <label class="control-label col-form-label" id="inputState">State</label> 
+                            <div class="col-sm-9 b-b">
+                                    <label class="control-label col-form-label " id="inputState"></label> 
                             </div>
                         </div>  
                         <div class="form-group row">
-                            <label for="inputAddress" class="col-sm-3 text-right control-label col-form-label">Address</label>
-                            <div class="col-sm-9"> 
-                                <label class="control-label col-form-label" id="inputAddress">Address</label>
+                            <label for="inputAddress" class="col-sm-3 label-right control-label col-form-label">Address</label>
+                            <div class="col-sm-9 b-b"> 
+                                <label class="control-label col-form-label " id="inputAddress"></label>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="inputpostal" class="col-sm-3 text-right control-label col-form-label">Trade License</label>
-                            <div class="col-sm-9">
-                                <label class="control-label col-form-label" id="inputpostal">Trade License</label>
+                            <label for="inputLicense" class="col-sm-3 label-right control-label col-form-label">Trade License</label>
+                            <div class="col-sm-9 b-b">
+                                <label class="control-label col-form-label " id="inputLicense"></label>
                             </div> 
                         </div>
                         <div class="form-group row">
-                            <label for="inputvat" class="col-sm-3 text-right control-label col-form-label">VAT Registration</label>
-                            <div class="col-sm-9">
-                                <label class="control-label col-form-label b-b" id="inputvat">VAT Registration</label>
+                            <label for="inputvat" class="col-sm-3 label-right control-label col-form-label">VAT Registration</label>
+                            <div class="col-sm-9 b-b">
+                                <label class="control-label col-form-label " id="inputvat"></label>
                             </div> 
                         </div>
                     </div> 
@@ -107,18 +108,27 @@ $pcode = array('id' => 'inputLicense', 'placeholder' => 'Enter Trade License', '
                                     <?php } ?>
                                     </div> 
 
-                                    <label class="col-xl-1 col-md-6 col-sm-12 control-label col-form-label text-right">Type</label>
+                                    <label class="col-xl-1 col-md-6 col-sm-12 control-label col-form-label label-right">Access</label>
                                     <div class="col-xl-2 col-md-6 col-sm-12"> 
                                         <select class="form-control" id="user_types" name="<?=$profile_types?>" required> 
                                             <option value="2">Administrator</option>
                                             <option value="3">Editor</option>
                                             <option value="4">SEO Editor</option>
                                             <option value="5">Staff</option>
-                                            <option value="6" >Client</option>
+                                            <option value="6" >Customer</option>
                                         </select>
                                     </div> 
 
-                                    <label class="col-xl-1 col-md-6 col-sm-12 control-label col-form-label text-right">Status</label>
+                                    <label class="col-xl-1 col-md-6 col-sm-12 control-label col-form-label label-right">Type</label>
+                                    <div class="col-xl-2 col-md-6 col-sm-12"> 
+                                        <select class="form-control" id="customer_types" name="customer_types" required> 
+                                            <option value="19">Normal</option>
+                                            <option value="20">Advance</option>
+                                            <option value="21">Premium</option> 
+                                        </select>
+                                    </div>
+
+                                    <label class="col-xl-1 col-md-6 col-sm-12 control-label col-form-label label-right">Status</label>
                                     <div class="col-xl-2 col-md-6 col-sm-12"> 
                                         <select class="form-control" id="user_status" name="profile_status" required> 
                                             <option value="9">Published</option>
@@ -137,6 +147,7 @@ $pcode = array('id' => 'inputLicense', 'placeholder' => 'Enter Trade License', '
                         
                         <input type="hidden" hidden class="hidden" id="old_user_types"   name='old_profile_types'>
                         <input type="hidden" hidden class="hidden" id="old_user_status"   name='old_profile_status'> 
+                        <input type="hidden" hidden class="hidden" id="old_customer_types"   name='old_customer_types'> 
                         <?php } ?>
                           
                     </div>

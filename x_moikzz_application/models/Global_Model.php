@@ -152,12 +152,9 @@ Class Global_Model extends SS_Model {
     }
 
   function new_batch_data($t,$data) {
-    $this->table_name = $t;
-
-    $id = $this->insert_batch_data($data);
-
-    return $id;
-
+      $this->table_name = $t; 
+      $id = $this->insert_batch_data($data); 
+      return $id; 
   }
 
   function get_title($t,$where,$fields){ 
@@ -168,23 +165,15 @@ Class Global_Model extends SS_Model {
   }
 
   function data_update_batch($t,$data,$id) {
-    $this->table_name = $t; 
-
-    $id = $this->update_batch_data($data,$id);
-
-    return $id;
-
-  } 
-  
-  
+      $this->table_name = $t;
+      $id = $this->update_batch_data($data,$id); 
+      return $id;
+  }  
 
 	function insert_data($t,$data) {
-    $this->table_name = $t; 
-
-    $id = $this->new_single_insert($data);
-
-    return $id;
-
+    $this->table_name = $t;  
+    $id = $this->new_single_insert($data); 
+    return $id; 
   }
   
   function remove_data( $t, $whr) {   

@@ -55,7 +55,7 @@ class General_callbacks extends SS_Controller {
     * $_GET['s'] for parent ID
     * $_GET['x'] for  organization type ( school = sc / company = comp / department = dept / division = div / section = sec / grade etc...)
     */
-    protected $userID = 2; // need to change to login user - temporary only
+     
     function __construct(){  
         parent::__construct(); 
         $this->load->helper('url'); 
@@ -70,7 +70,7 @@ class General_callbacks extends SS_Controller {
 
     public function view($page='404'){ 
 
-        $key = '2zSM*(sOGkVs193201971Jq)Sk0*^%skdjDs3051Fz4AKz821Pq7053atK';//public_key();
+        $key = public_key();
         
         if(@$_GET['k'] == $key/*  && $this->input->is_ajax_request() */){
             if (!method_exists($this, $page)){
@@ -93,12 +93,116 @@ class General_callbacks extends SS_Controller {
         return $this->{$this->data_pages}();
     }
 
+     /* New/Update Truck Fleet */
+     private function admin_settings(){
+        header('Content-type: application/json; charset=utf-8');
+        $success = false;
+        
+        $msg = 'Error: Something wrong on submittion...';
+      
+        $sys_site_email         = @$this->input->post('sys_site_email');
+        $sys_site_title         = @$this->input->post('sys_site_title');
+
+        if(!$sys_site_email || !$sys_site_title){
+            echo json_encode(array('success'=>$success,'message' => 'Site Title and Admin Email is required!')); 
+            return;
+        }
+       
+        $sys_site_description       = @$this->input->post('sys_site_description'); 
+        $sys_site_register          = @$this->input->post('sys_site_register');
+        $sys_site_language          = @$this->input->post('sys_site_language');
+
+        $sys_logo                   = @$this->input->post('sys_logo');
+        $sys_icon                   = @$this->input->post('sys_icon');
+        
+        $sys_site_meta_title       = @$this->input->post('sys_site_meta_title');
+        $sys_site_meta_description = @$this->input->post('sys_site_meta_description');
+        $sys_site_meta_keyword     = @$this->input->post('sys_site_meta_keyword');
+        $sys_site_script           = @$this->input->post('sys_site_script');
+
+        $sys_normal_pricing        = @$this->input->post('sys_normal_pricing');
+        $sys_advance_pricing       = @$this->input->post('sys_advance_pricing');
+        $sys_premium_pricing       = @$this->input->post('sys_premium_pricing');
+
+        $sys_social_fb              = @$this->input->post('sys_social_fb');
+        $sys_social_instagram       = @$this->input->post('sys_social_instagram');
+        $sys_social_twitter         = @$this->input->post('sys_social_twitter');
+        $sys_social_linkedin        = @$this->input->post('sys_social_linkedin');
+        
+        if($sys_logo && $sys_icon){
+            $fields_total = array('site_title','site_content','users_can_register','admin_email','site_logo','site_icon','site_meta_title','site_meta_desc','site_meta_keywords','site_analytics','site_language_default',
+            'n_pricing','a_pricing','p_pricing', 'social_fb', 'social_insta', 'social_linkedin', 'social_twitter');
+            
+            $fields = array($sys_site_title, $sys_site_description, $sys_site_register, $sys_site_email, $sys_logo, $sys_icon, $sys_site_meta_title, $sys_site_meta_description, $sys_site_meta_keyword,
+                            $sys_site_script, $sys_site_language, $sys_normal_pricing, $sys_advance_pricing, $sys_premium_pricing, $sys_social_fb, $sys_social_instagram, $sys_social_linkedin, $sys_social_twitter);
+            $txt = '1';
+        }elseif($sys_logo && !$sys_icon){
+            $fields_total = array('site_title','site_content','users_can_register','admin_email','site_logo','site_meta_title','site_meta_desc','site_meta_keywords','site_analytics','site_language_default',
+            'n_pricing','a_pricing','p_pricing', 'social_fb', 'social_insta', 'social_linkedin', 'social_twitter');
+            
+            $fields = array($sys_site_title, $sys_site_description, $sys_site_register, $sys_site_email, $sys_logo, $sys_site_meta_title, $sys_site_meta_description, $sys_site_meta_keyword,
+                            $sys_site_script, $sys_site_language, $sys_normal_pricing, $sys_advance_pricing, $sys_premium_pricing, $sys_social_fb, $sys_social_instagram, $sys_social_linkedin, $sys_social_twitter);
+            $txt = '2';
+        }elseif(!$sys_logo && $sys_icon){
+            $fields_total = array('site_title','site_content','users_can_register','admin_email','site_icon','site_meta_title','site_meta_desc','site_meta_keywords','site_analytics','site_language_default',
+            'n_pricing','a_pricing','p_pricing', 'social_fb', 'social_insta', 'social_linkedin', 'social_twitter');
+            
+            $fields = array($sys_site_title, $sys_site_description, $sys_site_register, $sys_site_email, $sys_icon, $sys_site_meta_title, $sys_site_meta_description, $sys_site_meta_keyword,
+                            $sys_site_script, $sys_site_language, $sys_normal_pricing, $sys_advance_pricing, $sys_premium_pricing, $sys_social_fb, $sys_social_instagram, $sys_social_linkedin, $sys_social_twitter);
+                            $txt = '3';
+        }else{
+            $fields_total = array('site_title','site_content','users_can_register','admin_email','site_meta_title','site_meta_desc','site_meta_keywords','site_analytics','site_language_default',
+            'n_pricing','a_pricing','p_pricing', 'social_fb', 'social_insta', 'social_linkedin', 'social_twitter');
+            
+            $fields = array($sys_site_title, $sys_site_description, $sys_site_register, $sys_site_email, $sys_site_meta_title, $sys_site_meta_description, $sys_site_meta_keyword,
+                            $sys_site_script, $sys_site_language, $sys_normal_pricing, $sys_advance_pricing, $sys_premium_pricing, $sys_social_fb, $sys_social_instagram, $sys_social_linkedin, $sys_social_twitter);
+                            $txt = '4';
+        }
+
+        foreach($fields_total AS $k => $v){
+            $data2[] =  array(  'zsystem_option' => $v, 
+                                'zsystem_value' =>  $fields[$k]
+                             );
+        }
+
+        $choices = $data2;
+
+        $result =  $this->global_func_query('mz_system', $choices, 'zsystem_option','update_batch');
+        if($result) {
+            $msg = 'Settings has been updated!';
+            $success = true;
+        }
+        
+        echo json_encode(array('success'=>$success,'message'=> $txt));
+        return;
+    }
+
+    private function menu_pages(){
+        header('Content-type: application/json; charset=utf-8');
+        $success = false;
+        $msg = 'Error 503';
+        $menu_id = $this->input->post('menuid');
+        $menu_sel = $this->input->post('menu_sel');
+        $where = array('zid' => $menu_id);
+        $data  = array('zsystem_value' => $menu_sel);
+
+        $result = $this->global_func_query('mz_system', $data, $where,'update_single');
+
+        if($result) {
+            $msg = 'Menu has been updated!';
+            $success = true;
+        }
+        
+        echo json_encode(array('success'=>$success,'message'=> $msg));
+        return;
+    }
+
     /* Update Profile Information to DB */
     private function userInfos(){
 		header('Content-type: application/json; charset=utf-8');
         
         $success = false;
-        $userID = false;
+        
         $msg = '';
         $email = $this->input->post('profile_email');
 
@@ -106,23 +210,33 @@ class General_callbacks extends SS_Controller {
             'moikzz' => 12,
         ];
 
-        if(!$email) return;
+        if(!$email) {
+            echo json_encode(array('success'=>$success,'message' => 'Error 505....')); 
+            return;
+        }
 
                 $type = $this->input->post('formtype');
-                if(!$type) return;
+                if(!$type) {
+                    echo json_encode(array('success'=>$success,'message' => 'Error 505....')); 
+                    return;
+                }
                
-                $fname = $this->input->post('profile_name');  
-                $web = $this->input->post('profile_website'); 
-                $phone = $this->input->post('profile_phone'); 
-                $cnty = $this->input->post('profile_country'); 
-                $state = $this->input->post('profile_state');
-                $address = $this->input->post('profile_address'); 
-                $postal = $this->input->post('profile_postal_code');
+                $fname = @$this->input->post('profile_name');  
+                $web = @$this->input->post('profile_website'); 
+                $company = @$this->input->post('profile_company'); 
+                $phone = @$this->input->post('profile_phone'); 
+                $cnty = @$this->input->post('profile_country'); 
+                $state = @$this->input->post('profile_state');
+                $address = @$this->input->post('profile_address'); 
                 
-                $user = $this->input->post('profile_username');
-                $pass = $this->input->post('profile_password');
-                $status = $this->input->post('profile_status');
-                $ptypes = $this->input->post('profile_types');
+                
+                $user = @$this->input->post('profile_username');
+                $pass = @$this->input->post('profile_password');
+                $status = @$this->input->post('profile_status');
+                $ptypes = @$this->input->post('profile_types');
+                $ctypes = @$this->input->post('customer_types');
+                $license = @$this->input->post('profile_license');
+                $vat = @$this->input->post('profile_vat');
 
                 $cur_date = date('Y-m-d H:i:s');
                 $arr_name = explode(" ", $fname);
@@ -132,7 +246,7 @@ class General_callbacks extends SS_Controller {
                 if($type == 'addnew'){
 
                     $password = password_hash($pass, PASSWORD_DEFAULT, $options); 
-                    $data = array('zusername' => $user, 'zpassword' => $password, 'ztype' => $ptypes, 'zstatus' => $status); 
+                    $data = array('zusername' => $user, 'zpassword' => $password, 'ztype' => $ptypes,'zcustomer_type'=> $ctypes, 'zstatus' => $status); 
                     $field1 = array('zusername' =>$user);
                    
                     $chking =  $this->global_func_query('mz_users', $field1,null,'check_duplicate');
@@ -150,10 +264,13 @@ class General_callbacks extends SS_Controller {
 
                     $userID =  $this->global_func_query('mz_users', $data,false, 'insert_single');
 
-                    if(!$userID) return;
+                    if(!$userID) {
+                        echo json_encode(array('success'=>$success,'message' => 'You did not change anything....')); 
+                        return;
+                    }
 
                     $data1 = array('zparent' => $userID, 'zemail'=> $email, 'zstatus' => $status, 'zfirstname' => $arr_name1, 'zlastname' => $lname, 'zdate_published' => $cur_date,
-                                    'zwebsite' => $web,   'zphone_num' => $phone, 'zcountry' => $cnty, 'zstate' => $state, 'zpostal_code' => $postal, 'zaddress' => $address);
+                                    'zwebsite' => $web,   'zphone_num' => $phone, 'zcountry' => $cnty, 'zstate' => $state , 'zaddress' => $address);
 
                     $rs =   $this->global_func_query('mz_profile', $data1,false, 'insert_single');
                     
@@ -168,37 +285,47 @@ class General_callbacks extends SS_Controller {
                 }else{
                     $profile_only = false;
                     $user_only = false;
+                    $msg = '';
 
-                    $old_fname = $this->input->post('old_profile_name');  
-                    $old_email = $this->input->post('old_profile_email'); 
-                    $old_web = $this->input->post('old_profile_website'); 
-                    $old_phone = $this->input->post('old_profile_phone'); 
-                    $old_cnty = $this->input->post('old_profile_country'); 
-                    $old_state = $this->input->post('old_profile_state');
-                    $old_address = $this->input->post('old_profile_address'); 
-                    $old_postal = $this->input->post('old_profile_postal_code');   
+                    $old_fname = @$this->input->post('old_profile_name');  
+                    $old_email = @$this->input->post('old_profile_email'); 
+                    $old_web = @$this->input->post('old_profile_website');  
+                    $old_company = @$this->input->post('old_profile_company'); 
+                    $old_phone = @$this->input->post('old_profile_phone'); 
+                    $old_cnty = @$this->input->post('old_profile_country'); 
+                    $old_state = @$this->input->post('old_profile_state');
+                    $old_address = @$this->input->post('old_profile_address'); 
+
+                    $old_license = @$this->input->post('old_profile_license'); 
+                    $old_vat = @$this->input->post('old_profile_vat'); 
+                   
                 
-                    $old_status = $this->input->post('old_profile_status');
-                    $old_ptypes = $this->input->post('old_profile_types');
-
-                    if($old_fname == $fname && $old_email == $email && $old_web == $web && $old_phone == $phone && $old_cnty == $cnty && $old_state == $state && $old_address == $address && $old_postal == $postal &&
-                    $old_status == $status && $old_ptypes == $ptypes && (!$pass)){
+                    $old_status = @$this->input->post('old_profile_status');
+                    $old_ptypes = @$this->input->post('old_profile_types');
+                    $old_ctypes = @$this->input->post('old_customer_types');
+                   
+                    if(@$old_fname == @$fname && @$old_email == @$email && @$old_company == @$company && @$old_web == @$web && @$old_phone == @$phone && @$old_cnty == @$cnty && @$old_state == @$state && @$old_address == @$address &&
+                    @$old_status == @$status && @$old_ptypes == @$ptypes && @$old_license == @$license && @$old_vat == @$vat && (!$pass)){
                         echo json_encode(array('success'=>$success,'message' => 'You did not change anything....')); 
                         return;
                     }
 
-                    if($old_fname == $fname && $old_email == $email && $old_web == $web && $old_phone == $phone && $old_cnty == $cnty && $old_state == $state && $old_address == $address && $old_postal == $postal){
+                    if(@$old_fname == @$fname && @$old_email == @$email && @$old_web == @$web && @$old_phone == @$phone && @$old_cnty == @$cnty && @$old_state == @$state && @$old_address == @$address && @$old_company == @$company && @$old_license == @$license && @$old_vat == @$vat){
                         $profile_only = true;
+                       
                     }
-                    if($old_status == $status && $old_ptypes == $ptypes && (!$pass)){
-                        $user_only = true;
+                    if(@$old_status == @$status && @$old_ptypes == @$ptypes && @$ctypes == @$old_ctypes && (!$pass)){
+                        $user_only = true; 
                     }
-                   
+                  
                     $userID = $this->input->post('userID');
 
-                    if(!$userID) return;
+                    if(!$userID) {
+                        echo json_encode(array('success'=>$success,'message' => 'You did not change anything....')); 
+                        return;
+                    }
 
-                    if(!$profile_only){
+                    if(!$profile_only && @$fname && @$email){
 
                             $field1 = 'zemail ="'.$email. '" AND zparent !='.$userID;
                             
@@ -209,44 +336,59 @@ class General_callbacks extends SS_Controller {
                             }
 
                             $data1 = array('zparent' => $userID, 'zemail'=> $email, 'zstatus' => $status, 'zfirstname' => $arr_name1, 'zlastname' => $lname, 'zdate_published' => $cur_date,
-                                            'zwebsite' => $web,   'zphone_num' => $phone, 'zcountry' => $cnty, 'zstate' => $state, 'zpostal_code' => $postal, 'zaddress' => $address);
+                                            'zwebsite' => $web,   'zphone_num' => $phone, 'zcountry' => $cnty, 'zstate' => $state, 'zcompany' => $company, 'zaddress' => $address, 'zlicense_num' =>$license, 'zvat_num' => $vat);
                             
                             $where = array('zparent' => $userID);
                             $this->global_func_query('mz_profile', $data1, $where, 'update_single');
-                            $success = true;
+                            $success = true; 
                     }
                     
                     if(!$user_only){
                         if($pass){
-                            $password = password_hash($pass, PASSWORD_DEFAULT, $options); 
-                            $data = array('zpassword' => $password, 'ztype' => $ptypes, 'zstatus' => $status); 
+                            $password = password_hash($pass, PASSWORD_DEFAULT, $options);
+                            
+                            if($ptypes && $ctypes && $status)
+                            $data = array('zpassword' => $password, 'ztype' => $ptypes,'zcustomer_type'=> $ctypes, 'zstatus' => $status);
+                            elseif($ctypes && $status)
+                            $data = array('zpassword' => $password, 'zcustomer_type'=> $ctypes, 'zstatus' => $status);
+                            elseif($ptypes && $status)
+                            $data = array('zpassword' => $password, 'ztype'=> $ptypes, 'zstatus' => $status);
+                            else
+                            $data = array('zpassword' => $password);
                         }else{
-                            $data = array('ztype' => $ptypes, 'zstatus' => $status); 
+                            if($ptypes && $ctypes && $status)
+                            $data = array('ztype' => $ptypes,'zcustomer_type'=> $ctypes, 'zstatus' => $status);
+                            elseif($ctypes && $status)
+                            $data = array('zcustomer_type'=> $ctypes, 'zstatus' => $status);
+                            elseif($ptypes && $status)
+                            $data = array('ztype'=> $ptypes, 'zstatus' => $status);
+                            elseif($status)
+                            $data = array('zstatus' => $status);
                         }
 
                         $where1 = array('zid' => $userID);
                         $this->global_func_query('mz_users', $data, $where1, 'update_single');
-                        $success = true;
+                        $success = true; 
+                    
                     }    
                    
                 }
 
            
-        echo json_encode(array('success'=>$success,'id'=>$userID, 'message' => $msg)); 
+        echo json_encode(array('success'=>$success,'id'=>$userID, 'message' => $msg));
+        return;
     }
 
-      /* Saving cart to DB */
-    private function sys_modules(){
+     /* Saving to system table */
+     private function sys_modules(){
         header('Content-type: application/json; charset=utf-8');
         $ID = $this->input->post('sys-id');
         if(!$ID){ return; }
-
         $success = false;
         
         $addelete    = @$this->input->post('addelete') ? $addelete = 'addelete' : $addelete = '';
         $view        = @$this->input->post('view') ? $view = 'view' : $view = '';
         $edit        = @$this->input->post('edit') ? $edit = 'edit' : $edit = '';
-
         $dashboard      = @$this->input->post('dashboard') ? $dashboard = 'dashboard' : $dashboard = '';
         $inquiries      = @$this->input->post('inquiries') ? $inquiries = 'inquiries' : $inquiries = '';
         $trucks         = @$this->input->post('trucks')  ? $trucks = 'trucks' : $trucks = '';
@@ -262,191 +404,245 @@ class General_callbacks extends SS_Controller {
         $payments       = @$this->input->post('payments') ? $payments = 'payments' : $payments = '';
         $orders         = @$this->input->post('orders') ? $orders = 'orders' : $orders = '';
         $history        = @$this->input->post('history') ? $history = 'history' : $history = '';
+        $users        = @$this->input->post('users') ? $users = 'users' : $users = '';
+        $customers        = @$this->input->post('customers') ? $customers = 'customers' : $customers = '';
         
-
-        $item1 = array($dashboard, $inquiries, $trucks, $posts, $pages, $cf, $menus, $media, $settings, $testimonials, $products, $categories, $payments, $orders, $history);
+        $item1 = array($dashboard, $inquiries, $trucks, $posts, $pages, $cf, $menus, $media, $settings, $testimonials, $products, $categories, $payments, $orders, $history,$customers, $users);
         $item1 = array_values(array_filter($item1));
         
         $item2 = array($addelete, $edit, $view);
         $item2 = array_values(array_filter($item2));
-
         $data2  = array('pages' => $item1, 'options' => $item2);
         $data2 = serialize($data2);
         $data = array('zvalue' => $data2);
         $where = array('zid' => $ID);
         $query = $this->global_func_query('mz_users_type',$data, $where, 'update_single');
-
         if($query){
             $success = true;
+            $msg = 'System Modules has been updated!';
+        }else{
+            $msg = 'No Changes!...';
         }
-
-        echo json_encode(array('success'=>$query,'message'=>$data));
+        echo json_encode(array('success'=>$query,'message'=> $msg));
+        return;
     }
 
-    /* Saving cart to DB */
-    private function cart_order_purchase(){
-		header('Content-type: application/json; charset=utf-8');
-        $meal_details = array();
-        $order_details_ID = null;
+     /* New/Update Truck Fleet */
+     private function sys_fleet_info(){
+        header('Content-type: application/json; charset=utf-8');
         $success = false;
-        $studentID = $this->input->post('student');
-        if($studentID){ 
+        $truckID = false;
+        $msg = 'Error: Something wrong on submittion...';
+        
+        $type = $this->input->post('formtype');
+        
+        $input_truck = @$this->input->post('input_truck');
 
-                $mealPrice = $this->input->post('mealPrice');
-                $mealTotal = $this->input->post('totalPrice');
-                $mealID = $this->input->post('mealID');
-                $comps = $this->input->post('compliments');
-                $prodSched = $this->input->post('prSched'); 
+        if(!$type || !$input_truck){
+            echo json_encode(array('success'=>$success,'message' => 'Error 505....')); 
+            return;
+        }
+        $cur_date = date('Y-m-d H:i:s');
 
-                $studentBalance =  $this->get_meal_schedule('mz_balances',array('zparent' => $studentID), 'zbalance');
+        $userID                     = @$this->input->post('userID');
+        $input_origin_place         = @$this->input->post('input_origin_place');
+        $input_origin_date          = @$this->input->post('input_origin_date');
+        $input_destination_place    = @$this->input->post('input_destination_place');
+        $input_destination_date     = @$this->input->post('input_destination_date');
+        $input_loads                = @$this->input->post('input_loads');
+        $input_public               = @$this->input->post('input_public');
+        $price_normal               = @$this->input->post('price_normal');
+        $price_advance              = @$this->input->post('price_advance');
+        $price_prem                 = @$this->input->post('price_prem');
+        $fleet_notes                 = @$this->input->post('fleet_notes');
 
-                if($studentBalance < $mealTotal){
-                    return false;
-                }
+        if(strtolower($input_public) == 'on' || $input_public == 1){
+            $input_public = 1;
+        }else{
+            $input_public = 0;
+        }
 
-                $public_data = array('student' => $studentID,
-                                    'mealprice' => $mealPrice,
-                                    'mealtotal' => $mealTotal,
-                                    'meals' => $mealID);
-                
-                $cur_date = date('Y-m-d H:i:s');
+        if($type == 'addnew'){  
 
-                $data_1 = array('zauthor' => $this->userID, 'zorder_to' => $studentID, 'zstatus' => 9, 'zdate_published' => $cur_date,'znotes' => null, 'zad_ons' => null,'ztotal' => $mealTotal);
-                $order_ID =  $this->global_func_query('mz_orders', $data_1,false, 'insert_single');
-
-                if($order_ID){
-
-                    foreach($mealID AS $k => $v){
-                      
-                        $meal_details[$k]['zorder_id'] = $order_ID;
-                        $meal_details[$k]['zproduct'] = $v;
-                        $meal_details[$k]['zprice'] = $mealPrice[$k];
-                        $meal_details[$k]['zcomp'] = $comps[$k];
-                        $meal_details[$k]['zdate_order'] = $prodSched[$k];
+                    $data = array('zcategory' => $input_truck, 'ztravel_from' => $input_origin_place, 'ztravel_to' => $input_destination_place,'zdate_from'=> $input_origin_date,'zdate_to' => $input_destination_date,
+                    'zloads' => $input_loads, 'zpublic' => $input_public, 'zprice' => $price_normal, 'zsaleprice' =>$price_advance, 'zpremprice' => $price_prem,  'zstatus' => 9,'zauthor'=> $userID,
+                    'zdate_published' => $cur_date, 'ztype'=> 'truck', 'znotes' => $fleet_notes);
+                    
+                    $truckID =  $this->global_func_query('mz_products', $data,null,'insert_single');
+                    if($truckID) {
+                        $msg = 'New Fleet has been added.';
+                        $success = true;
                     }
+            
+        }else{
+           
+                    $truckID                    = @$this->input->post('truckID');
 
-                    $order_details_ID =  $this->global_func_query('mz_orderdetails', $meal_details,false, 'insert_batch');
-                    if($order_details_ID){
-                        $updated_balance = (double)$studentBalance - (double)$mealTotal;
-                        $updated_balance = number_format($updated_balance, 2);
-                        $updated_balance = array('zbalance' => $updated_balance);
-                        $where = array('zparent' => $studentID);
-                        
-                        $balance = $this->global_func_query('mz_balances', $updated_balance ,$where, 'update_single');
-
-                        if($balance){
-                                    $where2 = array('zid' => $studentID);
-                                    $this->global_func_query('mz_subprofile', $updated_balance ,$where2, 'update_single');
-                                    $success = true;
-                        }
-
+                    if(!$truckID){
+                        echo json_encode(array('success'=>$success,'message' => 'Error 505....')); 
+                        return;
                     } 
-                } 
+        
+                    $status                 = @$this->input->post('truck_status');
+
+                    $data = array('zcategory' => $input_truck, 'ztravel_from' => $input_origin_place, 'ztravel_to' => $input_destination_place,'zdate_from'=> $input_origin_date,'zdate_to' => $input_destination_date,
+                    'zloads' => $input_loads, 'zpublic' => $input_public, 'zprice' => $price_normal, 'zsaleprice' =>$price_advance, 'zpremprice' => $price_prem,  'zstatus' => $status, 'znotes' => $fleet_notes);
+                    
+                    $where = array('zid' => $truckID);
+                    $result =  $this->global_func_query('mz_products', $data, $where,'update_single');
+                    if($result) {
+                        $msg = 'Fleet has been updated!';
+                        $success = true;
+                    }
         }
-        echo json_encode(array('success'=>$success,'message'=>$meal_details));
-         
+        echo json_encode(array('success'=>$success,'message'=> $msg,'id'=>$truckID));
+        return;
     }
 
-    /* Update Profile Information to DB */
-    private function profileInfos(){
-		header('Content-type: application/json; charset=utf-8');
-        
+
+     /* Order / Inquiry Status Change */
+     private function order_status_change(){
+        header('Content-type: application/json; charset=utf-8');
         $success = false;
-        $studID = false;
-        $user = $this->input->post('username');
-        if($user){
-
-                $pass = $this->input->post('password');
-
-                $fname = $this->input->post('fname');
-                $lname = $this->input->post('lname');
-                $web = $this->input->post('website');
-                $img1 = $this->input->post('image1');
-                $phone = $this->input->post('phone'); 
-                $cnty = $this->input->post('country'); 
-                $state = $this->input->post('state');
-
-                $postal = $this->input->post('postal');
-                
-                $division = $this->input->post('division');
-                $status = $this->input->post('status');
-                $section = $this->input->post('section');
-                $userID = $this->input->post('userID');
-
-                $cur_date = date('Y-m-d H:i:s');
-                
-                if($status == 'new'){
-                    $data = array('zusername' => $user, 'zpassword' => $pass, 'ztype' => 4, 'zstatus' => 9);
-                    
-                    $parentID =  $this->global_func_query('mz_users', $data,false, 'insert_single');
-
-                    if($parentID){
-                        $data1 = array('zparent' => $parentID, 'zstatus' => 9, 'zfirstname' => $fname, 'zlastname' => $lname, 'zdate_published' => $cur_date,
-                                        'zwebsite' => $web, 'zimage1' => $img1, 'zphone_num' => $phone, 'zcountry' => $cnty, 'zstate' => $state, 'zpostal_code' => $postal);
-                            $rs =  $this->global_func_query('mz_profile', $data1,false, 'insert_single');
-                            $success = true;
-                    }
-                }else{
-                    $user = $this->userID;
-
-                    $data = array('zstatus' => $status, 'zfirstname' => $fname, 'zlastname' => $lname, 
-                                    'zorganization' => $school, 'zstate' => $state, 'zdivision' => $division, 'zsection' => $section, 'zgrade' => $grade, 'zvalid_id' => $scID);
-                    
-                    $where = array('zid' => $userID);
-                    $this->global_func_query('mz_subprofile', $data, $where, 'update_single');
-                    $studID = $userID;
-                    $success = true;
-                }
-
-        }        
-        echo json_encode(array('success'=>$success,'id'=>$studID)); 
-    }
-
-    /* Update Student Information to DB */
-    private function studentInfos(){
-		header('Content-type: application/json; charset=utf-8');
+       
+        $msg = 'Error: Something wrong on submittion...';
         
-        $success = false;
-        $studID = false;
-        $scID = $this->input->post('schoolID');
-        if($scID){ 
+        $status = $this->input->post('status_id');
+        
+        $orderID = @$this->input->post('order_id');
 
-                $fname = $this->input->post('fname');
-                $lname = $this->input->post('lname');
-                $school = $this->input->post('school');
-                $country = $this->input->post('country');
-                $state = $this->input->post('state');
-                $grade = $this->input->post('grade');
-                $division = $this->input->post('division');
-                $status = $this->input->post('status');
-                $section = $this->input->post('section');
-                $userID = $this->input->post('userID');
+        if(!$status || !$orderID){
+            echo json_encode(array('success'=>$success,'message' => 'Error 505....')); 
+            return;
+        }
+        
+        $data = array('zstatus' => $status); 
+        $where = array('zid' => $orderID);
 
-                $cur_date = date('Y-m-d H:i:s');
-                
-                if($status == 'new'){
-                    $data = array('zparent' => $this->userID, 'zstatus' => 9, 'zfirstname' => $fname, 'zlastname' => $lname, 'zdate_published' => $cur_date, 
-                                    'zorganization' => $school, 'zstate' => $state, 'zbalance' => 0, 'zdivision' => $division, 'zsection' => $section, 'zgrade' => $grade, 'zvalid_id' => $scID);
-                    
-                    $studID =  $this->global_func_query('mz_subprofile', $data,false, 'insert_single');
-
-                    if($studID){
-                        $data1 = array('zparent' => $studID, 'zbalance' => 0);
-                            $rs =  $this->global_func_query('mz_balances', $data1,false, 'insert_single');
-                            $success = true;
-                    }
-                }else{
-                    $data = array('zstatus' => $status, 'zfirstname' => $fname, 'zlastname' => $lname, 
-                                    'zorganization' => $school, 'zstate' => $state, 'zdivision' => $division, 'zsection' => $section, 'zgrade' => $grade, 'zvalid_id' => $scID);
-                    
-                    $where = array('zid' => $userID);
-                    $this->global_func_query('mz_subprofile', $data, $where, 'update_single');
-                    $studID = $userID;
-                    $success = true;
-                }
-
-        }        
-        echo json_encode(array('success'=>$success,'id'=>$studID)); 
-    } 
+        $result =  $this->global_func_query('mz_orders', $data, $where,'update_single');
+        if($result) {
+            $msg = 'Status has been changed!';
+            $success = true;
+        }
      
+        echo json_encode(array('success'=>$success,'message'=> $msg,'id'=>$orderID));
+        return;
+    }
+
+    /* Saving to system table */
+    private function post_pages(){
+        header('Content-type: application/json; charset=utf-8'); 
+        $success = false;
+        $type = $this->input->post('formtype');
+        $logged_id      = @$this->input->post('logged_id');
+        if(!$type && !$logged_id) {
+            echo json_encode(array('success'=>$success,'message' => 'Error 503....')); 
+            return;
+        }
+
+        $status         = @$this->input->post('input_status');
+        $post_type      = @$this->input->post('post_type');         /* post_type : either its Page or Posts */
+        $title          = @$this->input->post('input_title');
+        $slug           = @$this->input->post('input_slug');
+        $image          = @$this->input->post('input_feature_image');
+        $contents       = @base64_encode($this->input->post('cmsEditor'));
+
+        $gen_title      = @$this->input->post('input_meta_title');
+        $gen_desc       = @$this->input->post('input_meta_description'); 
+        $gen_keys       = @$this->input->post('input_meta_keywords');
+
+        $fb_title       = @$this->input->post('social_fb_title'); 
+        $fb_desc        = @$this->input->post('social_fb_description'); 
+        $fb_image       = @$this->input->post('social_fb_image'); 
+        
+        $twit_title     = @$this->input->post('social_twitter_title'); 
+        $twit_desc      = @$this->input->post('social_twitter_description'); 
+        $twit_image     = @$this->input->post('social_twitter_image'); 
+        
+        $item2 = array('general' => array('title' => $gen_title, 'description' => $gen_desc, 'keywords' => $gen_keys),
+                        'facebook'=> array('title' => $fb_title, 'description' => $fb_desc, 'image' => $fb_image),
+                        'twitter'=> array('title' => $twit_title, 'description' => $twit_desc, 'image' => $twit_image)); 
+      
+        $data2 = serialize($item2);
+        $cur_date = date('Y-m-d H:i:s');
+
+        if($type == 'addnew'){
+            $data = array('ztitle' => $title, 'zslug' => $slug, 'zcontent' => $contents, 'ztype' => $post_type, 'zstatus' => $status, 'zdate_published' => $cur_date, 'zauthor' => $logged_id, 'zimage1' => $image);
+            $trigger_operation = 'insert_single';
+            $social_where = null;
+            $where = null;
+           
+        }else{
+            $ID = $this->input->post('post_id');
+            $data = array('ztitle' => $title, 'zslug' => $slug, 'zcontent' => $contents, 'ztype' => $post_type, 'zstatus' => $status, 'zlast_author' => $logged_id, 'zimage1' => $image);
+            $where = array('zid' => $ID);
+            $trigger_operation = 'update_single';
+
+            $social_data = array('zvalue' => $data2);
+            $social_where = array('zparent' => $ID);
+        }
+
+        $ID = $this->global_func_query('mz_postmain',$data, $where, $trigger_operation);
+        
+        if($ID){
+            if($type == 'addnew'){
+                $social_data = array('zparent' => $ID,'zvalue' => $data2);
+            }
+
+            $this->global_func_query('mz_postsocialmedia',$social_data, $social_where, $trigger_operation);
+            $success = true;
+            $msg = ucwords($post_type).' has been updated!';
+        } 
+        echo json_encode(array('success'=>$success,'message'=> $data,'id'=>$ID));
+        return;
+    }
+
+    
+
+    private function image_viewer(){ 
+        function mtimecmp($a, $b) {
+            $mt_a = filemtime($a);
+            $mt_b = filemtime($b);
+    
+            if ($mt_a == $mt_b)
+                return 0;
+            else if ($mt_a < $mt_b)
+                return 1;
+            else
+                return -1;
+        }
+
+        $files = glob("x_moikzz_assets/images/gallery/*.{jpg,png,jpeg}", GLOB_BRACE);
+        $data = array();
+        usort($files, "mtimecmp");
+
+        foreach($files AS $k => $v){
+            $image_files = explode('/', $v);
+            $data[$k]['url'] = base_url().$v;
+            $data[$k]['title'] = end($image_files);
+        }
+        echo json_encode($data);
+    }
+
+    private function ifile_upload(){
+        $image1 = @strtolower(trim($_FILES['fileupload']['name']));  
+        $inner_msg = false;
+        $uploads_dir    = getcwd()."/x_moikzz_assets/images/gallery/";
+        $msg = 'Failed to Upload!';
+
+        if (!is_dir($uploads_dir)) {
+                mkdir($uploads_dir, 0777, true); 
+        } 
+
+        if(@$image1){
+            $inner_msg = $this->file_image_upload( $image1, $_FILES['fileupload']['size'],$uploads_dir,$_FILES['fileupload']['tmp_name'] );
+        }
+        
+        if($inner_msg){
+            $msg = 'Successfully Uploaded';
+        }
+
+        echo json_encode(array('success' => $inner_msg,'message' => $msg));
+    }
+ 
 }

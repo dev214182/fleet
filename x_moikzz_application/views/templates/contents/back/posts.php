@@ -1,0 +1,1 @@
+<?php $this->load->view('templates/contents/back/tables'); ?>

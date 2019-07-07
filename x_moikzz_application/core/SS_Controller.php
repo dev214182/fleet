@@ -1,5 +1,29 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+        // fields - array()
+        // group_by - text
+        // where - array() - Normal where clause
+        // likes - array() - where like clause
+        // orlike - array() - where OR like clause
+        
+        /**** Note: if likes has value, the normal where clause is omitted. ****/
+        
+        //orlike is omitted if likes is empty
+        // order_by - array()
+        // order - array()
+        // limit - int
+        // offset - int 
 
+        /***
+            $query = array( 'fields' => array('',''),
+                            'group_by' => '' ,
+                            'where' => array('',''),
+                            'likes' => array('',''),
+                            'orlike' => array('',''),
+                            'order_by' => '',
+                            'order' => '',
+                            'limit' => 5,
+                            'offset' => 0);
+        ***/
 class SS_Controller extends CI_Controller { 
 
     protected $query;
@@ -17,16 +41,24 @@ class SS_Controller extends CI_Controller {
         $this->load->model('Global_Model', 'gms');
 	} 
 
-	function initialize() {
-
-		date_default_timezone_set($this->config->item('default_timezone_string'));
-
+	function initialize() { 
+		date_default_timezone_set($this->config->item('default_timezone_string')); 
 	}
 
 
     function page_not_found(){ 
         return $this->load->view('errors/html/default_error_404');
         die();
+    }
+
+    function system_default_open($logged_user_type){
+        $query_table = 'mz_users_type';
+        $query =    array( 'where' =>  array('zid' => $logged_user_type));
+        $rs = $this->global_func_query($query_table, $query);  
+        if($rs){
+            return $rs;
+        }
+        return false;
     }
 
     function template_page_not_found(){
@@ -50,6 +82,41 @@ class SS_Controller extends CI_Controller {
             return user_info();
 
     } 
+
+    public function file_image_upload($filename, $filesize, $uploads_dir, $tmp_file){ 
+        $userfile_size  = $filesize;
+
+        $allowed =  array('jpeg','png' ,'jpg'); 
+        $filename = str_replace(' ', '_', $filename);
+        $ext = pathinfo($filename, PATHINFO_EXTENSION); 
+        $success = false;
+        if(!in_array($ext,$allowed) ) { 
+
+            $msg     = "File not allowed";  
+
+        }else{   
+                if($userfile_size < 2000000){  
+
+                    if (file_exists($uploads_dir ."\\". $filename)) {
+
+                        $time_min = date('ymdis');  
+
+                        $newfile =  'copy_'.$time_min.'_'.$filename; 
+
+                    }else{
+
+                        $newfile = $filename;
+
+                    }
+
+                    if(move_uploaded_file($tmp_file,$uploads_dir.'/'.$newfile)){  
+                          $success = true;  
+                    } 
+                } 
+          
+        } 
+        return $success; 
+    }
     
     function status_info_controller($key) { 
 
@@ -146,45 +213,16 @@ class SS_Controller extends CI_Controller {
         }else{
             return null;
         }
-    }
-
-
-        // fields - array()
-        // group_by - text
-        // where - array() - Normal where clause
-        // likes - array() - where like clause
-        // orlike - array() - where OR like clause
-        
-        /**** Note: if likes has value, the normal where clause is omitted. ****/
-        
-        //orlike is omitted if likes is empty
-        // order_by - array()
-        // order - array()
-        // limit - int
-        // offset - int 
-
-        /***
-            $query = array( 'fields' => array('',''),
-                            'group_by' => '' ,
-                            'where' => array('',''),
-                            'likes' => array('',''),
-                            'orlike' => array('',''),
-                            'order_by' => '',
-                            'order' => '',
-                            'limit' => 5,
-                            'offset' => 0);
-        ***/
+    } 
 
     // batch = null single insert to database else insert batch
     // type = where select query or insert query
     function global_func_query($t,$query,$s=null, $type=null){
         
         if($type == 'insert_single'){  // insert single query
-                $result = $this->gms->insert_data($t,$query);
-           
+                $result = $this->gms->insert_data($t,$query);           
         }elseif($type == 'insert_batch'){ // insert batch query
-            $result = $this->gms->new_batch_data($t,$query);
-       
+            $result = $this->gms->new_batch_data($t,$query);       
         }elseif($type == 'update_single'){
             $result = $this->gms->update_data($t,$query,$s); // table , data , where
         }elseif($type == 'update_batch'){

@@ -2,7 +2,7 @@
 <html lang="en"  >
 
 <head>
- 
+    
     <!-- Bootstrap Core CSS -->
     
     <?php $this->load->view('templates/inc/back/metas.html'); ?>
@@ -18,11 +18,14 @@
 var base_url =  '<?=base_url()?>';
 let curUrl = '<?=get_current_url()?>';
 var jsCustom =  '<?=@$jsCustom?>';
+var options_c =  '<?=$options?>'; 
+var userType =  '<?=$userType?>';
+var logged_id =  '<?=$userID?>';
 var key =  '<?=public_key()?>';
 </script>
 </head>
 
-<body  class="fix-header fix-sidebar card-no-border <?=$bodyClass?>" data-namespace="<?=$bodyClass?>" data-namepage="<?=$pages?>">  
+<body  class="fix-header fix-sidebar card-no-border <?=$bodyClass?>" data-spy="scroll" data-namespace="<?=$bodyClass?>" data-namepage="<?=$pages?>">  
 <div class="preloader">
     <svg class="circular" viewBox="25 25 50 50">
         <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"></circle></svg>
@@ -114,14 +117,15 @@ var key =  '<?=public_key()?>';
     <!-- All Jquery -->
     <!-- ============================================================== -->
     
-    <?php $this->load->view('templates/js/back/default.html'); ?>   
+    <?php $this->load->view('templates/js/back/default.html'); ?>    
+ 
     <section>
         <?php $this->load->view('templates/js/back/graph.html'); ?>
         <?php $this->load->view('templates/js/back/dashboard.html'); ?>
         <?php $this->load->view('templates/js/back/datatables.html'); ?>
-        <?php $this->load->view('templates/js/back/print.html'); ?>
+        <?php $this->load->view('templates/js/back/print.html'); ?> <!-- many js are here -->
     </section>
-   
+
     <script>
     //For validation with custom styles
     (function() {
@@ -142,7 +146,7 @@ var key =  '<?=public_key()?>';
       }, false);
     })();
     </script>
-    
+      
     <!-- ============================================================== -->
     <!-- Style switcher -->
     <!-- ============================================================== -->

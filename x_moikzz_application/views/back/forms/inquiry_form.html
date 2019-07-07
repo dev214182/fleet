@@ -1,0 +1,139 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card card-outline-info">
+            <div class="card-header">
+                <h4 class="m-b-0 text-white"><?=@$title?> Information</h4>
+            </div>
+            <div class="card-body">
+            
+                    <div class="form-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group row">
+                                    <div class="col-lg-2 col-md-4 col-sm-6 ">
+                                        <h3 class="box-title">INQUIRE #: <span id="q-num "><?=@$_GET['id'];?></span></h3>
+                                    </div>
+                                    <div class="col-lg-4 col-md-5 col-sm-6">
+                                            <form class="needs-validation" novalidate="" id="form-inquire">
+                                                <span class="text-bold text-title">Change Status </span>
+                                                <div class="btn-group">
+                                                  
+                                                    <?php if($userType != 6 && $pages == 'inquiries'){ ?>
+                                                    <button type="button" class="btn btn-info status-active dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                                                  
+                                                    <div class="dropdown-menu" data-vid="<?=@$_GET['id']?>" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 40px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                                        <a class="dropdown-item change-status"  data-val="23" href="#">Order Confirmed</a>
+                                                        <a class="dropdown-item change-status"  data-val="24" href="#">Quote Sent</a>
+                                                        <a class="dropdown-item change-status"  data-val="25" href="#">Customer Contacted</a>
+                                                        <a class="dropdown-item change-status"  data-val="26" href="#">Payment Completed</a> 
+                                                        <a class="dropdown-item change-status"  data-val="7" href="#">Cancelled</a> 
+                                                    </div>
+                                                    <?php }else{ ?>
+                                                        <button type="button" class="btn btn-info status-active"></button>
+                                                    <?php } ?>
+                                                </div>
+                                                <br/>
+                                                <code>Only administrator/staff can change status</code>
+                                                </form>
+                                    </div> 
+ 
+                                    <div class="col-lg-6 col-md-3 col-sm-12 label-right">
+                                            <h3 class="box-title">Urgent? <span id="urgent" class="font-bold">No</span></h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="m-t-0 m-b-40">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="control-label label-right col-md-3">Company</label>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control inq-company">
+                                       </div>
+                                </div>
+                            </div>
+                            <!--/span-->
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="control-label label-right col-md-3">Email</label>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control inq-email" >
+                                       </div>
+                                </div>
+                            </div>
+                            <!--/span-->
+                        </div>
+                        <!--/row-->
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="control-label label-right col-md-3">Customer</label>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control inq-customer" >
+                                       </div>
+                                </div>
+                            </div>
+                            <!--/span-->
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="control-label label-right col-md-3">Phone</label>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control inq-phone" >
+                                    </div>
+                                </div>
+                            </div>
+                            <!--/span-->
+                        </div>
+              
+                        <h3 class="box-title">Details</h3>
+                        <hr class="m-t-0 m-b-40">
+                        <!--/row-->
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="control-label label-right col-md-3">Truck</label>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control inq-truck" >
+                                    </div>
+                                </div>
+                            
+                                <div class="form-group row">
+                                    <label class="control-label label-right col-md-3">Loads</label>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control inq-loads">
+                                    </div>
+                                </div>
+                             
+                                <div class="form-group row">
+                                    <label class="control-label label-right col-md-3">From</label>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control inq-from">
+                                    </div>
+                                </div>
+                          
+                                <div class="form-group row">
+                                    <label class="control-label label-right col-md-3">To</label>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control inq-to">
+                                    </div>  
+                                </div>
+                      
+                            </div> 
+                            <div class="col-md-6">
+                                    <div class="form-group row "> 
+                                            <label class="control-label label-right col-md-1"></label>
+                                        <div class="col-md-10 card">
+                                            <div class="card-body">
+                                                <label class="control-label label-notes "></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div> 
+                    </div> 
+           
+            </div>
+        </div>
+    </div>
+</div>

@@ -19,6 +19,8 @@ var app = {
   studentApi: base_url + 'api/vw/_students',
   displayOrdersApi: base_url + 'api/vw/_orders',
   schoolApi: base_url  + 'api/vw/_orgs',
+  systemApi: base_url  + 'api/vw/_site_settings',
+  pagesApi: base_url  + 'api/vw/_pageslist',
 
   /**
    * orderApi: width Form submission
@@ -56,6 +58,37 @@ var app = {
    */  
   sysUserApi: base_url + 'api/sys/userInfos',
   
+
+    /** 
+   * sysFleetApi: with Form submission
+   * API: Add and Update Truck - Fleet info
+   */  
+  sysFleetApi: base_url + 'api/sys/sys_fleet_info',
+  
+    /** 
+   * sysFleetApi: with Form submission
+   * API: Add and Update Truck - Fleet info
+   */  
+  adminSettingsApi: base_url + 'api/sys/admin_settings',
+  
+   /** 
+   * inquiryApi: with Form submission
+   * API: Update Order Status
+   */  
+  inquiryApi: base_url + 'api/sys/order_status_change',
+
+   /** 
+   * postsApi: with Form submission
+   * API: Add/Update Posts and Pages
+   */  
+  postsApi: base_url + 'api/sys/post_pages',
+
+   /** 
+   * updateMenus: with Form submission
+   * API: Update Menus
+   */  
+  updateMenus: base_url + 'api/sys/menu_pages',
+  
   lang: function lang() {
     return true ? $('body').hasClass('rtl') : false;
   },
@@ -78,21 +111,40 @@ var app = {
             cache: false,
             data: dataItems,
             beforeSend: function(){
-              
+              $("button[type='submit']").attr("disabled", true);
             },
-            success: function success(data) {  
+            success: function success(data) {
               var msg = '';
               if (data.success) {
                     if (typ == 'cart') {
                         swal("Success!", "Order has been confirmed!", "success");
                         
                          app.clearCart();
-                       setTimeout(function(){  location.reload(); }, 2000); 
+                       setTimeout(function(){  location.reload(); }, 2000);
+                    }else if(typ == 'profile'){
+                          msg = "Successfully Updated!..";
+                          if(data.message){
+                              msg = data.message;
+                          }  
+                         
+                          swal("Success!", msg, "success");
+
+                          setTimeout(function(){  
+                            location.reload();
+                            }, 1500); 
+
                     }else if(typ){
-                        swal("Success!", "New/Update has been Successful!", "success");
+                        msg = "New/Update has been Successful!";
+                        if(data.message){
+                            msg = data.message;
+                        } 
+                       
+                        swal("Success!", msg, "success");
                         setTimeout(function(){  
                         window.location.href = base_url + 'client/page/'+typ+'/update?id='+data.id; 
-                        }, 2500); 
+                        }, 1500); 
+                    }else{
+                      swal("Success!", data.message, "success");
                     }
 
                     if (classID && fields) {
@@ -100,14 +152,14 @@ var app = {
                         $(k).html(data.message[fields[0]]);
                       });
                     }
-                  //  $("form").remove();  /* Remove the form */
+              
               }else{
-                  msg = "Something wrong! kindly refresh the page.1";
+                  msg = "Nothing Change!";
                   
                   if(data.message){
                       msg = data.message;
                   } 
-                
+                 
                 swal("Error!", msg, "error");   
                 
               }
@@ -118,6 +170,8 @@ var app = {
                 text: "Something wrong! kindly refresh the page.2" 
               });
             }
+          }).done( function(){
+            $("button[type='submit']").attr("disabled", false);
           });
           
         }); 
@@ -144,7 +198,16 @@ var app = {
     }
   },
   dataTablesInitialize: function dataTablesInitialize(tables, download, bodyClass) {
-    
+    var options = '';
+    if(options_c != 'all'){
+        options = JSON.parse(options_c); 
+    }else{
+      options = options_c;
+    } 
+    var searching = true;
+    var stateSave = true;
+    var render = true;
+    var rowsort = [];
     var zapi = '';
     var colDef = '';
     var all = 1;
@@ -152,12 +215,22 @@ var app = {
     /*  true : action buttons show */
 
     var edit = '';
+    
+    if(jQuery.inArray("edit", options) !== -1 || options == 'all'){
+        edit = 1;
+    }
     /*  true : can edit */
 
     var read = '';
+    if(jQuery.inArray("view", options) !== -1 || options == 'all'){
+        read = 1;
+    }
     /*  true : can edit */
 
     var del = '';
+    if(jQuery.inArray("addelete", options) !== -1 || options == 'all'){
+        del = 1;
+    }
     /*  true : can delete */
 
     var act = null;
@@ -165,68 +238,100 @@ var app = {
     /* id */
 
     if (actions) {
-      act = -1; 
-            
-        edit = '<a class="action-btn" href="' + curUrl + 'update"><i class="fa fa-pencil list-edit text-success" data-toggle="tooltip"   title="EDIT"></i> </a>'; 
-       
-        view = '<a class="action-btn btn-rev" href="' + curUrl + 'views"><i class="fa fa-eye list-view text-default" data-toggle="tooltip"   title="VIEW"></i></a>'; 
-      
-        del = '<a class="action-btn btn-rev" href="' + curUrl + 'views"><i class="fa fa-trash btn-rev list-delete text-danger" data-toggle="tooltip"   title="DELETE"></i></a>'; 
-      
+      act = -1;
+        
+        if(edit){ 
+          edit = '<a class="action-btn" href="' + curUrl + 'update"><i  data-toggle="tooltip"   title="EDIT" class="fa fa-pencil list-edit text-inverse" ></i> </a>'; 
+        }
+
+        if(read){
+          read = '<a class="action-btn btn-rev"  href="' + curUrl + 'views"><i data-toggle="tooltip" data-original-title="View" title="VIEW" class="fa fa-external-link text-success list-view" ></i></a>'; 
+        }
+
+        if(del){
+          del = '<a class="action-btn btn-rev"  href="' + curUrl + 'views"><i data-toggle="tooltip"  data-original-title="Delete"  title="DELETE" class="fa fa-trash btn-rev list-delete text-danger" ></i></a>'; 
+        }
  
     }
+
+    colDef = [{
+        className: "hidden acc-id",
+        "targets": [0],
+        visible: false,
+        "searchable": false
+      }, {
+        className: "action",
+        "targets": act,
+        "data": null,
+        "searchable": false,
+        "orderable": false,
+        "defaultContent": edit + read + del
+      }, {
+        className: "hidden org-id",
+        "targets": -2,
+        "searchable": false
+    }]; 
    
     if (bodyClass == 'students') {
       all = '<a class="action-btn btn-rev" href="' + curUrl + 'menus"><i class="fa fa-shopping-cart list-view text-success" data-toggle="tooltip"   title="CART"></i> </a>' + '<a class="action-btn btn-rev" href="' + curUrl + 'payments"><i class="fa fa-credit-card-alt list-view text-warning" data-toggle="tooltip"   title="RELOAD ACCOUNT"></i></a>' + '<a class="action-btn btn-rev" href="' + curUrl + 'views"><i class="fa fa-eye list-view text-default" data-toggle="tooltip"   title="VIEW"></i></a>' + '<a class="action-btn" href="' + curUrl + 'update"><i class="fa fa-pencil list-edit text-primary" data-toggle="tooltip"   title="EDIT"></i> </a>' + '<i class="fa fa-trash btn-rev list-delete text-danger" data-toggle="tooltip" title="DELETE"></i>';
           zapi = app.studentApi + '?'+app.keyApi+'&z=1';
-       
+ 
+    }else if(bodyClass == 'orders' || bodyClass == 'inquiries' || bodyClass == 'dashboard'){
+          var qstring = '';
+          var d = '';
+          if(userType == 6){
+            qstring = '&x='+logged_id;
+          }else if(userType == 1 || userType == 2 || userType == 3 || userType == 5){
+            qstring = '&p=99';
+          }
 
-          colDef = [{
-                        className: "hidden acc-id",
-                        "targets": [0],
-                        visible: false,
-                        "searchable": false
-                      }, {
-                        className: "action",
-                        "targets": act,
-                        "data": null,
-                        "searchable": false,
-                        "orderable": false,
-                        "defaultContent": all
-                      }, {
-                        className: "hidden org-id",
-                        "targets": -2,
-                        "searchable": false
-                  }];
-    }else if(bodyClass == 'orders'){
-          zapi = app.displayOrdersApi + '?'+app.keyApi;
-          colDef = [];
-    }else if(bodyClass == 'users' || bodyClass == 'customers'){
+          var dh = false;
+          if(bodyClass == 'dashboard'){
+            colDef = '';
+            d = '&dashboard=1'
+              rowsort = [[6,'desc']];
+              searching = false;
+              stateSave = false;
+              render = false;
+              dh = true;
+          }
+         
+
+          zapi = app.displayOrdersApi + '?'+app.keyApi+qstring+d;
+          var ordStatus = app.orderStatuses(zapi);
+          app.orderInquiryStatus(ordStatus, dh);
+    }else if(bodyClass == 'users' || bodyClass == 'customers'){  
           var cst = '';
           if(bodyClass == 'customers'){
-              cst = '&c=1';
+              cst = '&c=1'; 
           }
-          zapi = app.profileApi + '?'+app.keyApi+'&tz=214'+cst;
-         
-          colDef = [{
-                      className: "hidden acc-id",
-                      "targets": [0],
-                      visible: false,
-                      "searchable": false
-                    }, {
-                      className: "action",
-                      "targets": act,
-                      "data": null,
-                      "searchable": false,
-                      "orderable": false,
-                      "defaultContent": edit + del
-                    }, {
-                      className: "hidden org-id",
-                      "targets": -2,
-                      "searchable": false
-                  }];
+          zapi = app.profileApi + '?'+app.keyApi+'&tz=214'+cst; 
+    }else if(bodyClass == 'trucks'){  
+                colDef = [{
+                  className: "hidden acc-id",
+                  "targets": [0],
+                  visible: false,
+                  "searchable": false
+                }, {
+                  className: "action",
+                  "targets": act,
+                  "data": null,
+                  "searchable": false,
+                  "orderable": false,
+                  "defaultContent": edit + del
+                }, {
+                  className: "hidden org-id",
+                  "targets": [-2,-3],
+                  "searchable": false
+              }]; 
+ 
+            zapi = app.productApi + '?'+app.keyApi+'&t=truck'; 
+    }else if(bodyClass == 'pages'){   
+      zapi = app.pagesApi + '?'+app.keyApi+'&t=page'; 
+    }else if(bodyClass == 'posts'){   
+      zapi = app.pagesApi + '?'+app.keyApi+'&t=posts'; 
     }
-  
+     
     if (!zapi) {
       return false;
     }  
@@ -240,15 +345,16 @@ var app = {
     }else{
       var dm = '<lf<t>ip>'
     }  
-   
+    
     $(tables).DataTable({
       dom:  dm,
       "columnDefs": colDef,
       processing: true,
       bserverSide: true,
       ordering: true,
-      searching: true,
-      deferRender: true,
+      searching: searching,
+      deferRender: render,
+      "aaSorting": rowsort,
       ajax: {
         url: zapi,
         type: "POST",
@@ -258,7 +364,7 @@ var app = {
       scroller: {
         loadingIndicator: true
       },
-      stateSave: true,
+      stateSave: stateSave,
       drawCallback: function drawCallback(settings) {
             var api = this.api();
           
@@ -267,12 +373,7 @@ var app = {
             }).nodes();
             api.column(0, {
               page: 'current'
-            }).data().each(function (g, i) {
-              
-              /* remove action buttons if status is not published */
-              if($(rows).eq(i).children().first().text() != ('Published' || 'Active' || 'Pending' || 'Authenticated')){ 
-                  $(rows).eq(i).children('td.action').children('.btn-rev').remove();
-              }
+            }).data().each(function (g, i) { 
 
               $(rows).eq(i).attr('id', g);
               $(rows).eq(i).children().addClass('t-child');
@@ -280,10 +381,16 @@ var app = {
               var sd = $(rows).eq(i).children('td.action').children('a.action-btn');
               var orgID = $(rows).eq(i).children('td.org-id').text();
               /* adding query string id - Action buttons */
-
+              $('a.action-btn').attr('href');
               $.each(sd, function (k, l) {
-                var ds = $(l).attr('href');
-                $(l).attr('href', ds + '?id=' + g + '&o=' + orgID);
+                    var ds = $(l).attr('href');
+                    /* $(l).attr('href', ds + '?id=' + g + '&o=' + orgID); */
+                    if (ds.indexOf("?") > 0) {
+                        var clean_uri = ds.substring(0, ds.indexOf("?"));
+                        ds = clean_uri; 
+                    }
+
+                    $(l).attr('href', ds + '?id=' + g);
               });
             });
             $(tables + ' tbody tr').on('click', 'td.t-child', function (e) {
@@ -303,45 +410,32 @@ var app = {
   },
 
   resetPass: function resetPass() {
-    app.profileInfo(true, true);
-
-    var vs;
-    $('body.lists-profile').on('change', '#reset-pass', function (e) {
+   /*  app.profileInfo(true, true); */
+   app.userInfoUpdate(null,'profile');
+    $('body.lists-profile').on('click', 'a.generate-pass', function (e) {
       e.preventDefault();
-      e.stopImmediatePropagation();
-      var parent = $(this).parents('.form-group');
-
-      if ($(this).is(':checked')) {
-        vs = app.generatePass(12);
-        $('#inputPass').removeAttr('disabled');
-        $('#inputPass').attr('name', 'client_pass');
-        $('#inputPass').val(vs);
-        $('#inputPass').attr('type', 'text');
-        $(parent).find('i.view-pass').addClass('fa-eye');
-        $(parent).find('i.view-pass').addClass('reveal-pass');
-      } else {
-        $('#inputPass').removeAttr('name');
-        $('#inputPass').attr('disabled', 'disabled');
-        $('#inputPass').attr('type', 'password');
-        $('#inputPass').val('');
-        $(parent).find('i.view-pass').removeClass('fa-eye');
-        $(parent).find('i.view-pass').removeClass('reveal-pass');
-      }
+      e.stopImmediatePropagation(); 
+        vs = app.generatePass(12);  
+        $('#inputPass').val(vs); 
     });
+
     var ts = 0;
     $('body.lists-profile').on('click', '.reveal-pass', function (e) {
       ts++;
 
       if (ts == 1) {
-        $('#inputPass').attr('type', 'password');
+        $('#inputPass').attr('type', 'text');
       } else {
         ts = 0;
-        $('#inputPass').attr('type', 'text');
+        $('#inputPass').attr('type', 'password');
       }
     });
 
-    var controller = app.studentNups + '?'+app.keyApi;
-    app.formSubmittion('body.lists-profile','#form-profile', controller);
+    var controller = app.sysUserApi + '?'+app.keyApi;
+    
+   var namespace = $('body').data('namespace');
+    app.formSubmittion('body','#form-users', controller, namespace); 
+  
   },
   generatePass: function generatePass(length) {
     var result = '';
@@ -378,33 +472,26 @@ var app = {
   },
 
   profileInfo: function profileInfo(usedInfo,p){
-    var default_postal_code = '00000';
+    /* var default_postal_code = '00000'; */
     if(usedInfo){
           var profile = app.profileApi + '?'+app.keyApi+'&tz=214&p=1';
-          var prof = $.post(profile, function (data) { 
-            return data; 
-          },'json');  
+          var prof = app.orderStatuses(profile);
 
           prof.always(function(i,s){
+            if(i.length == 0){ return false; }
             if(p){
               var fullname = i[0]['zfirstname'] + ' '+i[0]['zlastname'];
               $('#inputFirst').val(fullname);
               $('#inputPhone').val(i[0]['zphone_num']);
-              $('#inputWeb').val(i[0]['zwebsite']);
+              $('#inputComp').val(i[0]['zwebsite']);
              
-              $('#profUser').text(i[0]['zusername']); 
-
+              $('#profUser').text(i[0]['zusername']);
              
             }else{
                   $('#inputFirst').val(i[0]['zfirstname']);
                   $('#inputLast').val(i[0]['zlastname']);
             }
-            if(i[0]['zpostal_code']){
-              var pcode = i[0]['zpostal_code'];
-            }else{
-              var pcode = default_postal_code;
-            }
-            $('#inputpostal').val(pcode);
+      
             $('#inputAddress').val(i[0]['zaddress']);    
               $('#profemail').val(i[0]['zemail']); 
               $('#inputCardHolder').val(i[0]['zfirstname'] + ' ' +i[0]['zlastname']); 
@@ -414,7 +501,7 @@ var app = {
           $('#inputLast').val(''); 
           $('#inputAddress').val(''); 
           $('#inputCardHolder').val('');
-          $('#inputpostal').val(default_postal_code);
+         /*  $('#inputpostal').val(default_postal_code); */
     }
     app.profileUsed();
     return false;
@@ -931,9 +1018,10 @@ var app = {
       var outerTarget = $(this);
       setParents = $(outerTarget).parents('.div-parent');
       var getComps = $(outerTarget).parents('.div-parent').find('.hidden-comps').val();
-      var idAPI = $.post(tzcomps, function (data) { 
-        return data; 
-      },'json').always(function(data,s){
+      var idAPI = app.orderStatuses(tzcomps);
+
+      idAPI.always(function(data,s){
+        if(data.length == 0){ return false; }
       var checked;
       var comp = [];
      
@@ -1211,9 +1299,10 @@ var app = {
                       /* Add to cart */
                       
             
-            var idAPI = $.post(tzcomps, function (data) { 
-                return data; 
-            },'json').always(function(data,s){
+            var idAPI = app.orderStatuses(tzcomps);
+            idAPI.always(function(data,s){
+              if(data.length == 0){ return false; }
+
               var ln = [];
               var comp = [];
               var endLayout=''    ;
@@ -1364,7 +1453,8 @@ var app = {
     },'json');  
 
      idAPI.always(function(i,s){
-          
+          if(i.length == 0){ return false; }
+
           if(s == 'success' && i.recordsTotal > 0){
               var getAPI = app.productApi + '?'+app.keyApi + '&o=' + myParam;
               $.post(getAPI, function (data2) {
@@ -1569,12 +1659,10 @@ var app = {
 
         
         var cheakingMeals = app.studentmealOrdered + '?'+app.keyApi + '&s=' + myParamID;
-        var idAPI = $.post(cheakingMeals, function (data) {
-          return data;
-        },'json');
+        var idAPI = app.orderStatuses(cheakingMeals);
         
         idAPI.always(function(i,s){
-          
+          if(i.length == 0){ return false; }
               if(s == 'success'){
                   $.each(i, function(o,q){ 
                     var getID = q.zproductID; 
@@ -1682,23 +1770,21 @@ var app = {
         
         var activeSchool = app.schoolApi + '?'+app.keyApi+'&x=sc'; 
 
-        var scAPI = $.post(activeSchool, function (data) {   
-          return data; 
-        },'json'); 
+        var scAPI = app.orderStatuses(activeSchool);
         
         if(scAPI){
 
           scAPI.always(function(ii,ss){
-           
+                if(ii.length == 0){ return false; }
+
                 if(ss == 'success'){
 
                   if (myParam || myParamID) {
                         var studID = app.studentApi  + '?'+app.keyApi+ '&s=' + myParamID;
-                        var idAPI = $.post(studID, function (data) {  
-                          return data; 
-                        },'json');
+                        var idAPI = app.orderStatuses(studID);
                         
                           idAPI.always(function(i,s){
+                            if(i.length == 0){ return false; }
                               if(s == 'success'){
                                   var status = i['data'][0][1];
                                   var fullname = i['data'][0][2];
@@ -1787,33 +1873,41 @@ var app = {
       return false;
   },
 
-  formSubmittion: function(bodyClass, formID, controller, page){
+  formSubmittion: function(bodyClass, formID, controller, page, customData){
+    var namepage = $('body').data('namepage');
+    var txt = '';
+    if(customData){
+      var typez = namepage;
+      var data = customData;
+      app.ajax_load_info(txt, namepage, data, controller, false, false, typez);
+      
+      return false;
+    }
+
     $(bodyClass).on('submit', formID, function (event) {
       event.preventDefault();
       event.stopImmediatePropagation();
       var typez = false;   
-      var namepage = $(this).parents('body').data('namepage');
       if(!namepage || !controller) { return false;}
-      var txt = '';
+      
 
       var target = $(this);
-
+      var data = $(this).serialize();
       if(namepage == 'orders'){ 
-        var data = app.formOrders(target);   
+         data = app.formOrders(target);   
         txt = 'Continue to Order...';
         typez = 'cart';
       }else if(namepage == 'addnew' || namepage == 'updating'){ 
         if(page == 'students'){
-          var data = app.formStudentInfo(target);
-        }else if(page == 'users'){
-          var data = $(this).serialize();
-        }
+            data = app.formStudentInfo(target); 
+        }  
         typez = page;
+      }else if(namepage == 'profile' || namepage == 'lists-settings' ){  
+        typez = 'profile';
       }else{
-        var data = $(this).serialize();
-        txt = 'Updating System Modules'; 
+        txt = 'Updating System'; 
       }
-
+      
       app.ajax_load_info(txt, namepage, data, controller, false, false, typez);
       
       return false;
@@ -1918,11 +2012,10 @@ var app = {
   singleSchoolInfo: function singleSchoolInfo(sc){
         var infos = app.schoolApi + '?'+app.keyApi+'&x=sc&s='+sc;
 
-        var info = $.post(infos, function (data) {  
-            return data; 
-        },'json');
+        var info = app.orderStatuses(infos);
 
         info.always(function(ii,s){
+          if(ii.length == 0){ return false; }
           $.each(ii, function(iz,o){  
               if(o['ID'] == sc){
                     var active = 'selected';
@@ -1946,9 +2039,7 @@ var app = {
 
         if(upd) $(aClass).html('<option> - Select - </option>');
 
-        var sOrgs = $.post(aOrgs, function (data) {  
-            return data; 
-        },'json');
+        var sOrgs = app.orderStatuses(aOrgs);
 
         sOrgs.always(function(ii,s){
           $.each(ii, function(iz,o){ 
@@ -1970,14 +2061,14 @@ var app = {
     return false;
   }, 
 
-  systemInfo: function(){
-    var typez = app.userTypesApi + '?'+app.keyApi; 
+  systemInfo: function(){ 
 
-    var info = $.post(typez, function (data) {  
-        return data; 
-    },'json');
+    var typez = app.userTypesApi + '?'+app.keyApi; 
+    
+    var info = app.orderStatuses(typez);
 
     info.always(function(ii,s){
+      if(ii.length == 0){ return false; }
       $.each(ii, function(iz,o){
         
             if(iz == 0){
@@ -1985,8 +2076,8 @@ var app = {
             }else{
               var active = '';
             }
-
-           
+            
+            
             var ctitle = o['ztitle'];
                 title = ctitle.charAt(0).toUpperCase()+ctitle.slice(1);
                 title = title.replace("_", " ");
@@ -1999,18 +2090,18 @@ var app = {
                 var items = o['zvalue']['pages'];
                 var items2 = o['zvalue']['options'];
                 $.each(items, function(i,o){ 
-                  $("input[name='"+o+"']").attr('checked','checked');
+                  $("input[name='"+o+"']").prop('checked',true);
                 });
 
                 $.each(items2, function(i,o){ 
-                  $("input[name='"+o+"']").attr('checked','checked');
+                  $("input[name='"+o+"']").prop('checked',true);
                 });
             }
       });
 
       $('.sys-settings .nav-tabs').on('click','.nav-link', function(e){
           e.preventDefault();
-
+          $("input").prop('checked',false);
           
           var id = $(this).data('id');
           var cid = $(this).data('zid');
@@ -2031,13 +2122,12 @@ var app = {
   moduleOtherTabs: function(cid){
     var typez = app.userTypesApi + '?'+app.keyApi+'&s='+cid; 
 
-    var info = $.post(typez, function (data) {  
-        return data; 
-    },'json');
+    var info = app.orderStatuses(typez);
 
     info.always(function(ii,s){
+      if(ii.length == 0){ return false; }
       $.each(ii, function(iz,o){
-        $("input").removeAttr('checked');
+        
             if(iz == 0){
               var active = 'active';
             }else{
@@ -2049,55 +2139,87 @@ var app = {
                 var items2 = o['zvalue']['options'];
                 
                 $.each(items, function(i,o){ 
-                  $("input[name='"+o+"']").attr('checked','checked');
+                  $("input[name='"+o+"']").prop('checked',true);
                 });
 
                 $.each(items2, function(i,o){ 
-                  $("input[name='"+o+"']").attr('checked','checked');
+                  $("input[name='"+o+"']").prop('checked',true);
                 });
             }
       }); 
     });
   },
 
-  userInfoUpdate: function(param){
-      var default_postal_code = '00000';
-        var profile = app.profileApi + '?'+app.keyApi+'&tz=214&s='+param;
-        var prof = $.post(profile, function (data) { 
-          return data; 
-        },'json');  
+  userInfoUpdate: function(param=null,pf=null){
 
+        var profile = app.profileApi + '?'+app.keyApi+'&tz=214&s='+param;
+
+        if(pf){
+          var profile = app.profileApi + '?'+app.keyApi+'&tz=214&p=1';
+        }
+        var prof = app.orderStatuses(profile);
+
+       
         prof.always(function(i,s){
-          
+            if(i.length == 0){ return false; }
+            if(!s) { location.reload();}
+           
             var fullname = i[0]['zfirstname'] + ' '+i[0]['zlastname'];
-            $('#inputFirst').val(fullname);
-            $('#inputPhone').val(i[0]['zphone_num']);
-            $('#inputWeb').val(i[0]['zwebsite']);
+            $('input#inputFirst').val(fullname.toUpperCase());
+            $('input#inputPhone').val(i[0]['zphone_num']);
+
+          
+
+            $('input#inputWeb').val(i[0]['zwebsite']);
+            $('input#inputCompany').val(i[0]['zcompany'].toUpperCase());
             
-            $('#old_inputFirst').val(fullname);
+            $('#old_inputFirst').val(fullname.toUpperCase());
             $('#old_profemail').val(i[0]['zemail']);
             $('#old_inputPhone').val(i[0]['zphone_num']);
             $('#old_inputWeb').val(i[0]['zwebsite']);
-            $('#old_inputpostal').val(i[0]['zpostal_code']);
+            /* $('#old_inputpostal').val(i[0]['zpostal_code']); */
             $('#old_inputState').val(i[0]['zstate']);
             $('#old_inputAddress').val(i[0]['zaddress']);
-
-            $('#old_user_types').val(i[0]['ztype']);
+            
+            $('input#old_inputCompany').val(i[0]['zcompany'].toUpperCase());
+            $('#old_user_types').val(i[0]['ztypeID']);
+            $('#old_user_access').val(i[0]['zcustomer_type']);
             $('#old_user_status').val(i[0]['zstatusID']);
+            $('#old_customer_types').val(i[0]['zcustomer_typeID']);
+            $('label#customer_types').html(i[0]['zcustomer_type']);
+            $('label#user_status').html(i[0]['zstatus']);
             $('#old_inputCountry').val(i[0]['zcountry']);
-
+            
             $('#profUser').text(i[0]['zusername']);  
-          
-            if(i[0]['zpostal_code']){
-              var pcode = i[0]['zpostal_code'];
-            }else{
-              var pcode = default_postal_code;
-            }
+            
+            $('label#inputFirst').text(fullname.toUpperCase());
+            $('label#inputPhone').text(i[0]['zphone_num']);
+            $('label#inputWeb').text(i[0]['zwebsite']);
+            $('label#inputCompany').text(i[0]['zcompany'].toUpperCase());
+            $('label#profemail').text(i[0]['zemail']);
+            $('label#inputAddress').text(i[0]['zaddress']);
+            $('label#inputState').text(i[0]['zstate']);
+            $('label#inputCountry').text(i[0]['zcountry']); 
+            $('label#inputLicense').text(i[0]['zlicense_num']);
+            $('label#inputvat').text(i[0]['zvat_num']);
 
-            var country = $('#inputCountry').children();
-            var zstate = $('#inputState').children();
+            $('input#inputLicense').val(i[0]['zlicense_num']);
+            $('input#inputvat').val(i[0]['zvat_num']);
+            $('input#old_inputLicense').val(i[0]['zlicense_num']);
+            $('input#old_inputvat').val(i[0]['zvat_num']); 
+           
+            var country = $('select#inputCountry').children();
+            var zstate = $('select#inputState').children();
+
             var user_types = $('#user_types').children();
+            var customer_types = $('#customer_types').children();
             var user_status = $('#user_status').children();
+
+            $.each(customer_types, function(c,v){ 
+                if($(v).val() == i[0]['zcustomer_typeID']){
+                  $(v).attr('selected','selected'); 
+                }
+            });
 
             $.each(country, function(c,v){ 
               if($(v).val() == i[0]['zcountry']){
@@ -2111,9 +2233,9 @@ var app = {
                }
             });
 
-            $.each(user_types, function(c,v){ 
-              if($(v).val() == i[0]['ztype']){
-                 $(v).attr('selected','selected'); 
+            $.each(user_types, function(c,v){  
+              if($(v).val() == i[0]['ztypeID']){
+                $(v).attr('selected','selected'); 
               }
            });
 
@@ -2123,7 +2245,7 @@ var app = {
               }
           });
             
-            $('#inputpostal').val(pcode);
+           /*  $('#inputpostal').val(pcode); */
             $('#inputAddress').val(i[0]['zaddress']);    
             $('#profemail').val(i[0]['zemail']); 
             $('#inputCardHolder').val(i[0]['zfirstname'] + ' ' +i[0]['zlastname']);
@@ -2134,8 +2256,8 @@ var app = {
   userInformation: function(){
     var urlParams = app.paramQuery;
     var myParam = urlParams('id');
- 
-    if(myParam){ app.userInfoUpdate(myParam);} 
+    
+    if(myParam){ app.userInfoUpdate(myParam); }  
 
     $('body.users').on('click', 'a.generate-pass', function (e) {
       e.preventDefault();
@@ -2157,10 +2279,425 @@ var app = {
     });
 
     var controller = app.sysUserApi + '?'+app.keyApi;
-    app.formSubmittion('body.users','#form-users', controller, 'users');
+    
+   var namespace = $('body').data('namespace');
+    app.formSubmittion('body','#form-users', controller, namespace);
+  },
+  
+  systemSettings: function(){
+   
+    var settings = app.systemApi + '?'+app.keyApi;
+     
+    var system = app.orderStatuses(settings);
+   
+    system.always(function(i,s){
+        if(i.length == 0){ return false; }
+        if(!s) { location.reload(); }
+        $.each(i, function(q,t){
+              if(t['zsystem_option'] == 'site_title'){
+                $('input[name="sys_site_title"]').val(t['zsystem_value']);  /* site title */
+              }else if(t['zsystem_option'] == 'site_content'){
+                $('input[name="sys_site_description"]').val(t['zsystem_value']); /* site description */
+              }else if(t['zsystem_option'] == 'admin_email'){
+                $('input[name="sys_site_email"]').val(t['zsystem_value']); /* site admin email */
+              }else if(t['zsystem_option'] == 'users_can_register'){ 
+                  var txt = 'No';
+                if(t['zsystem_value'] == 1){  txt = 'Yes'; } 
+                $('select[name="sys_site_register"]').prepend('<option value="'+t['zsystem_value']+'" selected> '+txt+' </option>'); /* site registration */ 
+              }else if(t['zsystem_option'] == 'site_language_default'){
+                $('input[name="sys_site_language"]').val(t['zsystem_value']); /* site default language */
+              }else if(t['zsystem_option'] == 'site_logo'){
+                if(t['zsystem_value']){
+                  $('div.logo').html('<img src="'+t['zsystem_value']+'" class="img-thumbnail">'); /* site logo */
+                }
+              }else if(t['zsystem_option'] == 'site_icon'){
+                if(t['zsystem_value']){
+                  $('div.icon').html('<img src="'+t['zsystem_value']+'" class="img-thumbnail">'); /* site icon */
+                }
+              }else if(t['zsystem_option'] == 'site_meta_title'){
+                $('input[name="sys_site_meta_title"]').val(t['zsystem_value']); /* site global meta title */
+              }else if(t['zsystem_option'] == 'site_meta_desc'){
+                $('textarea[name="sys_site_meta_description"]').val(t['zsystem_value']); /* site global meta description */
+              }else if(t['zsystem_option'] == 'site_meta_keywords'){
+                $('input[name="sys_site_meta_keyword"]').val(t['zsystem_value']); /* site global meta keywords */
+              }else if(t['zsystem_option'] == 'site_analytics'){
+                $('textarea[name="sys_site_script"]').val(t['zsystem_value']); /* site custom scripts */
+              }else if(t['zsystem_option'] == 'n_pricing'){
+                $('input[name="sys_normal_pricing"]').val(t['zsystem_value']); /* Normal Price */
+              }else if(t['zsystem_option'] == 'a_pricing'){
+                $('input[name="sys_advance_pricing"]').val(t['zsystem_value']); /* Advance Price */
+              }else if(t['zsystem_option'] == 'p_pricing'){
+                $('input[name="sys_premium_pricing"]').val(t['zsystem_value']); /* Premium Price */
+              }else if(t['zsystem_option'] == 'social_fb'){
+                $('input[name="sys_social_fb"]').val(t['zsystem_value']); /* Social Facebook */
+              }else if(t['zsystem_option'] == 'social_twitter'){
+                $('input[name="sys_social_twitter"]').val(t['zsystem_value']); /* Social Twitter */
+              }else if(t['zsystem_option'] == 'social_insta'){
+                $('input[name="sys_social_instagram"]').val(t['zsystem_value']); /* Social Instagram */
+              }else if(t['zsystem_option'] == 'social_linkedin'){
+                $('input[name="sys_social_linkedin"]').val(t['zsystem_value']); /* Social linkedIn */
+              }
+        });
+    });
+
+    var controller = app.adminSettingsApi + '?'+app.keyApi; 
+    var namespace = $('body').data('namespace');
+    app.formSubmittion('body.lists-settings','#form-setttings', controller, namespace);
   },
  
+  trucksInfo: function(){
+    $.ajax({
+      dataType: "json",
+      url: base_url + 'x_moikzz_assets/country_lists.json',
+      cache: true,
+      success: function(data,k){
+          var dataParse = data;
+          $.each(dataParse, function(i,o){
+              $('#input_origin_place').append('<option value="'+o.name+'"> '+o.name+'</option>');
+              $('#input_destination_place').append('<option value="'+o.name+'"> '+o.name+'</option>');
+          });
+      }
+    });
+
+    var urlParams = app.paramQuery;
+    var myParam = urlParams('id');
+
+    if(myParam){
+          app.trucksUpdateInfo(myParam); 
+    } 
+
+    var controller = app.sysFleetApi + '?'+app.keyApi;
+    
+    var namespace = $('body').data('namespace');
+   
+    app.formSubmittion('body.trucks','#form-trucks', controller, namespace);
+  },
+
+  trucksUpdateInfo: function(myParam){
+      var trucks = app.productApi + '?'+app.keyApi+'&p=9&f='+myParam;      
+      
+      var info = app.orderStatuses(trucks); 
+      info.always(function(i,s){
+          if(i.length == 0){ return false; }
+          if(!s) { location.reload();}
+          $.each(i, function(q,t){
+             
+            if(t['zpublic'] == 1){
+               var chkpub = true;
+             }else{
+               var chkpub = false;
+             }
+            
+             $('input[name="input_public"]').prop('checked', chkpub);
+             $('select[name="input_truck"]').prepend('<option value="'+t['zcategoryID']+'" selected> '+t['zcategory']+' </option>'); /* site global meta title */
+             $('select[name="input_origin_place"]').prepend('<option value="'+t['ztravel_from']+'" selected> '+t['ztravel_from']+' </option>'); /* site global meta title */
+             $('select[name="input_destination_place"]').prepend('<option value="'+t['ztravel_to']+'" selected> '+t['ztravel_to']+' </option>'); /* site global meta title */
+             $('input[name="input_origin_date"]').val(t['zdate_from']); /* site global meta title */
+             $('input[name="input_destination_date"]').val(t['zdate_to']); /* site global meta title */
+             $('input[name="input_loads"]').val(t['zloads']); /* site global meta title */
+             $('input[name="price_normal"]').val(t['zprice']); /* site global meta title */
+             $('input[name="price_advance"]').val(t['zsaleprice']); /* site global meta title */
+             $('input[name="price_prem"]').val(t['zpremprice']); /* site global meta title */
+             $('textarea[name="fleet_notes"]').val(t['znotes']); /* site global meta title */
+             $('select[name="truck_status"]').prepend('<option value="'+t['zstatusID']+'" selected> '+t['zstatus']+' </option>'); /* site global meta title */
+         
+          });
+      });
+  },
+  inquiryInfos: function(){
+    var urlParams = app.paramQuery;
+    var myParam = urlParams('id');
+    if(!myParam){ return false; }
+
+          var orders = app.displayOrdersApi + '?'+app.keyApi+'&z='+myParam+'&x='+logged_id;
+          var orderInfo = app.orderStatuses(orders);
+
+          orderInfo.always(function(i,s){
+            if(i.length == 0){ return false; }
+            if(s){
+              $('button.status-active').html(i[0].zstatus.replace(/<[^>]*>?/gm, ''));
+               
+              if(i[0].zurgent.toLowerCase() == 'yes'){
+                $('span#urgent').addClass('text-danger');
+              }
+              $('span#urgent').html(i[0].zurgent);
+
+               $('label.label-notes').html(i[0].znotes);
+               $('input.inq-company').val(i[0].zcompany);
+               $('input.inq-customer').val(i[0].zauthor);
+               $('input.inq-email').val(i[0].zemail);
+               $('input.inq-phone').val(i[0].zphone_num);
+               $('input.inq-truck').val(i[0].zcategory);
+               $('input.inq-loads').val(i[0].zloads);
+               $('input.inq-from').val(i[0].ztravel_from + ' ' + i[0].zdate_from);
+               $('input.inq-to').val(i[0].ztravel_to + ' ' + i[0].zdate_to); 
+            } 
+       
+          });
+      
+      var controller = app.inquiryApi + '?'+app.keyApi;
+
+      var namespace = $('body').data('namespace'); 
+      
+      $('body.inquiries').on('click','.change-status', function(e){
+        e.preventDefault();
+      
+        var statusID = $(this).data('val');
+        var orderID = $(this).parent().data('vid');
+        
+        var datas = { 'order_id' : orderID, 'status_id' : statusID };
+        app.formSubmittion('body.inquiries','#form-inquire', controller, namespace, datas);
+      });
+  },
+
+  postMainInfo: function(){ 
+    
+    var urlParams = app.paramQuery;
+    var myParam = urlParams('id');
+
+    if(myParam){
+        app.postUpdateInfos(myParam); 
+    }else{
+        CKEDITOR.replace( 'cmsEditor',{
+          customConfig: base_url+'ckeditor/ckconfig.js',
+          height: 400
+        });
+    } 
+    app.postUpload();
+
+    var controller = app.postsApi + '?'+app.keyApi;
+
+    var namespace = $('body').data('namespace');
+
+    app.formSubmittion('body','#form-pages', controller, namespace);
+    
+    return;
+  },
+
+  postUpload: function postUpload(){
+    $('body').on('submit','form#form-upload', function(e){
+      e.preventDefault();
+     
+      $.ajax({
+          type: "POST",
+          url: base_url + "api/sys/ifile_upload?k=2zSM*(sOGkVs193201971Jq)Sk0*^%skdjDs3051Fz4AKz821Pq7053atK",
+          dataType: "json",
+          data: new FormData(this),
+          cache: !1,
+          processData: !1,
+          contentType: !1,
+          success: function(e) { 
+            if(e.success){
+              swal("Success!", e.message, "success"); 
+              document.getElementById("form-upload").reset();
+              
+              $.get(CKEDITOR.config.simpleImageBrowserURL, function(e) {
+                  var t;
+                  return t=$.parseJSON(e), e="", $.each(t, function(t, i) {
+                      e="thumbnails"===CKEDITOR.config.simpleImageBrowserListType?e+"<div onclick=\"CKEDITOR.tools.simpleimagebrowserinsertpicture('"+i.url+"');\" style=\"position:relative;width:75px;height:75px;margin-top:5px;margin-bottom:25px;margin-left:5px;margin-right:5px;background-image:url('"+i.url+"');background-repeat:no-repeat;background-size:125%;background-position:center center;float:left;\"><div style='bottom:-18px;position:absolute;width:inherit;overflow:hidden;'>"+i.title+"</div></div>": "link"
+                  }), $("#imageBrowser").html(e)
+              });
+            }else{
+              swal("Error!", e.message, "error");
+            }
+         
+          }
+      });
+    });
+
+   
+  },
+
+  postUpdateInfos: function(myParam){
+    var dataInfo = app.pagesApi + '?'+app.keyApi+'&z='+myParam;
+    var postPage = app.orderStatuses(dataInfo);
+
+    postPage.always(function(i,s){
+      if(i.length == 0){ return false; }
+      if(s){ 
+         
+        $('input[name="input_title"]').val(i[0].ztitle);
+        $('input[name="input_slug"]').val(i[0].zslug);
+        $('textarea[name="cmsEditor"]').text(i[0].zcontent); 
+
+        /* General SEO settings */
+        $('input[name="input_meta_title"]').val(i[0].zvalue['general'].title);
+        $('textarea[name="input_meta_description"]').text(i[0].zvalue['general'].description);
+        $('textarea[name="input_meta_description"]').val(i[0].zvalue['general'].description);
+        $('input[name="input_meta_keywords"]').val(i[0].zvalue['general'].keywords);
+
+        /* FB - Social Media */
+        $('input[name="social_fb_title"]').val(i[0].zvalue['facebook'].title);
+        $('textarea[name="social_fb_description"]').text(i[0].zvalue['facebook'].description);
+        $('textarea[name="social_fb_description"]').val(i[0].zvalue['facebook'].description);
+        $('input[name="social_fb_image"]').val(i[0].zvalue['facebook'].image);
+
+         /* Twitter - Social Media */
+        $('input[name="social_twitter_title"]').val(i[0].zvalue['twitter'].title);
+        $('textarea[name="social_twitter_description"]').text(i[0].zvalue['twitter'].description);
+        $('textarea[name="social_twitter_description"]').val(i[0].zvalue['twitter'].description);
+        $('input[name="social_twitter_image"]').val(i[0].zvalue['twitter'].image);
+      }   
+     
+          CKEDITOR.replace( 'cmsEditor',{
+            customConfig: base_url+'ckeditor/ckconfig.js',
+            height: 400
+          });  
+       
+      }); 
+  },
+
+  buildItem : function(item){ 
+    
+    var html = "<li class='dd-item' data-id='" + item.id + "' data-title='"+item.title+"' id='" + item.id + "'>"; 
+    html += "<div class='dd-handle'>" + item.title + "</div>";
+    html += "<i class='mdi mdi-close float-right cms-nav-remove' style='position:absolute;right:10px;top:10px;cursor:pointer;'></i>";
+
+    if (item.children) {
+
+        html += "<ol class='dd-list'>";
+        $.each(item.children, function (index, sub) {
+            html += app.buildItem(sub);
+        });
+        html += "</ol>"; 
+    } 
+    html += "</li>"; 
+    return html;
+  },
+
+  displayCurrentMenu: function displayCurrentMenu(ids){
+    var menus = app.systemApi + '?'+app.keyApi+'&m='+ids;
+  
+    var menuInfo = app.orderStatuses(menus);
+    
+     /* Display Page at left side menu*/
+     menuInfo.always(function(i,s){
+      $('#nestable #cmsSelectedNav').html(''); 
+      if(i.length == 0){  return false; }
+      if(s){  
+          var zvalue = JSON.parse(i[0].zsystem_value);
+
+          $.each(zvalue, function (index, item) { 
+              $('#nestable #cmsSelectedNav').append(app.buildItem(item));   
+          });
+
+          $('#nestable').nestable(); 
+      }
+    });
+
+       // Save Navigation to DB
+       $('body.menu').on('submit','#form-menu',function(e){
+        e.preventDefault();
+          var t = $('.dd').nestable('serialize');
+           var menuID = $('select[name="menu_selection"]').val();
+  
+          var controller = app.updateMenus + '?'+app.keyApi;
+  
+          var namespace = $('body').data('namespace');
+  
+          var data = {'menu_sel' : JSON.stringify(t), 'menuid' : menuID };
+          console.log(data);
+          app.formSubmittion('body','#form-pages', controller, namespace, data);
+      });
+  },
+
+  menuInfos: function menuInfos(ids){
+    var pages = app.pagesApi + '?'+app.keyApi+'&t=page'; 
+    var posts = app.pagesApi + '?'+app.keyApi+'&t=posts';
+
+    var pagesInfo = app.orderStatuses(pages);
+
+    var postsInfo = app.orderStatuses(posts);
+
+    /* Display Page at left side menu*/
+    pagesInfo.always(function(i,s){
+        if(i.length == 0){ return false; }
+        if(s){ 
+          var parent = $('#pageCollapse ul');
+          $.each(i.data, function(o,q){
+            $(parent).append('<li data-id="'+q[0]+'" class="cms-nav-select" data-navtitle="'+q[1]+'" style="cursor:pointer;"><i class="mdi mdi-plus text-info m-r-5"></i><small>'+q[1]+'</small></li>');
+          });
+        }
+    });
+
+    /* Display Posts at left side menu */
+    postsInfo.always(function(i,s){
+      if(i.length == 0){ return false; }
+      if(s){ 
+        var parent = $('#postCollapse ul'); 
+        $.each(i.data, function(o,q){ 
+          $(parent).append('<li  data-id="'+q[0]+'" class="cms-nav-select" data-navtitle="'+q[1]+'" style="cursor:pointer;"><i class="mdi mdi-plus text-info m-r-5"></i><small>'+q[1]+'</small></li>');
+        });
+      }
+    });
+
+    $('body.menu').on('change','#inlineFormCustomSelect', function(e){
+      e.preventDefault(); 
+      app.displayCurrentMenu($(this).val()); 
+    });
+
+    app.displayCurrentMenu(ids); 
+  },
+
+  orderStatuses: function orderStatuses(dataInfo){
+    var dataDetails = $.post(dataInfo, function (data) { 
+      if(data.length == 0) {
+        $('form').remove();
+        return false;
+      }
+      return data; 
+    },'json');
+
+    return dataDetails;
+  },
+
+  /* Display Inquiry Status Counts */
+  orderInquiryStatus: function  orderInquiryStatus(dataInfo, dh){
+    dataInfo.always(function(i,s){
+      if(i.length == 0){ return false; }
+      if(s){ 
+        var received = 0;
+        var responded = 0;
+        var pending = 0;
+        var completed = 0;
+        var net = 0;
+         $.each(i.data, function(z,k){ 
+
+          if(dh){
+              if(k[7] == 23 || k[7] == 24 || k[7] == 25){
+                responded++;
+              }else if(k[7] == 22){
+                pending++;
+              }else if(k[7] == 26){
+                completed++;
+              } 
+          }else{
+              if(k[11] == 23 || k[11] == 24 || k[11] == 25){
+                responded++;
+              }else if(k[11] == 22){
+                pending++;
+              }else if(k[11] == 26){
+                completed++;
+              }
+          } 
+           
+           received++;
+         });
+         
+         net = (parseInt(completed) / parseInt(received) ) * 100; 
+         net = parseInt(net);
+         net = net.toFixed(2);
+          
+         $('body h2#received span').html(received);
+         $('body h2#responded span').html(responded);
+         $('body h2#pending span').html(pending);
+         $('body h2#completed span').html(net+'%');
+      }
+    });
+  },
+  
   init: function init() {
+      console.log(jsCustom);
       /* Table Lists */
       if (jsCustom == 1) app.dataTableConnection();
       /* Profile */
@@ -2179,7 +2716,19 @@ var app = {
       if (jsCustom == 6) app.userInformation();
 
       /* System Module */
+      if (jsCustom == 7) app.systemSettings();
+
+      if (jsCustom == 8) app.trucksInfo();
+      
+      /* System Module */
       if (jsCustom == 9) app.systemInfo();
+
+      if (jsCustom == 10) app.inquiryInfos();
+
+      if (jsCustom == 11) app.postMainInfo();
+
+      if (jsCustom == 12) app.menuInfos(15);
+ 
   }
 };
 $(document).ready(function ($) { 
