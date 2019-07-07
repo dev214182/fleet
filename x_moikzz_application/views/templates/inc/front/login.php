@@ -12,10 +12,10 @@
     <link rel="icon" type="image/png" sizes="16x16" href="<?=file_common_dir('images/favicon.png')?>">
     <title>Admin Press Admin Template - The Ultimate Bootstrap 4 Admin Template</title>
     <!-- Bootstrap Core CSS -->
-    <link href="<?=file_common_dir('back/plugins/bootstrap/css/bootstrap.min.css')?>" rel="stylesheet">  
+    <link href="<?=plugins_dir('bootstrap/css/bootstrap.min.css')?>" rel="stylesheet">  
     
     <!-- toast CSS --> 
-    <link href="<?=file_common_dir('back/plugins/toast-master/css/jquery.toast.css')?>" rel="stylesheet">  
+    <link href="<?=plugins_dir('toast-master/css/jquery.toast.css')?>" rel="stylesheet">  
     <!-- Custom CSS -->
      <link href="<?=file_common_dir('back/css/style.css')?>" rel="stylesheet">  
     <!-- You can change the theme colors from here -->
@@ -43,7 +43,7 @@
     <!-- Main wrapper - style you can find in pages.scss -->
     <!-- ============================================================== -->
     <section id="wrapper">
-        <div class="login-register" style="background-image:url('<?=base_url('x_moikzz_assets/images/backgrounds/login-register-bg.jpg')?>');">
+        <div class="login-register" style="background-image:url('<?=imgs_dir('backgrounds/login-register-bg.jpg')?>');">
             <div class="login-box card">
                 <div class="card-body">
                     <form class="form-horizontal form-material form-login" id="loginform" method="post">
@@ -101,10 +101,10 @@
     <!-- ============================================================== -->
     <!-- All Jquery -->
     <!-- ============================================================== -->
-    <script src="<?=file_common_dir('back/plugins/jquery/jquery.min.js')?>"></script> 
+    <script src="<?=plugins_dir('jquery/jquery.min.js')?>"></script> 
     <!-- Bootstrap tether Core JavaScript -->
-    <script src="<?=file_common_dir('back/plugins/bootstrap/js/popper.min.js')?>"></script>
-    <script src="<?=file_common_dir('back/plugins/bootstrap/js/bootstrap.min.js')?>"></script> 
+    <script src="<?=plugins_dir('bootstrap/js/popper.min.js')?>"></script>
+    <script src="<?=plugins_dir('bootstrap/js/bootstrap.min.js')?>"></script> 
      
     <!-- slimscrollbar scrollbar JavaScript -->
    
@@ -116,16 +116,14 @@
      <script src="<?=file_common_dir('back/js/sidebarmenu.js')?>"></script>
     <!--stickey kit -->
      
-    <script src="<?=file_common_dir('back/plugins/sticky-kit-master/dist/sticky-kit.min.js')?>"></script> 
-    <script src="<?=file_common_dir('back/plugins/sparkline/jquery.sparkline.min.js')?>"></script> 
+    <script src="<?=plugins_dir('sticky-kit-master/dist/sticky-kit.min.js')?>"></script> 
+    <script src="<?=plugins_dir('sparkline/jquery.sparkline.min.js')?>"></script> 
     <!--Custom JavaScript -->
    
      <script src="<?=file_common_dir('back/js/custom.min.js')?>"></script>
 
-     <script src="<?=file_common_dir('back/plugins/toast-master/js/jquery.toast.js')?>"></script>  
-    <script src="<?=file_common_dir('back/js/toastr.js')?>"></script>
-    
-    <script src="<?=file_common_dir('login.js?v=1.0.1')?>"></script> 
+     <script src="<?=plugins_dir('toast-master/js/jquery.toast.js')?>"></script>  
+    <script src="<?=file_common_dir('back/js/toastr.js')?>"></script> 
  
 </body>
 

@@ -6,10 +6,14 @@ class Login extends SS_Controller {
     function __construct(){ 
 
        parent::__construct(); 
+<<<<<<< HEAD
 
         $this->load->model('User_Model','um');
         //$this->load->model('Global_Model', 'gm');
 
+=======
+   
+>>>>>>> July 7
         $this->load->helper('form','url'); 
         $this->load->library('form_validation'); 
 
@@ -20,6 +24,7 @@ class Login extends SS_Controller {
 
             $data['ci_title'] = 'Login';
             $data['pageclass'] = 'login';
+<<<<<<< HEAD
 
            $this->load->view('front/templates/login', $data);
 
@@ -38,6 +43,9 @@ class Login extends SS_Controller {
             $data['pageclass'] = 'login';
            $this->load->view('front/templates/login', $data);
 >>>>>>> Moikzz
+=======
+           $this->load->view('templates/inc/front/login', $data);
+>>>>>>> July 7
         }else{
             redirect('admin/dashboard');
         } 
