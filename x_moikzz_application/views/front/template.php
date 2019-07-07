@@ -67,12 +67,13 @@
                   </ul>
                 </div>
                 <span class="fa fa-envelope"></span>
-                  <em>info@gallega.com</em> 
+                  <a href="mailto:info@gallega.com">Email:  info@gallega.com</a> 
               </div>
             </div>
             <div class="col-xs-5">  
               <div class="b-topBar__tel">
-                <span class=" p-r-20 pull-right">+971 48 215 099</span>
+                <span class=" p-r-20 pull-right">
+                <a href="tel:+97148215099"> +971 48 215 099 </a></span>
               </div>
             </div>
           </div>
@@ -97,8 +98,8 @@
                 <div class="col-md-4 col-xs-6 gal-contact-container">  
                   <div class="b-topBar__tel">
                     <span class="fa fa-envelope"></span>
-                      <em>Email:  info@gallega.com</em> 
-                    <span class="pull-right p-r-20">+971 48 215 099</span>
+                      <a href="mailto:info@gallega.com">Email:  info@gallega.com</a> 
+                    <span class="pull-right p-r-20"><a href="tel:+97148215099"> +971 48 215 099</a></span>
                   </div>
                 </div>
 
@@ -336,7 +337,7 @@
                
               <div class="b-info__contacts-item">
                 <span class="fa fa-envelope"></span>
-                <em>Email:  info@gallega.com</em>
+                <em><a href="#">Email:  info@gallega.com</a></em>
               </div>
             </address>
             <address class="b-info__map">
