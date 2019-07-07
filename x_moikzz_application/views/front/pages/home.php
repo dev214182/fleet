@@ -335,14 +335,22 @@
                     <label>Travel</label>
                   </div>
                   <div class="col-xs-4 col-lg-3">
+<<<<<<< HEAD
                     <select name="select1" class="rx-country">
+=======
+                    <select name="select1" id="input_origin_place" class="rx-country">
+>>>>>>> Moikzz
                       <option value="" selected="">From</option>
                     </select>
                     
                     <p>Origin?</p>
                   </div>
                   <div class="col-xs-4 col-lg-3">
+<<<<<<< HEAD
                      <select name="select2" class="rx-country">
+=======
+                     <select name="select2" id="input_destination_place" class="rx-country">
+>>>>>>> Moikzz
                       <option value="" selected="">To</option>
                     </select>
                     

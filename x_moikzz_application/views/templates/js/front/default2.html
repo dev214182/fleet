@@ -1,0 +1,78 @@
+ <!--Theme-->
+ <script src="<?=file_common_dir('front/js/jquery.smooth-scroll.js')?>"></script>
+ <script src="<?=file_common_dir('front/js/wow.min.js')?>"></script>
+
+ <script src="<?=file_common_dir('front/js/theme.js')?>"></script>
+
+ <script src="//cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js"></script>
+ <script type="text/javascript">
+ jQuery(document).ready(function($) { 
+   $(".rx-country").select2();
+
+   // && window.pageYOffset >= 500
+   $(window).scroll(function() {    
+     var scroll = $(window).scrollTop();
+     if (scroll >= 400) {
+       $("body").addClass("fixedheader");
+     }else{
+       $("body").removeClass("fixedheader");  
+     }
+  
+   }); //missing );
+
+   /* GSAP */
+   var navSpeed = 0.2;
+   var colorDelayIn = navSpeed/2;
+   var colorDelayOut = 0;
+   var lineColor = "linear-gradient(to right, rgb(116, 116, 191), rgb(52, 138, 199))";
+   var lineColorOpen = "linear-gradient(to right, rgb(255, 255, 255), rgb(255, 255, 255))";
+
+
+   var line1 = $('.line1');
+   var line2 = $('.line2');
+   var line3= $('.line3');
+   var line123 = $('.line1, .line2, .line3');
+   var mobileNav = $('.mobileNav');
+
+
+   $('.mobileButton').click(function(){
+   if($(this).hasClass('X')){
+     $(this).removeClass('X');
+     closeTheMobileNav();
+   }
+   else{
+     $(this).addClass('X');
+     openTheMobileNav();
+   }
+   });
+
+
+   function openTheMobileNav(){
+     TweenMax.killTweensOf(line123);
+     TweenMax.to(line1, navSpeed, {css:{transform:"translateY(0)"}, ease:Back.easeIn});
+     TweenMax.to(line3, navSpeed, {css:{transform:"translateY(0px)"},ease:Back.easeIn});
+     TweenMax.to(line2, navSpeed, {opacity:0, ease:Back.easeIn});
+     TweenMax.to(line1, navSpeed, {rotation:"+45deg", delay: navSpeed, ease: Back.easeOut});
+     TweenMax.to(line3, navSpeed, {rotation:"-45deg", delay: navSpeed, ease: Back.easeOut});
+     TweenMax.to(line123, navSpeed, {className:"+=open", ease:Back.easeIn, delay: colorDelayIn});
+
+     // YOUR MOBILE NAVIGATION
+     TweenLite.to(mobileNav, navSpeed, {className:"+=open", ease:Quad.easeOut});
+   }
+
+   function closeTheMobileNav(){
+     TweenMax.killTweensOf(line123);
+     TweenMax.to(line1, navSpeed, {rotation:"0deg", ease: Power1.easeOut});
+     TweenMax.to(line3, navSpeed, {rotation:"0deg", ease: Power1.easeOut});
+     TweenMax.to(line2, navSpeed, {opacity:1, ease:Back.easeIn});
+     TweenMax.to(line1, navSpeed, {css:{transform:"translateY(-8px)"}, delay: navSpeed, ease:Back.easeOut});
+     TweenMax.to(line3, navSpeed, {css:{transform:"translateY(8px)"}, delay: navSpeed,ease:Back.easeOut});
+     TweenMax.to(line123, navSpeed, {className:"-=open", ease:Back.easeIn, delay: colorDelayIn});
+
+     // YOUR MOBILE NAVIGATION
+     TweenLite.to(mobileNav, navSpeed, {className:"-=open", ease:Quad.easeIn});
+   }
+   /* GSAP */
+
+ });
+ </script>

@@ -1,0 +1,14 @@
+<?php if(@$filter_css_js && in_array('carousel', $filter_css_js)){ ?>   
+<!--Owl Carousel-->
+<script src="<?=file_common_dir('front/plugins/owl-carousel/owl.carousel.min.js')?>"></script>
+<?php } ?>
+<?php if(@$filter_css_js && in_array('slider', $filter_css_js)){ ?>   
+<!--bxSlider-->
+<script src="<?=file_common_dir('front/plugins/bxslider/jquery.bxslider.js')?>"></script>  
+<!-- jQuery UI Slider -->
+<script src="<?=file_common_dir('front/plugins/slider/jquery.ui-slider.js')?>"></script>
+<?php } ?>
+<?php if(@$filter_css_js && in_array('select2', $filter_css_js)){ ?>   
+
+<script src="<?=plugins_dir('select2/dist/js/select2.full.min.js')?>" type="text/javascript"></script>
+<?php } ?>

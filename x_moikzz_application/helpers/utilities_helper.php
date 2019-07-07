@@ -5,10 +5,15 @@
 		function file_common_dir( $file ){ 
 			return  base_url().'x_moikzz_assets/'.$file; 
 		} 
+<<<<<<< HEAD
 	}
 	// @mel
 
 
+=======
+	} 
+	
+>>>>>>> Moikzz
 	if (!function_exists('file_common_dir_back')) { 
 
 		function file_common_dir_back( $file ){ 
@@ -39,8 +44,14 @@
 		}  
 	} 
 
-	if (!function_exists('public_key')) { 
+	if (!function_exists('logged_info')) {
+		function logged_info(){
+			$info = array('id'=> 1, 'type' =>1);
+			return  $info;
+		}
+	}
 
+	if (!function_exists('public_key')) {
 		function public_key(){ 
 			$year = date('Y');
 			$month = date('m');
@@ -48,7 +59,6 @@
 			//$key = '2zSM*(sOGkVs193'.$year.'71Jq)Sk0*^%skdjDs3'.$month.'1Fz4AKz821Pq7'.$day.'3atK'; 
 			$key = '2zSM*(sOGkVs193201971Jq)Sk0*^%skdjDs3051Fz4AKz821Pq7053atK'; 
 			return  $key;
-
 		} 
 	}
 
@@ -163,25 +173,25 @@
 
 			    case 1:
 
-			        echo "Preview";
+				return "Preview";
 
 			        break;
 
 			    case 2:
 
-			        echo "<p class='text-danger msg-inline'>Deleted</p>";
+				return "<p class='text-danger msg-inline'>Deleted</p>";
 
 			        break;
 
 			    case 3:
 
-			        echo "<p class='text-warning msg-inline'>Rejected</p>";
+				return "<p class='text-warning msg-inline'>Rejected</p>";
 
 			        break;
 
 			    case 4:  
 
-			        echo "<p class='text-primary msg-inline'>Private</p>";
+				return "<p class='text-primary msg-inline'>Private</p>";
 
 			        break;
 
@@ -209,7 +219,7 @@
 	                break;
 		     	case 9:
 
-                	echo "<p class='text-success msg-inline'>Published</p>";
+                	return "<p class='text-success msg-inline'>Published</p>";
 
                 	break; 
 				case 10:
@@ -271,10 +281,30 @@
 
 	                return "<p class='text-success msg-inline'>Premium</p>";
 
+					break;
+				case 22:
+
+	                return "<p class='text-default msg-inline'>Order Received</p>";
+
+					break;
+				case 23: 
+	                return "<p class='text-info msg-inline'>Order Confirmed</p>"; 
+					break;
+				case 24: 
+	                return "<p class='text-primary msg-inline'>Quote Sent</p>"; 
+					break;	
+				case 25: 
+	                return "<p class='text-primary msg-inline'>Customer Contacted</p>"; 
+					break;
+				case 26: 
+	                return "<p class='text-success msg-inline'>Payment Completed</p>"; 
+					break;
+				case 27: 
+	                return "<p class='text-default msg-inline'>Draft</p>"; 
 					break;		
 			    default:
 
-			        echo "Preview";
+			        return "Preview";
 
 			        break;
 
@@ -392,7 +422,32 @@
 					break;
 				case 21:
 
-	                return "Premium";
+					return "Premium";
+				case 22:
+
+	                return "Order Received";
+
+					break;
+				case 23: 
+
+	                return "Order Confirmed"; 
+					break;
+				case 24: 
+
+	                return "Quote Sent"; 
+					break;	
+				case 25: 
+
+	                return "Customer Contacted"; 
+					break;
+				case 26: 
+
+					return "Payment Completed"; 
+					break;
+				case 27: 
+
+					return "Draft"; 
+					break; 
 			    default:
 
 			        return "Preview";
@@ -403,19 +458,33 @@
 		}  
 	}
 
+	if (!function_exists('yes_no')) {  
+		function yes_no($key) {   
+			switch($key){ 
+			    case 1: 
+			        return "Yes"; 
+					break;
+			 
+				default: 
+			        return "No"; 
+			        break; 
+			}  
+		}
+	}
+
 	if (!function_exists('user_types_clean')) {  
 		function user_types_clean($key) {   
 			switch($key){ 
-			    case "admin": 
+			    case 2: 
 			        return "Administrator"; 
 					break;
-				case "editor": 
+				case 3: 
 			        return "Editor"; 
 					break;
-				case "seo_editor": 
+				case 4: 
 			        return "SEO Editor"; 
 					break;
-				case "staff": 
+				case 5: 
 			        return "Admin Staff"; 
 					break; 
 				default: 

@@ -29,7 +29,7 @@ $pcode = array('id' => 'inputpostal', 'placeholder' => 'Postal Code', 'class' =>
                 <div class="form-row">
                 <div class="col-md-6">
                         <div class="form-group row">
-                            <label for="inputFirst" class="col-sm-3 text-right control-label col-form-label">Name*</label>
+                            <label for="inputFirst" class="col-sm-3 label-right control-label col-form-label">Name*</label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" id="inputFirst"  placeholder="Name" name="<?=$profile_name?>" autofocus required>
                                 <?php if(@$_GET['id']){  ?>
@@ -39,19 +39,19 @@ $pcode = array('id' => 'inputpostal', 'placeholder' => 'Postal Code', 'class' =>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="profemail" class="col-sm-3 text-right control-label col-form-label">Email</label>
+                            <label for="profemail" class="col-sm-3 label-right control-label col-form-label">Email</label>
                             <div class="col-sm-9">
-                                <input type="email" id="profemail" class="form-control" name="<?=$profile_email?>" placeholder="Email" required>
+                                <input type="email" autocomplete="username" id="profemail" class="form-control" name="<?=$profile_email?>" placeholder="Email" required>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="inputPhone" class="col-sm-3 text-right control-label col-form-label">Phone</label>
+                            <label for="inputPhone" class="col-sm-3 label-right control-label col-form-label">Phone</label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" id="inputPhone" placeholder="Phone Number" name="<?=$profile_phone?>">
                             </div>
                         </div> 
                         <div class="form-group row">
-                            <label for="inputWeb" class="col-sm-3 text-right control-label col-form-label">Website</label>
+                            <label for="inputWeb" class="col-sm-3 label-right control-label col-form-label">Website</label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" id="inputWeb" placeholder="Website" value="<?=base_url()?>" name="<?=$profile_website?>">
                             </div>  
@@ -60,7 +60,7 @@ $pcode = array('id' => 'inputpostal', 'placeholder' => 'Postal Code', 'class' =>
                     </div>
                     <div class="col-md-6">
                     <div class="form-group row">
-                            <label for="inputCountry" class="col-sm-3 text-right control-label col-form-label">Country</label>
+                            <label for="inputCountry" class="col-sm-3 label-right control-label col-form-label">Country</label>
                             <div class="col-sm-9">
                                 <select class="custom-select" id="inputCountry" name="<?=$profile_country?>">
                                     <option value="United Arab Emirates">United Arab Emirates</option> 
@@ -69,7 +69,7 @@ $pcode = array('id' => 'inputpostal', 'placeholder' => 'Postal Code', 'class' =>
                             </div>
                         </div> 
                         <div class="form-group row">
-                            <label for="inputState" class="col-sm-3 text-right control-label col-form-label">State</label>
+                            <label for="inputState" class="col-sm-3 label-right control-label col-form-label">State</label>
                           
                             <div class="col-sm-9">
                                     <select class="custom-select" id="inputState" name="<?=$profile_state?>">
@@ -86,17 +86,11 @@ $pcode = array('id' => 'inputpostal', 'placeholder' => 'Postal Code', 'class' =>
                             </div>
                         </div>  
                         <div class="form-group row">
-                            <label for="inputAddress" class="col-sm-3 text-right control-label col-form-label">Address</label>
+                            <label for="inputAddress" class="col-sm-3 label-right control-label col-form-label">Address</label>
                             <div class="col-sm-9"> 
                                 <?php echo form_input($profile_address,'',$padd);  ?> 
                             </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="inputpostal" class="col-sm-3 text-right control-label col-form-label">Postal Code</label>
-                            <div class="col-sm-9">
-                                <?php echo form_input($profile_postal_code,'00000',$pcode); ?> 
-                            </div> 
-                        </div>
+                        </div> 
                     </div> 
                 </div>
                 <div class="row row-pass">
@@ -114,18 +108,30 @@ $pcode = array('id' => 'inputpostal', 'placeholder' => 'Postal Code', 'class' =>
                                     <?php } ?>
                                     </div> 
 
-                                    <label class="col-xl-1 col-md-6 col-sm-12 control-label col-form-label text-right">Type</label>
+                                    <label class="col-xl-1 col-md-6 col-sm-12 control-label col-form-label label-right">Type</label>
                                     <div class="col-xl-2 col-md-6 col-sm-12"> 
                                         <select class="form-control" id="user_types" name="<?=$profile_types?>" required> 
                                             <option value="2">Administrator</option>
                                             <option value="3">Editor</option>
                                             <option value="4">SEO Editor</option>
                                             <option value="5">Staff</option>
-                                            <option value="6" >Client</option>
+                                            <option value="6" >Customer</option>
                                         </select>
-                                    </div> 
+                                    </div>
 
-                                    <label class="col-xl-1 col-md-6 col-sm-12 control-label col-form-label text-right">Status</label>
+                                    <label class="col-xl-1 col-md-6 col-sm-12 control-label col-form-label label-right">Type</label>
+                                    <div class="col-xl-2 col-md-6 col-sm-12"> 
+                                        <select class="form-control" id="customer_types" name="customer_types" required> 
+                                            <optgroup label="Customers Only">
+                                            <option value=""> - Select -</option>
+                                            <option value="19">Normal</option>
+                                            <option value="20">Advance</option>
+                                            <option value="21">Premium</option>
+                                            </optgroup> 
+                                        </select>
+                                    </div>
+
+                                    <label class="col-xl-1 col-md-6 col-sm-12 control-label col-form-label label-right">Status</label>
                                     <div class="col-xl-2 col-md-6 col-sm-12"> 
                                         <select class="form-control" id="user_status" name="profile_status" required> 
                                             <option value="9">Published</option>
@@ -140,7 +146,8 @@ $pcode = array('id' => 'inputpostal', 'placeholder' => 'Postal Code', 'class' =>
                             <label for="inputPass" class="col-xl-1 col-md-6 col-sm-12 control-label col-form-label">Password</label>
                             <div class="col-xl-4 col-md-6 col-sm-12">
                                 <div class="input-group">
-                                    <input type="password" class="form-control col-md-6 col-sm-12" id="inputPass" name="profile_password" maxlength="25"  <?php if(@$_GET['id']){}else{ echo 'required'; }  ?>  placeholder="****************************">    
+                                    
+                                    <input type="password" autocomplete="current-password" class="form-control col-md-6 col-sm-12" id="inputPass" name="profile_password" maxlength="25"  <?php if(@$_GET['id']){}else{ echo 'required'; }  ?>  placeholder="****************************">    
                                     <div class="input-group-append">
                                         <span class="input-group-text bg-theme text-white" id="basic-addon2">
                                         <i class="fa view-pass fa-eye reveal-pass"></i>
@@ -159,8 +166,7 @@ $pcode = array('id' => 'inputpostal', 'placeholder' => 'Postal Code', 'class' =>
                                 <input type="hidden" hidden class="hidden" id="old_inputWeb"   name='old_profile_website'>
                                 <input type="hidden" hidden class="hidden" id="old_inputCountry"   name='old_profile_country'>
                                 <input type="hidden" hidden class="hidden" id="old_inputState"   name='old_profile_state'>
-                                <input type="hidden" hidden class="hidden" id="old_inputAddress"   name='old_profile_address'> 
-                                <input type="hidden" hidden class="hidden" id="old_inputpostal"   name='old_profile_postal_code'>
+                                <input type="hidden" hidden class="hidden" id="old_inputAddress"   name='old_profile_address'>  
 
                                 <input type="hidden" hidden class="hidden" id="old_user_types"   name='old_profile_types'>
                                 <input type="hidden" hidden class="hidden" id="old_user_status"   name='old_profile_status'> 

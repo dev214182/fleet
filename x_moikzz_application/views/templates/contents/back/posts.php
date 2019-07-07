@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?php defined('BASEPATH') OR exit('No direct script access allowed');?>      
 <div class="row">
     <!-- column -->
@@ -139,3 +140,6 @@
         </div>
     </div>
 </div>
+=======
+<?php $this->load->view('templates/contents/back/tables'); ?>
+>>>>>>> Moikzz

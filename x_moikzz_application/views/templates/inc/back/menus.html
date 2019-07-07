@@ -1,20 +1,32 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');?>
-<li class="<?=current_uri_segments('dashboard')?>"> <a class="waves-effect waves-dark <?=current_uri_segments('dashboard')?>" href="<?=site_url('client/page/dashboard/')?>" aria-expanded="false"><i class="mdi mdi-gauge"></i><span class="hide-menu">Dashboard </span></a> </li>
-<li class="<?=current_uri_segments('inquiries')?>"> <a class="waves-effect waves-dark <?=current_uri_segments('inquiries')?>" href="<?=site_url('client/page/inquiries/')?>" aria-expanded="false"><i class="mdi mdi-newspaper"></i><span class="hide-menu">Inquiries </span></a> </li>
-<li class="<?=current_uri_segments('trucks')?>"> <a class="waves-effect waves-dark <?=current_uri_segments('trucks')?>" href="<?=site_url('client/page/trucks/')?>" aria-expanded="false"><i class="mdi mdi-newspaper"></i><span class="hide-menu">Trucks </span></a> </li>
-<li class="<?=current_uri_segments('posts')?>"> <a class="waves-effect waves-dark <?=current_uri_segments('posts')?>" href="<?=site_url('client/page/posts/')?>" aria-expanded="false"><i class="mdi mdi-newspaper"></i><span class="hide-menu">Posts </span></a> </li>
-<li class="<?=current_uri_segments('pages')?>"> <a class="waves-effect waves-dark <?=current_uri_segments('pages')?>" href="<?=site_url('client/page/pages/')?>" aria-expanded="false"><i class="mdi mdi-file-document-box"></i><span class="hide-menu">Pages </span></a> </li>
-<li class="<?=current_uri_segments('contact_form')?>"> <a class="waves-effect waves-dark <?=current_uri_segments('contact_form')?>" href="<?=site_url('client/page/contact_form/')?>" aria-expanded="false"><i class="mdi mdi-book-multiple-variant"></i><span class="hide-menu">Contact Form </span></a> </li>
-<li class="<?=current_uri_segments('menus')?>"> <a class="waves-effect waves-dark <?=current_uri_segments('menus')?>" href="<?=site_url('client/page/menus/')?>" aria-expanded="false"><i class="mdi mdi-menu"></i><span class="hide-menu">Menus </span></a> </li>
-<li class="<?=current_uri_segments('media')?>"> <a class="waves-effect waves-dark <?=current_uri_segments('media')?>" href="<?=site_url('client/page/media/')?>" aria-expanded="false"><i class="mdi mdi-file-image"></i><span class="hide-menu">Media </span></a> </li>
-<li class="<?=current_uri_segments('settings')?>"> <a class="waves-effect waves-dark <?=current_uri_segments('settings')?>" href="<?=site_url('client/page/settings/')?>" aria-expanded="false"><i class="mdi mdi-settings"></i><span class="hide-menu">Settings </span></a> </li>
-<li class="<?=current_uri_segments('testimonials')?>"> <a class="waves-effect waves-dark <?=current_uri_segments('testimonials')?>" href="<?=site_url('client/page/testimonials/')?>" aria-expanded="false"><i class="mdi mdi-comment-account"></i><span class="hide-menu">Testimonials </span></a> </li>
-<li class="<?=current_uri_segments('products')?>"> <a class="waves-effect waves-dark <?=current_uri_segments('products')?>" href="<?=site_url('client/page/products/')?>" aria-expanded="false"><i class="mdi mdi-cart"></i><span class="hide-menu">Products </span></a> </li>
-<li class="<?=current_uri_segments('categories')?>"> <a class="waves-effect waves-dark <?=current_uri_segments('categories')?>" href="<?=site_url('client/page/categories/')?>" aria-expanded="false"><i class="mdi mdi-file-document"></i><span class="hide-menu">Categories </span></a> </li>
-<li class="<?=current_uri_segments('orders')?>"> <a class="waves-effect waves-dark <?=current_uri_segments('orders')?>" href="<?=site_url('client/page/orders/')?>" aria-expanded="false"><i class="mdi mdi-basket"></i><span class="hide-menu">Meal Orders </span></a> </li>
-<li class="<?=current_uri_segments('payments')?>"> <a class="waves-effect waves-dark <?=current_uri_segments('payments')?>" href="<?=site_url('client/page/payments/')?>" aria-expanded="false"><i class="mdi mdi-credit-card"></i><span class="hide-menu">Payment History </span></a> </li>
-<li class="<?=current_uri_segments('customers')?>"> <a class="waves-effect waves-dark <?=current_uri_segments('customers')?>" href="<?=site_url('client/page/customers/')?>" aria-expanded="false"><i class="mdi mdi-account-multiple"></i><span class="hide-menu">Customers </span></a> </li>
-<li class="<?=current_uri_segments('history')?>"> <a class="waves-effect waves-dark <?=current_uri_segments('history')?>" href="<?=site_url('client/page/history/')?>" aria-expanded="false"><i class="mdi mdi-book-open-page-variant"></i><span class="hide-menu">History </span></a> </li>
+<?php
+$menus = array( array('title' =>'Dashboard','id' => 'dashboard','icon' => 'mdi mdi-gauge'), 
+                array('title' =>'Inquiries','id' => 'inquiries','icon' => 'mdi mdi-newspaper'),
+                array('title' =>'Trucks','id' => 'trucks','icon' => 'mdi mdi-newspaper'),
+                array('title' =>'Posts','id' => 'posts','icon' => 'mdi mdi-newspaper'),
+                array('title' =>'Pages','id' => 'pages','icon' => 'mdi mdi-file-document-box'),
+                array('title' =>'Contact Form','id' => 'contact_form','icon' => 'mdi mdi-book-multiple-variant'),
+                array('title' =>'Menus','id' => 'menus','icon' => 'mdi mdi-menu'),
+                array('title' =>'Media','id' => 'media','icon' => 'mdi mdi-file-image'),
+                array('title' =>'Settings','id' => 'settings','icon' => 'mdi mdi-settings'),
+                array('title' =>'Testimonials','id' => 'testimonials','icon' => 'mdi mdi-comment-account'),
+                array('title' =>'Products','id' => 'products','icon' => 'mdi mdi-cart'),
+                array('title' =>'Categories','id' => 'categories','icon' => 'mdi mdi-file-document'),
+                array('title' =>'Payments','id' => 'payments','icon' => 'mdi mdi-credit-card'),
+                array('title' =>'Customers','id' => 'customers','icon' => 'mdi mdi-account-multiple'),
+                array('title' =>'Orders','id' => 'orders','icon' => 'mdi mdi-file-document'),
+                array('title' =>'History','id' => 'history','icon' => 'mdi mdi-book-open-page-variant')
+                );
+
+$menu_active= @unserialize($active_menus[0]->zvalue);
+$active_pages = $menu_active['pages'];
+foreach($menus AS $k => $v){
+    if (@$userType == 1 || in_array($v['id'], $active_pages)){
+?>
+<li class="<?=current_uri_segments($v['id'])?>"> <a class="waves-effect waves-dark <?=current_uri_segments($v['id'])?>" href="<?=site_url('client/page/'.$v['id'])?>/" aria-expanded="false"><i class="mdi <?=$v['icon']?>"></i><span class="hide-menu"><?=$v['title']?> </span></a> </li>
+<?php } }?>
 <li class="nav-small-cap">Administrator</li>
 <li class="<?=current_uri_segments('users')?>"> <a class="waves-effect waves-dark <?=current_uri_segments('users')?>" href="<?=site_url('client/page/users/')?>" aria-expanded="false"><i class="mdi mdi-account-multiple"></i><span class="hide-menu">Users </span></a> </li>
+<?php  if( $userType == 1 ){?>
 <li class="<?=current_uri_segments('system')?>"> <a class="waves-effect waves-dark <?=current_uri_segments('system')?>" href="<?=site_url('client/page/system/')?>" aria-expanded="false"><i class="mdi mdi-lock-pattern"></i><span class="hide-menu">System</span></a> </li>
+<?php } ?>

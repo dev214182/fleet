@@ -15,6 +15,7 @@ class General_pages extends SS_Controller {
     }
     
     function cart_listing_callback(){ 
+<<<<<<< HEAD
         /*$comp = $this->input->post('company');
         $dept = $this->input->post('department');
         $pos = $this->input->post('position');
@@ -32,5 +33,13 @@ class General_pages extends SS_Controller {
                  
                 echo json_encode(array('success'=>$success, 'respond' => $data));
            // }
+=======
+      
+        $data =  $this->input->post('items');
+        
+                 
+        echo json_encode(array('success'=>$success, 'respond' => $data));
+          
+>>>>>>> Moikzz
     }
 } 

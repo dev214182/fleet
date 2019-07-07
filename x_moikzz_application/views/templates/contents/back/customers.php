@@ -1,1 +1,1 @@
-<?php $this->load->view('templates/contents/back/users'); ?>
+<?php $this->load->view('templates/contents/back/tables'); ?>

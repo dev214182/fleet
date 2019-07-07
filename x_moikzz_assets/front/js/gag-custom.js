@@ -6,6 +6,7 @@ var app = {
         return true ? $('body').hasClass('rtl') : false;
     },  
 
+<<<<<<< HEAD
     data_country: function(){ 
 
         // country lists
@@ -131,18 +132,42 @@ var app = {
             $(this).parents('.b-items__cars-one').remove();
         })
     },
+=======
+    data_country: function(){  
+        
+        if($('select').hasClass('rx-country')){
+            $.ajax({
+                dataType: "json",
+                url: base_url + 'x_moikzz_assets/country_lists.json',
+                cache: true,
+                success: function(data,k){
+                    var dataParse = data;
+                    $.each(dataParse, function(i,o){
+                        $('#input_origin_place').append('<option value="'+o.name+'"> '+o.name+'</option>');
+                        $('#input_destination_place').append('<option value="'+o.name+'"> '+o.name+'</option>');
+                    });
+                }
+              });
+        }
+    }, 
+ 
+>>>>>>> Moikzz
     //------------------------------------------------------------------------///
     init: function () {    
                  
         // country function
         app.data_country();  
 
+<<<<<<< HEAD
         if($('body').hasClass('search-page'))
             app.listings_view_details();  
         
         if($('body').hasClass('cart'))    
             app.items_in_cart();  
        
+=======
+     
+>>>>>>> Moikzz
     }
 }; 
 

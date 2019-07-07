@@ -9,9 +9,11 @@ class Viewing_callbacks extends SS_Controller {
 
     protected $data_pages;
     protected $lists = false;
+    protected $order_company = false;
     protected $studz = false;
     protected $query;
     protected $query_table;
+    protected $_table_company    = 'mz_company AS ccomp';
     protected $_table_extras    = 'mz_extras_free AS extr';
     protected $_table_balances    = 'mz_balances AS bal';
     protected $_table_system    = 'mz_system AS sys';
@@ -27,7 +29,7 @@ class Viewing_callbacks extends SS_Controller {
     protected $_table_order_details = 'mz_orderdetails AS ordd'; 
     protected $_table_products = 'mz_products AS prod';
     protected $_table_categories = 'mz_categories AS cats'; 
-    protected $_table_social_media = 'mz_social_media AS socm';
+    protected $_table_social_media = 'mz_postsocialmedia AS socm';
     protected $_table_postmain = 'mz_postmain AS post';
     protected $_table_orgsmeta = 'mz_orgsmeta AS orgm';
     protected $_table_organization = 'mz_organization AS orgs';
@@ -55,7 +57,8 @@ class Viewing_callbacks extends SS_Controller {
     * $_GET['s'] for parent ID
     * $_GET['x'] for  organization type ( school = sc / company = comp / department = dept / division = div / section = sec / grade etc...)
     */
-    protected $userID = 2; // need to change to login user - temporary only
+    protected $userID; // need to change to login user - temporary only
+    protected $userType; //This will be change to session logged type - temporary only
     function __construct(){  
         parent::__construct(); 
         $this->load->helper('url'); 
@@ -69,10 +72,11 @@ class Viewing_callbacks extends SS_Controller {
     }
 
     public function view($page='404'){ 
-
-        $key = '2zSM*(sOGkVs193201971Jq)Sk0*^%skdjDs3051Fz4AKz821Pq7053atK';//public_key();
-        
-        if(@$_GET['k'] == $key/*  && $this->input->is_ajax_request() */){
+        $this->userID = logged_info()['id'];
+        $this->userType = logged_info()['type']; 
+        $key = public_key();
+      
+        if(@$_GET['k'] == $key /* && $this->input->is_ajax_request() */){
             if (!method_exists($this, $page)){
                 $this->page_not_found();
                 return false;
@@ -80,13 +84,10 @@ class Viewing_callbacks extends SS_Controller {
                 $this->links($page);
             }
         }else{
-           
             echo 'Direct access is not allowed!';
-            die();
-            return false;  
+            return false;
         }
-        
-    } 
+    }
 
     private function links($p){
         $this->data_pages = $p;
@@ -133,7 +134,12 @@ class Viewing_callbacks extends SS_Controller {
     }
 
     private function _site_settings(){
+        global $_GET;
         $this->query_table =  $this->_table_system;
+
+        if(@$_GET['m']){
+            $this->query = array( 'where' =>  array('zid' => $_GET['m']));
+        }
         $this->jsons();
     }
 
@@ -176,6 +182,52 @@ class Viewing_callbacks extends SS_Controller {
             $this->query = array( 'where' =>  'cats.zid = prod.zcategory AND prod.zstatus = "'.$_GET['p'].'" AND prod.zorganization = "'.$_GET['o'].'" AND cats.zstatus = 9 AND cats.ztype = "product" AND prod.zdate_display >= "'.$currentDate.'"',
                                     'fields' => 'prod.*');
         
+        /* For Trucks/Fleet */
+        }elseif(@$_GET['p'] && @$_GET['p'] == 9 && @$_GET['f']){ 
+            // Display all products except deleted
+            $this->query = array( 'where' => 'cats.zid = prod.zcategory AND prod.zstatus != 2 AND cats.ztype = "product" AND prod.zid = '.$_GET['f'],
+                                    'fields' => 'prod.*, cats.ztitle');
+        /** For Trucks/Fleet **/     
+        }elseif(@$_GET['t']){ 
+                $status = '';
+            // Display all products except deleted
+            if(@$_GET['p']){
+                $status = 'AND zstatus ='. $_GET['p'];
+            }
+
+            $this->lists =  array(  'zid',
+                                    'zid',
+                                    'zstatus',  
+                                    'zcategory',  
+                                    'zloads',
+                                    'ztravel_list_from',
+                                    'ztravel_list_to',
+                                    'zprice',
+                                    'zsaleprice',
+                                    'zpremprice' ,
+                                    'zdate_from' ,
+                                    'zdate_to'                                                                      
+                            ); 
+           
+            $this->query = array( 'fields_listing' => array( 
+                                                                'zid',
+                                                                'zcategory',  
+                                                                'zloads',
+                                                                'ztravel_from',
+                                                                'ztravel_to',
+                                                                'zprice',
+                                                                'zsaleprice',
+                                                                'zpremprice',
+                                                                'zstatus',
+                                                                'zdate_from' ,
+                                                                'zdate_to'       
+                                                            ),
+                                'fields' => 'prod.*, cats.ztitle',
+                                'where' => 'cats.zid = prod.zcategory AND prod.zstatus != 2 '.$status.' AND cats.ztype = "product" AND prod.ztype ="'.$_GET['t'].'"',
+                                'order_by' => 'LENGTH(prod.zdate_published), prod.zdate_published',
+                                            'order' => 'DESC');                  
+
+
         }elseif(@$_GET['p'] && @$_GET['p'] == 'administrator'){
             
             // for admin
@@ -190,43 +242,129 @@ class Viewing_callbacks extends SS_Controller {
         $this->query_table =  $this->_table_products .','. $this->_table_categories;
         $this->jsons();
     }
+    
 
-    private function _orders(){
-            global $_GET;
-            $this->query_table =  $this->_table_orders .' , '. $this->_table_order_details;
-            $datas = ' AND ords.zstatus != 2';
+    private function _pageslist(){
+        global $_GET;
+        $this->query_table =  $this->_table_postmain;   
 
-            // Display specific student order
-            if(@$_GET['s']){
-                $datas .= " AND ords.zorder_to =".$_GET['s'];
-            }
+       
+        
+        if(@$_GET['z']){
+           
+            $this->lists = false;
+            $this->query_table =  $this->_table_postmain. ', '. $this->_table_social_media;
+            $this->query = array(   'fields' => '*',
+                                    'where' =>  'post.zid = socm.zparent AND post.zid ='.$_GET['z']
+                                    ); 
+        }else{
 
-            // Display all orders from children
-            if(@$_GET['x']){
-                $datas = " AND ords.zauthor =".$_GET['x'];
-            }
+            if(@!$_GET['t']) return false;
 
-            $this->lists =  array(  'zorder_to',
-                                    'zorganization',  
-                                    'zproduct',
-                                    'zprice',
+            $this->lists =  array(  
+                                    'zid',
+                                    'ztitle',
+                                    'zauthor',  
                                     'zdate_published',
+                                    'zstatus',
                                     'zstatus'
                             );
 
-            $this->query = array( 'fields_listing' => array( 
-                                                'zorder_to',
-                                                'zorganization',  
-                                                'zproduct',
-                                                'zprice',
-                                                'zdate_published',
-                                                'zstatus'
+            $this->query = array(   'fields_listing' => array(
+                                                'zid',
+                                                        'ztitle',
+                                                        'zauthor',  
+                                                        'zdate_published',
+                                                        'zstatus'     
+                                                        ),
+                                    'fields' => '*',
+                                    'where' =>  'zstatus != 2 AND ztype="'.$_GET['t'].'"',
+                                    'order_by' => 'LENGTH(zdate_published), zdate_published',
+                                                'order' => 'DESC'); 
+        }
+    
+        $this->jsons();
+    }
+
+    
+
+
+    private function _orders(){
+            global $_GET;
+            $this->query_table =  $this->_table_orders .' , '. $this->_table_order_details; 
+            $datas = '';
+            $suc = false;
+            // Display all orders from author
+            if(@$_GET['x']){ 
+                $datas = " AND ords.zauthor =".$_GET['x'];
+                $suc = true;
+            }elseif(@$_GET['p'] == 99){ 
+                $suc = true;
+            } 
+            $this->order_company = true; 
+           
+            $this->lists =  array(  
+                                    'zid',
+                                    'zid',
+                                    'zstatus',
+                                    'zauthor',  
+                                    'zcategory',
+                                    'zloads',
+                                    'ztravel_list_from',
+                                    'zcustomer_type', 
+                                    'zurgent', 
+                                    'zdate_published',
+                                    'ztravel_to',
+                                    'zstatusID'
+                            );
+
+            if(@$_GET['dashboard']){
+                
+                $this->lists =  array(  
+                                            'zid', 
+                                            'zauthor',  
+                                            'zcategory',
+                                            'zloads',
+                                            'ztravel_list_from',
+                                            'zurgent',
+                                            'zdate_published',
+                                            'zstatusID'
+                                    );
+            }
+
+            $this->query = array(   'fields_listing' => array(
+                                                'zid',
+                                                'zauthor',  
+                                                'zcategory',
+                                                'zloads',
+                                                'ztravel_from', 
+                                                'ztravel_to',
+                                                'zcustomer_type',
+                                                'zurgent',
+                                                'zdate_from',
+                                                'zstatus',
+                                                'zdate_published'
                                                 ),
-                    'fields' => '*',
-                    'where' =>  'ords.zid = ordd.zorder_id '.$datas,
-                    'order_by' => 'LENGTH(zdate_published),zdate_published',
-                                'order' => 'DESC'); 
+                                    'fields' => '*,ords.zid AS zid',
+                                    'where' =>  'ords.zid = ordd.zorder_id AND ords.zstatus != 2'.$datas,
+                                    'order_by' => 'LENGTH(ords.zdate_published), ords.zdate_published',
+                                                'order' => 'DESC'); 
             
+                if(@$_GET['z'] && @$_GET['x']){
+                    $suc = true;
+                    $this->lists = false;
+                    $item = '';
+
+                    if($this->userType == 6){
+                        $item = $datas;
+                    }
+                    $this->query = array(   'fields' => '*,ords.zid AS zid',
+                                            'where' =>  'ords.zid = ordd.zorder_id AND ords.zid ='.$_GET['z']. $item
+                                         ); 
+                }
+                
+            if(!$suc) return false;
+        
             $this->jsons();
     }
 
@@ -310,12 +448,12 @@ class Viewing_callbacks extends SS_Controller {
 
         // Display specific user data
         if(@$_GET['s']){
-            $datas = " AND uss.zid =".$_GET['s'];
-            $this->query = array(   'where' =>  'uss.zid = prof.zparent AND uss.zstatus != 2 AND uss.ztype != 1'.$datas);
+            $datas = 'AND uss.zid ='. $_GET['s'];
+            $this->query = array(   'where' =>  'uss.zid = prof.zparent AND uss.zstatus != 2 AND uss.ztype != 1 '.$datas);
         //get current logged profile
         }elseif(@$_GET['p']){
             $datas = " AND uss.zid =".$this->userID;
-            $this->query = array(   'where' =>  'uss.zid = prof.zparent AND uss.zstatus != 2 AND uss.ztype != 1'.$datas);
+            $this->query = array(   'where' =>  'uss.zid = prof.zparent AND uss.zstatus != 2 '.$datas);
         }else{
             $this->lists =  array(  'zid',
                                     'zstatus',
@@ -323,29 +461,32 @@ class Viewing_callbacks extends SS_Controller {
                                     'zfullname',
                                     'zemail', 
                                     'ztype', 
+                                    'zcustomer_type', 
                                     'zemail'
             );
 
-
-            //$_GET['c'] show all clients only
             $sv = @$_GET['c'] ? $clients_only = 'AND uss.ztype = 6': $clients_only = 'AND uss.ztype != 6';
+               
 
-            $this->query = array(   'where' =>  'uss.zid = prof.zparent AND uss.zstatus != 2 '.$clients_only.'  AND uss.ztype != 1'.$datas,
-                                    'fields_listing' => array(
-                                                        'zstatus',
-                                                        'zusername',
-                                                        'zfirstname',
-                                                        'zemail',
-                                                        'ztype'
-                                    ),
-                                    'fields' => array( 'uss.zid',
-                                                        'uss.zstatus',  
-                                                        'uss.zusername',
-                                                        'prof.zfirstname',
-                                                        'prof.zlastname',
-                                                        'prof.zemail',
-                                                        'uss.ztype')
-                                    );
+                $this->query = array(   'where' =>  'uss.zid = prof.zparent AND uss.zstatus != 2 '.$clients_only.'  AND uss.ztype != 1'.$datas,
+                                        'fields_listing' => array(
+                                                            'zstatus',
+                                                            'zusername',
+                                                            'zfirstname',
+                                                            'zemail',
+                                                            'ztype',
+                                                            'zcustomer_type' 
+                                        ),
+                                        'fields' => array( 'uss.zid',
+                                                            'uss.zstatus',  
+                                                            'uss.zusername',
+                                                            'prof.zfirstname',
+                                                            'prof.zlastname',
+                                                            'prof.zemail',
+                                                            'uss.ztype',
+                                                            'uss.zcustomer_type')
+                                        );
+            
         }
 
       
@@ -461,14 +602,45 @@ class Viewing_callbacks extends SS_Controller {
                         }
                     }
 
+                    if(@$v->zcontent){
+                        $output[$k]['zcontent'] = base64_decode($v->zcontent);
+                    }
+                    
+                    if(@$v->ztravel_from){
+                        $output[$k]['ztravel_list_from'] =  '<p>'.$v->ztravel_from . "</p><p>".date('m/d/Y', strtotime($v->zdate_from))."</p>";
+                    }
+
+                    if(@$v->ztravel_to){
+                        $output[$k]['ztravel_list_to'] =  '<p>'.$v->ztravel_to . "</p><p>".date('m/d/Y', strtotime($v->zdate_to))."</p>";
+                    }
+
+                    if(@$v->zdate_published){
+                        $output[$k]['zdate_published'] =  date('m-d-Y', strtotime($v->zdate_published));
+                    }
+
+                    if(@$v->zpassword){ 
+                        $output[$k]['zpassword'] =  'Find it yourself';
+                    }
+
+                    if(@$v->zcustomer_type){
+                        $output[$k]['zcustomer_typeID'] = $v->zcustomer_type; 
+                        $output[$k]['zcustomer_type'] = status_info($v->zcustomer_type); 
+                    }
+
                     if(@$v->ztype){
                         $output[$k]['ztypeID'] = $v->ztype;
-                        $output[$k]['ztype'] = user_types_clean($this->global_get_title('mz_users_type',array('zid' => $v->ztype),'ztitle'));
+                        $output[$k]['ztype'] = user_types_clean( $v->ztype);
+                    }
+
+                    if(@$v->zurgent){
+                        $output[$k]['zurgentID'] = $v->zurgent;
+                        $output[$k]['zurgent'] = yes_no( $v->zurgent);
                     }
 
                     if(@$v->zstatus){
-                        $output[$k]['zstatusID'] = $v->zstatus;
-                        $output[$k]['zstatus'] = status_info_clean($v->zstatus);
+                        $output[$k]['zstatusID'] = $v->zstatus;  
+                        $output[$k]['zstatus'] = status_info($v->zstatus);
+                        
                     }else{
                         $output[$k]['zstatus'] = '';
                     }
@@ -489,6 +661,18 @@ class Viewing_callbacks extends SS_Controller {
                         $output[$k]['zorder_to'] = $getName[0]->zfirstname. ' '. $getName[0]->zlastname;
                     }
 
+                    if(@$v->zauthor){ 
+                        $getName = $this->global_get_title('mz_profile',array('zid' => $v->zauthor),array('zfirstname','zlastname','zcompany','zemail','zphone_num'));
+                        $output[$k]['zauthorID'] = $v->zauthor;
+                        $output[$k]['zauthor'] = $getName[0]->zfirstname. ' '. $getName[0]->zlastname;
+
+                        if($this->order_company){
+                            $output[$k]['zcompany'] = $getName[0]->zcompany;
+                            $output[$k]['zemail'] = $getName[0]->zemail;
+                            $output[$k]['zphone_num'] = $getName[0]->zphone_num;
+                        }
+                    }
+
                     if(@$v->zproduct){ 
                         $output[$k]['zproductID'] = $v->zproduct;
                         $output[$k]['zproduct'] =  $this->global_get_title('mz_products',array('zid' => $v->zproduct),'ztitle');
@@ -497,44 +681,33 @@ class Viewing_callbacks extends SS_Controller {
                     if(@$v->zgrade){
                         $output[$k]['zgradeID'] =  $v->zgrade;
                         $output[$k]['zgrade'] =  $this->global_get_title('mz_organization',array('zid' => $v->zgrade),'ztitle');
-                    }else{
-                        $output[$k]['zgrade'] = '';
-                        $output[$k]['zgradeID'] = '';
-                    }
+                    } 
                     if(@$v->zdivision){
                         $output[$k]['zdivisionID'] =  $v->zdivision;
                         $output[$k]['zdivision'] = $this->global_get_title('mz_organization',array('zid' => $v->zdivision),'ztitle');
-                    }else{
-                        $output[$k]['zdivision'] = '';
-                        $output[$k]['zdivisionID'] = '';
-                    }
+                    } 
                     if(@$v->zsection){
                         $output[$k]['zsectionID'] =  $v->zsection;
                         $output[$k]['zsection'] = $this->global_get_title('mz_organization',array('zid' => $v->zsection),'ztitle');
-                    }else{
-                        $output[$k]['zsection'] = '';
-                        $output[$k]['zsectionID'] = '';
-                    }
+                    } 
                     if(@$v->zcompany){
-                        $output[$k]['zcompany'] = $this->global_get_title('mz_organization',array('zid' => $v->zcompany),'ztitle');
-                    }else{
-                        $output[$k]['zcompany'] = '';
-                    }
+                        $output[$k]['zcompany'] = $v->zcompany;
+                        if(is_numeric($v->zcompany)){
+                            $output[$k]['zcompanyID'] = $v->zcompany;
+                            $output[$k]['zcompany'] = $this->global_get_title('mz_organization',array('zid' => $v->zcompany),'ztitle');
+                        }
+                    } 
+
                     if(@$v->zdepartment){
                         $output[$k]['zdepartment'] = $this->global_get_title('mz_organization',array('zid' => $v->zdepartment),'ztitle');
-                    }else{
-                        $output[$k]['zdepartment'] = '';
-                    }
+                    } 
                     if(@$v->zposition){
                         $output[$k]['zposition'] = $this->global_get_title('mz_organization',array('zid' => $v->zposition),'ztitle');
-                    }else{
-                        $output[$k]['zposition'] = '';
-                    }
+                    } 
                     if(@$v->zcategory){
+                        $output[$k]['zcategoryID'] =  $v->zcategory;
                         $output[$k]['zcategory'] = $this->global_get_title('mz_categories',array('zid' => $v->zcategory),'ztitle');
-                    }else{
-                        $output[$k]['zcategory'] = '';
-                    }
+                    } 
                     
                     if(@$v->zfirstname){ 
                         $output[$k]['zfullname'] =  ucwords($v->zfirstname . " ". $v->zlastname);

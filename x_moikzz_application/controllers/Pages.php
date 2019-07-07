@@ -5,6 +5,7 @@
  * @author Moikzz
  */
 class Pages extends CI_Controller{ 
+<<<<<<< HEAD
 
      protected $filter = array();
      protected $page = 'pages';
@@ -22,6 +23,19 @@ class Pages extends CI_Controller{
 
 	public function view( $page='home'){
         
+=======
+     protected $filter = array();
+     protected $page = 'pages';
+	 protected $bodyClass = 'front';
+	function __construct(){ 
+       	parent::__construct(); 
+   	 	// Get User/Client Device browser Info
+       	$this->load->library('user_agent');
+        $this->load->helper('url');
+    }
+	public function view( $page='home'){
+       
+>>>>>>> Moikzz
         if (!method_exists($this, $page)){
             $data['bodyClass'] =  $this->bodyClass;
             page_not_found($data);
@@ -35,15 +49,22 @@ class Pages extends CI_Controller{
         $this->data_pages = $p;
         return $this->{$this->data_pages}();
     }
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> Moikzz
     /**
      * @mel
      * User Pages
      */
     private function dashboard(){ 
+<<<<<<< HEAD
         $this->filter = array('');
+=======
+        $this->filter = array('carousel','slider','select2');
+>>>>>>> Moikzz
     	$this->page = 'dashboard';
         $this->bodyClass = 'dashboard';
         $this->display('dashboard page');
@@ -61,23 +82,32 @@ class Pages extends CI_Controller{
         $this->display('profile page');
     }
     /* User Pages */
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> Moikzz
     private function home(){ 
         $this->filter = array('');
     	$this->page = 'home';
         $this->bodyClass = 'home m-index';
         $this->display('home page');
     } 
+<<<<<<< HEAD
 
+=======
+>>>>>>> Moikzz
     private function about(){ 
         $this->filter = array('');
     	$this->page = 'about';
         $this->bodyClass = 'about';
         $this->display('About us');
     } 
+<<<<<<< HEAD
 
+=======
+>>>>>>> Moikzz
     private function contact(){ 
          
         $this->filter = array('');
@@ -85,7 +115,10 @@ class Pages extends CI_Controller{
         $this->bodyClass = 'contact-us';
         $this->display('contact us');
     } 
+<<<<<<< HEAD
 
+=======
+>>>>>>> Moikzz
     private function search(){ 
          
         $this->filter = array('');
@@ -93,6 +126,7 @@ class Pages extends CI_Controller{
         $this->bodyClass = 'm-listingsTwo search-page';
         $this->display('truck listing');
     } 
+<<<<<<< HEAD
 
     private function cart(){ 
          
@@ -109,10 +143,25 @@ class Pages extends CI_Controller{
       
         $p = str_replace(' ', '', $p);
      
+=======
+    private function cart(){ 
+         
+        $this->filter = array('');
+        // filename - views/front/pages
+        $this->page = 'cart';
+        $this->bodyClass = 'cart inquire-now';
+        $this->display('cart');
+    } 
+    private function display($p){ 
+      
+        $p = str_replace(' ', '', $p);
+         
+>>>>>>> Moikzz
         $data['filter_css_js'] = $this->filter;
         $data['bodyClass'] =  $this->bodyClass;
         $data['pageclass'] = 'lists-'.$p;
  
+<<<<<<< HEAD
         // fields - text
         // group_by - text
         // where - array() - Normal where clause
@@ -143,6 +192,9 @@ class Pages extends CI_Controller{
        
         $this->template->load( 'front/template', 'front/pages/'.$this->page.'.php', $data);
 
+=======
+        $this->template->load( 'front/template', 'front/pages/'.$this->page.'.php', $data);
+>>>>>>> Moikzz
     }  
  
 }

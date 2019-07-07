@@ -1,0 +1,53 @@
+<?php defined('BASEPATH') OR exit('No direct script access allowed');?>      
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+            <div class="row button-group">
+                <div class="col-xl-1 col-md-2 col-sm-12 "><h4 class="card-title">Lists</h4></div>
+                <div class="col-xl-1 col-md-1 col-sm-12 "> 
+                    <div class="checkbox checkbox-primary p-t-0">
+                        <input id="list-download" type="checkbox">
+                        <label for="list-download"> Download </label>
+                    </div>
+                </div>
+
+                <?php if(@$addButton){ ?>
+                <div class="col-md-10">
+                        <a href="<?=get_current_url()?>create" class="btn btn-block btn-sm btn-outline-info col-xl-2 col-md-4 col-sm-12 text-uppercase  pull-right">ADD NEW <?=$pages; ?></a>
+                    </div>
+                </div>
+                <?php } ?>
+                <hr/>
+                <div class="table-responsive">
+                    <table  class="display nowrap table table-hover table-striped table-bordered <?=$pages; ?>" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th class="hidden" hidden></th>
+                                <?php if(@$tableHeaders):
+                                        foreach($tableHeaders AS $k => $v): ?>
+                                        <th><?=$v?></th> 
+                                    <?php endforeach; 
+                                    endif; ?>
+                            </tr>
+                        </thead> 
+                        <tfoot> 
+                            <tr>
+                                <th class="hidden" hidden></th>
+                                <?php if(@$tableHeaders):
+                                        foreach($tableHeaders AS $k => $v): ?>
+                                        <th><?=$v?></th> 
+                                    <?php endforeach; 
+                                    endif; ?>
+                            </tr>
+                        </tfoot>
+                        <tbody>
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div>

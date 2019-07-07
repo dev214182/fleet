@@ -1,0 +1,202 @@
+<?php defined('BASEPATH') OR exit('No direct script access allowed');?> 
+<form class="needs-validation" novalidate="" id="form-pages">
+<div class="row">
+    <div class="col-xlg-10 col-md-8">
+        <div class="card">
+            <div class="card-body form-material">
+                <h5 class="card-title b-b p-b-10"><?=$pagetitle?></h5>
+                <div class="form-group">
+                    <small class="font-weight-bold">Page Title</small>
+                    <input type="text" class="input-text form-control form-control-sm form-control-line" name="input_title" placeholder="Enter Page Title here" required autofocus>
+                </div>
+                <input type="hidden" class="hidden" hidden  name="logged_id" value="<?=@$userID?>">
+                <input type="hidden" hidden class="hidden" value="<?=$pages?>" name='formtype'>
+                <input type="hidden" class="hidden" hidden  name="post_type" value="<?=$post_type?>">
+                <?php if($pages == 'addnew'){ ?>
+                <div class="form-group">
+                    <small class="font-weight-bold">Slug</small>
+                    <input type="text" class="input-text form-control form-control-sm form-control-line" placeholder="Your slug here" name="input_slug">
+                </div>
+                <?php }else{ ?>
+                <div class="form-group">
+                    <small class="font-weight-bold">Slug</small>
+                    <div class="list-inline">
+                        <div class="p-0 m-0 list-inline-item"><h6 class="text-muted"><?=site_url()?></h6></div>
+                        <div class="list-inline-item">
+                            <input type="hidden" class="hidden" hidden  name="post_id" value="<?=@$_GET['id']?>">
+                            <input type="text" class="input-text form-control form-control-sm form-control-line"  name="input_slug" placeholder="Your slug here">
+                        </div>
+                        <div class="list-inline-item"><a href="#" title="view post" target="_blank"><i class="mdi mdi-open-in-new"></i></a></div>
+                    </div> 
+                </div>
+                <?php } ?>
+                <div class="form-group gal-cmsEditor">
+                    <small class="font-weight-bold">Content</small>
+                    <textarea name="cmsEditor"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <div id="gal-accordian">
+                    <h5 class="card-title b-b p-b-10 m-b-0" data-toggle="collapse" data-target="#collapse1" aria-expanded="true" aria-controls="collapse1" style="cursor:move!important;">SEO</h5>
+                    <div id="collapse1" class="collapse show m-t-30" data-parent="#gal-accordian">
+                        <div class="col-md-12">
+                            <!-- Nav tabs -->
+                            <ul class="nav nav-tabs customtab2 border-light" role="tablist">
+                                <li class="nav-item"> <a class="nav-link show bg-light text-secondary active" data-toggle="tab" href="#settingsm" role="tab" aria-selected="true"><span class="sm-up"><i class="mdi mdi-chart-bar"></i></span> <span class="hidden-xs-down">Settings</span></a></li>
+                                <li class="nav-item"> <a class="nav-link show bg-light text-secondary" data-toggle="tab" href="#socialm" role="tab" aria-selected="false"><span class="sm-up"><i class="mdi mdi-share-variant"></i></span> <span class="hidden-xs-down">Social</span></a></li>
+                            </ul>
+                        </div>
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <div class="tab-pane show active" id="settingsm" role="tabpanel">
+                                <div class="col-md-12 m-t-20">
+                                    
+                                        <div class="card">
+                                            <div class="card-body form-material">
+                                                <h6 class="card-title b-b p-b-10 font-weight-bold">General SEO Settings</h6>
+                                                <div class="form-group">
+                                                    <small class="font-weight-bold">Meta Title</small>
+                                                    <div class="text-counter">
+                                                        <input type="text" class="input-text form-control form-control-sm form-control-line" name="input_meta_title" placeholder="" value="" data-limit="60">
+                                                        <small class="help-block text-muted"><span class="count-text">0</span>/60 Maximum recommended limit</small>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <small class="font-weight-bold">Meta Description</small>
+                                                    <div class="text-counter">
+                                                        <textarea class="input-text form-control form-control-sm" data-limit="160" rows="3" name="input_meta_description"></textarea>
+                                                        <small class="help-block text-muted"><span class="count-text">0</span>/160 Maximum recommended limit</small>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <small class="font-weight-bold">Focus Keywords</small>
+                                                    <input type="text" class="form-control form-control-sm form-control-line" name="input_meta_keywords" placeholder="" value="">
+                                                    <span class="help-block text-muted"><small>Separate keywords by commas (eg: "my super keyword,another keyword,keyword")</small></span>
+                                                </div>
+                                        
+                                            </div>
+                                        </div><!-- Card -->
+                                 
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="socialm" role="tabpanel">
+                                <div class="col-md-12 m-t-20">
+                                
+                                        <div class="card">
+                                            <div class="card-body form-material">
+                                                
+                                                    <h6 class="card-title b-b p-b-10 font-weight-bold"><i class="mdi mdi-facebook-box"></i> Facebook</h6>
+                                                    <div class="form-group">
+                                                        <small class="font-weight-bold">Meta Title</small>
+                                                        <div class="text-counter">
+                                                            <input type="text" class="input-text form-control form-control-sm form-control-line" name="social_fb_title" placeholder="" value="" data-limit="60">
+                                                            <small class="help-block text-muted"><span class="count-text">0</span>/60 Maximum recommended limit</small>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <small class="font-weight-bold">Meta Description</small>
+                                                        <div class="text-counter">
+                                                            <textarea class="input-text form-control form-control-sm" data-limit="160" name="social_fb_description" rows="3"></textarea>
+                                                            <small class="help-block text-muted"><span class="count-text">0</span>/160 Maximum recommended limit</small>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <small class="font-weight-bold">Custom Image</small>
+                                                        <div class="custom-file m-t-10">
+                                                                <input type="text" class="form-control form-control-sm form-control-line" name="social_fb_image" id="facebookcustomFile" > 
+                                                          
+                                                        </div>
+                                                       
+                                                    </div>
+                                               
+                                            </div>
+                                        </div><!-- card -->
+                                        <div class="card">
+                                            <div class="card-body form-material">
+                                                 
+                                                    <h6 class="card-title b-b p-b-10 font-weight-bold"><i class="mdi mdi-twitter-box"></i> Twitter</h6>
+                                                    <div class="form-group">
+                                                        <small class="font-weight-bold">Meta Title</small>
+                                                        <div class="text-counter">
+                                                            <input type="text" class="input-text form-control form-control-sm form-control-line" name="social_twitter_title" placeholder="" value="" data-limit="60">
+                                                            <small class="help-block text-muted"><span class="count-text">0</span>/60 Maximum recommended limit</small>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <small class="font-weight-bold">Meta Description</small>
+                                                        <div class="text-counter">
+                                                            <textarea class="input-text form-control form-control-sm" data-limit="160" rows="3" name="social_twitter_description" ></textarea>
+                                                            <small class="help-block text-muted"><span class="count-text">0</span>/160 Maximum recommended limit</small>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <small class="font-weight-bold">Custom Image</small>
+                                                        <div class="custom-file m-t-10">
+                                                                <input type="text" class="form-control form-control-sm form-control-line" name="social_twitter_image" id="twittercustomFile" >  
+                                                        </div>
+                                                    </div>
+                                              
+                                            </div>
+                                        </div><!-- card -->
+                           
+                                </div>
+                            </div>
+                        </div><!-- tab-content -->
+                    </div>
+                </div>
+            </div>  
+        </div>
+    </div>
+    <div class="col-xlg-2 col-md-4 ">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title b-b p-b-10">Status</h5>
+                <div class="form-group">
+                    <select class="form-control" name="input_status">
+                        <option value="9">Published</option>
+                        <option value="27">Draft</option> 
+                    </select>
+                </div>
+                <button class="btn btn-info m-b-10 p-10 btn-block waves-effect waves-light">Save</button>
+               
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title b-b p-b-10">Featured Image</h5>
+                <label for="input-file-now-custom-1">You can add a default value</label>
+                <input type="text" id="input-file-now-custom-1" name="input_feature_image"  />
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title b-b p-b-10">Category</h5>
+                <div class="input-group">
+                     
+                                <div class="checkbox checkbox-primary p-t-0">
+                                    <input id="list-download1" type="checkbox">
+                                    <label for="list-download1"> Download </label>
+                                </div>
+                        
+                                <div class="checkbox checkbox-primary p-t-0">
+                                        <input id="list-download2" type="checkbox">
+                                        <label for="list-download2"> Download </label>
+                                    </div>
+                       
+                                <div class="checkbox checkbox-primary p-t-0">
+                                        <input id="list-download3" type="checkbox">
+                                        <label for="list-download3"> Download </label>
+                                    </div>
+                       
+                                <div class="checkbox checkbox-primary p-t-0">
+                                        <input id="list-download4" type="checkbox">
+                                        <label for="list-download4"> Download </label>
+                                    </div> 
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</form>
