@@ -11,7 +11,12 @@
     <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-    <script> var base_url = '<?=base_url()?>';</script>
+    <script> 
+    var base_url = '<?=base_url()?>';
+    var images_dir =   '<?=front_images_dir()?>';
+    var jsCustom =  '<?=@$jsCustom?>';
+    var key =  '<?=private_key()?>';
+    </script>
   </head>
   <body class="<?=$bodyClass?>" data-scrolling-animations="true" data-equal-height=".b-auto__main-item"> 
     <!-- Loader -->

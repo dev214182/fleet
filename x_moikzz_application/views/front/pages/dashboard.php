@@ -1,17 +1,4 @@
-<!-- <section class="b-pageHeader">
-    <div class="container">
-        <h1>Dashboard</h1>
-        <div class="b-pageHeader__search">
-            <h3>Romel Indemne</h3>
-        </div>
-    </div>
-</section>
-<div class="b-breadCumbs s-shadow">
-    <div class="container">
-        <a href="home.html" class="b-breadCumbs__page">Home</a><span class="fa fa-angle-right"></span><a href="<?=base_url('dashboard')?>" class="b-breadCumbs__page m-active">Dashboard</a>
-    </div>
-</div> -->
-
+<?php defined('BASEPATH') OR exit('No direct script access allowed');?>
 <section class="b-auto">
     <div class="container">
         <div class="row">

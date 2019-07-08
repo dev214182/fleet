@@ -89,7 +89,7 @@ body.cart .b-items__cars-one{ margin-bottom: 10px !important;}
 .border-top { border-top: 1px solid #ccc; }
 .border-bottom { border-bottom: 1px solid #ccc; }
 
-.inline-block { display: inline-block; }
+.inline-block { display: inline-block !important; }
 .inline-table { display: inline-table; }
 
 .b-topBar__lang { padding: 9px 0; }
