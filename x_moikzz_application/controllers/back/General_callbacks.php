@@ -128,28 +128,28 @@ class General_callbacks extends SS_Controller {
             
             $fields = array($sys_site_title, $sys_site_description, $sys_site_register, $sys_site_email, $sys_logo, $sys_icon, $sys_site_meta_title, $sys_site_meta_description, $sys_site_meta_keyword,
                             $sys_site_script, $sys_site_language, $sys_normal_pricing, $sys_advance_pricing, $sys_premium_pricing, $sys_social_fb, $sys_social_instagram, $sys_social_linkedin, $sys_social_twitter);
-            $txt = '1';
+            
         }elseif($sys_logo && !$sys_icon){
             $fields_total = array('site_title','site_content','users_can_register','admin_email','site_logo','site_meta_title','site_meta_desc','site_meta_keywords','site_analytics','site_language_default',
             'n_pricing','a_pricing','p_pricing', 'social_fb', 'social_insta', 'social_linkedin', 'social_twitter');
             
             $fields = array($sys_site_title, $sys_site_description, $sys_site_register, $sys_site_email, $sys_logo, $sys_site_meta_title, $sys_site_meta_description, $sys_site_meta_keyword,
                             $sys_site_script, $sys_site_language, $sys_normal_pricing, $sys_advance_pricing, $sys_premium_pricing, $sys_social_fb, $sys_social_instagram, $sys_social_linkedin, $sys_social_twitter);
-            $txt = '2';
+            
         }elseif(!$sys_logo && $sys_icon){
             $fields_total = array('site_title','site_content','users_can_register','admin_email','site_icon','site_meta_title','site_meta_desc','site_meta_keywords','site_analytics','site_language_default',
             'n_pricing','a_pricing','p_pricing', 'social_fb', 'social_insta', 'social_linkedin', 'social_twitter');
             
             $fields = array($sys_site_title, $sys_site_description, $sys_site_register, $sys_site_email, $sys_icon, $sys_site_meta_title, $sys_site_meta_description, $sys_site_meta_keyword,
                             $sys_site_script, $sys_site_language, $sys_normal_pricing, $sys_advance_pricing, $sys_premium_pricing, $sys_social_fb, $sys_social_instagram, $sys_social_linkedin, $sys_social_twitter);
-                            $txt = '3';
+                            
         }else{
             $fields_total = array('site_title','site_content','users_can_register','admin_email','site_meta_title','site_meta_desc','site_meta_keywords','site_analytics','site_language_default',
             'n_pricing','a_pricing','p_pricing', 'social_fb', 'social_insta', 'social_linkedin', 'social_twitter');
             
             $fields = array($sys_site_title, $sys_site_description, $sys_site_register, $sys_site_email, $sys_site_meta_title, $sys_site_meta_description, $sys_site_meta_keyword,
                             $sys_site_script, $sys_site_language, $sys_normal_pricing, $sys_advance_pricing, $sys_premium_pricing, $sys_social_fb, $sys_social_instagram, $sys_social_linkedin, $sys_social_twitter);
-                            $txt = '4';
+                            
         }
 
         foreach($fields_total AS $k => $v){
@@ -166,7 +166,7 @@ class General_callbacks extends SS_Controller {
             $success = true;
         }
         
-        echo json_encode(array('success'=>$success,'message'=> $txt));
+        echo json_encode(array('success'=>$success,'message'=> $msg));
         return;
     }
 
@@ -581,13 +581,15 @@ class General_callbacks extends SS_Controller {
         if($ID){
             if($type == 'addnew'){
                 $social_data = array('zparent' => $ID,'zvalue' => $data2);
+            }else{
+                $ID = $this->input->post('post_id');
             }
 
             $this->global_func_query('mz_postsocialmedia',$social_data, $social_where, $trigger_operation);
             $success = true;
             $msg = ucwords($post_type).' has been updated!';
         } 
-        echo json_encode(array('success'=>$success,'message'=> $data,'id'=>$ID));
+        echo json_encode(array('success'=>$success,'message'=> $msg,'id'=>$ID));
         return;
     }
 
@@ -1064,6 +1066,9 @@ class General_callbacks extends SS_Controller {
 =======
         echo json_encode(array('success' => $inner_msg,'message' => $msg));
     }
+<<<<<<< HEAD
  
 >>>>>>> Moikzz
+=======
+>>>>>>> July 8
 }

@@ -569,12 +569,11 @@ class Viewing_callbacks extends SS_Controller {
         $fut_date = date('Y-m-d',strtotime('+30 days')) . PHP_EOL;
         $menu_chk = false;
         $arr_pop = false;
-        $output = [];
-        $qrt = [];
+        $output = []; 
         $data1 = [];
         $data2 = [];
         $parZ =  $o;
-        $tz = [];  
+        
         
          /* Run on DataTables */
         if($o && $this->lists){

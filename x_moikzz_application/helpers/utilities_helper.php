@@ -36,6 +36,12 @@
 		}
 	}
 
+	if (!function_exists('front_images_dir')) {
+		function front_images_dir(){
+			return base_url().'x_moikzz_assets/images/';
+		}
+	}
+
 	if (!function_exists('plugins_dir')) {
 		function plugins_dir( $file ){
 
@@ -55,9 +61,15 @@
 		function public_key(){ 
 			$year = date('Y');
 			$month = date('m');
-			$day = date('d');
-			//$key = '2zSM*(sOGkVs193'.$year.'71Jq)Sk0*^%skdjDs3'.$month.'1Fz4AKz821Pq7'.$day.'3atK'; 
+			$day = date('d'); 
 			$key = '2zSM*(sOGkVs193201971Jq)Sk0*^%skdjDs3051Fz4AKz821Pq7053atK'; 
+			return  $key;
+		} 
+	}
+
+	if (!function_exists('private_key')) {
+		function private_key(){  
+			$key = 'zMI*3n42TU1Ias62fkn%L(1r:LK6^VL(@PO67Edfhb*8@L93dG4'; 
 			return  $key;
 		} 
 	}
