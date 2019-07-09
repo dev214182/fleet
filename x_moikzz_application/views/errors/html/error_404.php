@@ -1,19 +1,62 @@
-<section class="b-pageHeader">
-    <div class="container">
-        <h1 class="wow zoomInUp" data-wow-delay="0.7s">Error 404 Page</h1>
-    </div>
-</section><!--b-pageHeader-->
-<div class="b-breadCumbs s-shadow">
-    <div class="container">
-        <a href="home.html" class="b-breadCumbs__page">Home</a><span class="fa fa-angle-right"></span><a href="#" class="b-breadCumbs__page m-active">Page Not Found</a>
-    </div>
-</div><!--b-breadCumbs-->
-<section class="b-error s-shadow">
-    <div class="container">
-        <h1>Error</h1>
-        <img class="img-responsive center-block"src="<?=file_common_dir('images/backgrounds/404.png')?>" alt="404" />
-        <h2 class="s-lineDownCenter">page not found</h2>
-        <p>The page you are looking for is not available and might have been removed, its name changed or is temprarily unavailable.</p>
-    </div>
-    <img alt="audi" src="<?=file_common_dir('images/backgrounds/404Bg.jpg')?>" class="img-responsive center-block b-error-img" />
-</section><!--b-error-->
+<html lang="en"><head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Grandiose Catering">
+    <meta name="author" content="Grandiose Catering">
+    <?php  
+     	$htt = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") ? "https" : "http");
+    	$server =  $htt. "://".$_SERVER['HTTP_HOST'].'/';
+     	$client = $_SERVER['REQUEST_URI'];
+     	$client = explode('/', $client); 
+    	$base_url =  $server.$client[1].'/x_moikzz_assets';
+     ?>
+
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="<?=$base_url?>/images/favicon.png">
+    <title>Page not found</title>
+    <!-- Bootstrap Core CSS -->
+    <link href="<?=$base_url?>/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="<?=$base_url?>/back/css/style.css" rel="stylesheet">
+    <!-- You can change the theme colors from here -->
+    <link href="<?=$base_url?>/back/css/colors/blue.css" id="theme" rel="stylesheet">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+</head>
+
+<body class="fix-header card-no-border">
+    <!-- ============================================================== -->
+    <!-- Main wrapper - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+     
+
+    <section id="wrapper" class="error-page">
+        <div class="error-box">
+            <div class="error-body text-center">
+                <h1>404</h1>
+                <h3 class="text-uppercase">Page Not Found !</h3>
+                <p class="text-muted m-t-30 m-b-30">YOU SEEM TO BE TRYING TO FIND HIS WAY HOME</p>
+                <a href="/" class="btn btn-info btn-rounded waves-effect waves-light m-b-40">Back to home</a> </div>
+            <footer class="footer text-center">© 2019 Moikzz</footer>
+        </div>
+    </section>
+    <!-- ============================================================== -->
+    <!-- End Wrapper -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- All Jquery -->
+    <!-- ============================================================== -->
+    <script src="<?=$base_url?>/plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap tether Core JavaScript -->
+    <script src="<?=$base_url?>/plugins/bootstrap/js/popper.min.js"></script>
+
+    <script src="<?=$base_url?>/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <!--Wave Effects -->
+    <script src="<?=$base_url?>/back/js/waves.js"></script> 
+</body></html>

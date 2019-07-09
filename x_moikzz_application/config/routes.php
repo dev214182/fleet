@@ -49,27 +49,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-// @jacob
-// $route['default_controller'] = 'welcome';
-// $route['api/sys/(:any)'] = 'back/General_callbacks/view/$1';  
-// $route['api/vw/(:any)'] = 'back/Viewing_callbacks/view/$1';  
-// $route['client'] = 'back/General_pages';  
-// $route['client/page'] = 'back/General_pages'; 
-// $route['compress/cache'] = 'back/Compress/clear_cache'; 
-// $route['client/page/(:any)'] = 'back/General_pages/view/$1'; 
-// $route['client/page/(:any)/(:any)'] = 'back/Page_lists/view/$1/$2'; 
-// $route['404_override'] = '';
-// $route['translate_uri_dashes'] = FALSE;
-
-
-// @mel
-$route['default_controller'] = 'pages/view';
-=======
-=======
->>>>>>> b534c0a98cfcba2eb79875f4c8acdfc6b8b1bd52
 $route['default_controller'] = 'pages/view';
 $route['api/sys/(:any)'] = 'back/General_callbacks/view/$1';  
 $route['api/vw/(:any)'] = 'back/Viewing_callbacks/view/$1';  
@@ -90,35 +69,5 @@ $route['(:any)/(:any)'] = 'pages/view/$1/$2';
 $route['(:any)/(:any)/(:any)'] = 'pages/view/$1/$2/$3';
 
 
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> Moikzz
-$route['api/sys/(:any)'] = 'back/General_callbacks/view/$1';  
-$route['api/vw/(:any)'] = 'back/Viewing_callbacks/view/$1';  
-$route['client'] = 'back/General_pages';  
-$route['client/page'] = 'back/General_pages'; 
-$route['compress/cache'] = 'back/Compress/clear_cache'; 
-$route['client/page/(:any)'] = 'back/General_pages/view/$1'; 
-$route['client/page/(:any)/(:any)'] = 'back/Page_lists/view/$1/$2'; 
-=======
->>>>>>> July 8
-=======
->>>>>>> b534c0a98cfcba2eb79875f4c8acdfc6b8b1bd52
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
-
-
-// $route['default_controller'] = 'pages/view';
-$route['login']  = 'front/Login'; 
-$route['login/new']  = 'front/Login/newUser'; 
-$route['log/verify'] = 'front/Login/verification';
-$route['log/logout'] = 'front/Login/logout';
-// $route['admin'] = 'back/General_pages';
-// $route['admin/callback/(:any)'] = 'back/General_callbacks/view/$1';
-// $route['admin/(:any)'] = 'back/General_pages/view/$1'; 
-// $route['admin/settings/(:any)'] = 'back/Settings/view/$1';
-// $route['admin/(:any)/(:any)'] = 'back/General_addlinks/view/$1/$2';
-$route['public/callback/(:any)'] = 'front/General_pages/$1';
-$route['(:any)'] = 'pages/view/$1';
-// $route['404_override'] = 'errors/show_404';
-// $route['translate_uri_dashes'] = FALSE;

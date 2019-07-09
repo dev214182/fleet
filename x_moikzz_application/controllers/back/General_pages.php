@@ -6,6 +6,7 @@
  */
 class General_pages extends SS_Controller { 
 
+    protected $pg; 
     protected $pages;
     protected $menus;
     protected $tableHeaders;
@@ -40,7 +41,7 @@ class General_pages extends SS_Controller {
 		$this->page_not_found();
 
 	}
-
+ 
     public function view($page='dashboard'){
         $this->userID = logged_info()['id'];
         $this->userType = logged_info()['type'];
@@ -62,13 +63,14 @@ class General_pages extends SS_Controller {
             $this->page_not_found();
             return false;
         }else{
-            $this->links($page);
+            $this->pg = $page;
+            $this->links();
         }
     }
 
-    private function links($p){
-        $this->data_pages = $p;
-        return $this->{$this->data_pages}();
+    private function links(){
+        $this->data_pages = $this->pg;
+        return $this->{$this->data_pages}(); 
     }
 
     
@@ -158,19 +160,7 @@ class General_pages extends SS_Controller {
         $this->bodyClass = 'lists-trucks';
         $this->pageClass = 'lists-trucks';  
         $this->page = 'templates/contents/back/'.$this->namespace;
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-        $this->jsCustom = 1; 
-        $this->template_display(); 
-    } 
-=======
-=======
         $this->tableHeaders = array('ID','Status','Trucks','<p>Loads</p><small>Max cars</small>','<p>From</p> <small>Origin</small>','<p>To</p> <small>Destination</small>', '<p>N.Price</p> <small>(AED)</small>','</p>A.Price</p> <small>(AED)</small>','<p>P.Price</p> <small>(AED)</small>','Date From','Date To','Action');
->>>>>>> Moikzz
-=======
-        $this->tableHeaders = array('ID','Status','Trucks','<p>Loads</p><small>Max cars</small>','<p>From</p> <small>Origin</small>','<p>To</p> <small>Destination</small>', '<p>N.Price</p> <small>(AED)</small>','</p>A.Price</p> <small>(AED)</small>','<p>P.Price</p> <small>(AED)</small>','Date From','Date To','Action');
->>>>>>> b534c0a98cfcba2eb79875f4c8acdfc6b8b1bd52
         $this->jsCustom = 1;
         $this->template_display();
     }
@@ -202,7 +192,6 @@ class General_pages extends SS_Controller {
         $this->jsCustom = 1;
         $this->template_display();
     }
->>>>>>> moikzz
 
     private function settings(){
         $this->filter = array('form');
@@ -216,10 +205,6 @@ class General_pages extends SS_Controller {
         $this->template_display(); 
     } 
 
-<<<<<<< HEAD
-    private function template_display(){
-        
-=======
     private function system(){
 
         if( $this->userID != 1 )  {$this->page_not_found(); return false;}
@@ -274,10 +259,10 @@ class General_pages extends SS_Controller {
     }
 
     private function template_display(){ 
->>>>>>> Moikzz
         $data['breadcrumbs'] = '<li class="breadcrumb-item active">'.ucfirst($this->namespace).'</li>';
         $data['filter_css_js'] = $this->filter;
         $data['pages'] =  $this->namespace;
+        $data['title'] = $this->pageTitle;
         $data['pagetitle'] = $this->pageTitle;
         $data['bodyClass'] = $this->bodyClass;
         $data['pageclass'] = $this->pageClass;
@@ -297,46 +282,9 @@ class General_pages extends SS_Controller {
         $data['addButton'] = $this->addButton;
                 
         $data['jsCustom'] = $this->jsCustom;
+        $data['system'] = 'Moikzz Application';
       
         $this->template->load( 'back/template', $this->page, $data); 
     }
-
-
-    
-
-    /**
-     * Pages - @mel
-     */
-    public function pages(){
-        $this->namespace = 'pages';
-        $this->pageTitle = 'Pages';
-        $this->bodyClass = 'page';
-        $this->pageClass = 'page';  
-        $this->jsCustom = 1; 
-        $this->pageHeaderz = "Pages";
-        $this->page = 'templates/contents/back/'.$this->namespace;
-        $this->template_display(); 
-    }
-    public function posts(){
-        $this->namespace = 'posts';
-        $this->pageTitle = 'Posts';
-        $this->bodyClass = 'post';
-        $this->pageClass = 'post';  
-        $this->jsCustom = 1; 
-        $this->pageHeaderz = "Posts";
-        $this->page = 'templates/contents/back/'.$this->namespace;
-        $this->template_display(); 
-    }
-    public function menus(){
-        $this->namespace = 'menus';
-        $this->pageTitle = 'Menus';
-        $this->bodyClass = 'menu';
-        $this->pageClass = 'menu';  
-        $this->jsCustom = 1; 
-        $this->pageHeaderz = "Menus";
-        $this->page = 'templates/contents/back/'.$this->namespace;
-        $this->template_display(); 
-    }
-
     
 }

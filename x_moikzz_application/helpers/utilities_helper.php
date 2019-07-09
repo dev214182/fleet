@@ -5,18 +5,8 @@
 		function file_common_dir( $file ){ 
 			return  base_url().'x_moikzz_assets/'.$file; 
 		} 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	}
-	// @mel
-
-
-=======
-=======
->>>>>>> b534c0a98cfcba2eb79875f4c8acdfc6b8b1bd52
 	} 
 	
->>>>>>> Moikzz
 	if (!function_exists('file_common_dir_back')) { 
 
 		function file_common_dir_back( $file ){ 

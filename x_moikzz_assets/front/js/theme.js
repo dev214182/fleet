@@ -25,15 +25,7 @@
 		build: function() {
 
 			//Placeholder for IE
-<<<<<<< HEAD
-<<<<<<< HEAD
-			$('input, textarea').placeholder();
-=======
 		//	$('input, textarea').placeholder();
->>>>>>> Moikzz
-=======
-		//	$('input, textarea').placeholder();
->>>>>>> b534c0a98cfcba2eb79875f4c8acdfc6b8b1bd52
 			
 			// Dropdown menu
 			this.dropdownhover();

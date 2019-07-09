@@ -35,7 +35,21 @@ class General_callbacks extends SS_Controller {
     protected $_table_history = 'mz_history AS hist';
     protected $_table_contactform = 'mz_contactform AS cont';
     protected $_table_comments = 'mz_comments AS comm';
-   
+    
+    /*** QUERY string
+      * 
+      *    $query = array( 'fields_listing' => array('', '') - this is for datatable field to show
+                            'fields' => array('',''),
+                            'group_by' => '' ,
+                            'where' => array('',''),
+                            'likes' => array('',''),
+                            'orlike' => array('',''),
+                            'order_by' => '',
+                            'order' => '',
+                            'limit' => 5,
+                            'offset' => 0);
+    ***/  
+
     /* 
     * $_GET['p'] for Status
     * $_GET['s'] for parent ID
@@ -79,16 +93,6 @@ class General_callbacks extends SS_Controller {
         return $this->{$this->data_pages}();
     }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-    /* Saving cart to DB */
-    private function cart_order_purchase(){
-		header('Content-type: application/json; charset=utf-8');
-        $meal_details = array();
-        $order_details_ID = null;
-=======
-=======
->>>>>>> b534c0a98cfcba2eb79875f4c8acdfc6b8b1bd52
      /* New/Update Truck Fleet */
      private function admin_settings(){
         header('Content-type: application/json; charset=utf-8');
@@ -426,10 +430,6 @@ class General_callbacks extends SS_Controller {
      /* New/Update Truck Fleet */
      private function sys_fleet_info(){
         header('Content-type: application/json; charset=utf-8');
-<<<<<<< HEAD
->>>>>>> Moikzz
-=======
->>>>>>> b534c0a98cfcba2eb79875f4c8acdfc6b8b1bd52
         $success = false;
         $truckID = false;
         $msg = 'Error: Something wrong on submittion...';
@@ -443,7 +443,6 @@ class General_callbacks extends SS_Controller {
             return;
         }
         $cur_date = date('Y-m-d H:i:s');
-<<<<<<< HEAD
 
         $userID                     = @$this->input->post('userID');
         $input_origin_place         = @$this->input->post('input_origin_place');
@@ -525,89 +524,6 @@ class General_callbacks extends SS_Controller {
             $msg = 'Status has been changed!';
             $success = true;
         }
-=======
-
-        $userID                     = @$this->input->post('userID');
-        $input_origin_place         = @$this->input->post('input_origin_place');
-        $input_origin_date          = @$this->input->post('input_origin_date');
-        $input_destination_place    = @$this->input->post('input_destination_place');
-        $input_destination_date     = @$this->input->post('input_destination_date');
-        $input_loads                = @$this->input->post('input_loads');
-        $input_public               = @$this->input->post('input_public');
-        $price_normal               = @$this->input->post('price_normal');
-        $price_advance              = @$this->input->post('price_advance');
-        $price_prem                 = @$this->input->post('price_prem');
-        $fleet_notes                 = @$this->input->post('fleet_notes');
-
-        if(strtolower($input_public) == 'on' || $input_public == 1){
-            $input_public = 1;
-        }else{
-            $input_public = 0;
-        }
-
-        if($type == 'addnew'){  
-
-                    $data = array('zcategory' => $input_truck, 'ztravel_from' => $input_origin_place, 'ztravel_to' => $input_destination_place,'zdate_from'=> $input_origin_date,'zdate_to' => $input_destination_date,
-                    'zloads' => $input_loads, 'zpublic' => $input_public, 'zprice' => $price_normal, 'zsaleprice' =>$price_advance, 'zpremprice' => $price_prem,  'zstatus' => 9,'zauthor'=> $userID,
-                    'zdate_published' => $cur_date, 'ztype'=> 'truck', 'znotes' => $fleet_notes);
-                    
-                    $truckID =  $this->global_func_query('mz_products', $data,null,'insert_single');
-                    if($truckID) {
-                        $msg = 'New Fleet has been added.';
-                        $success = true;
-                    }
-            
-        }else{
-           
-                    $truckID                    = @$this->input->post('truckID');
-
-                    if(!$truckID){
-                        echo json_encode(array('success'=>$success,'message' => 'Error 505....')); 
-                        return;
-                    } 
-        
-                    $status                 = @$this->input->post('truck_status');
-
-                    $data = array('zcategory' => $input_truck, 'ztravel_from' => $input_origin_place, 'ztravel_to' => $input_destination_place,'zdate_from'=> $input_origin_date,'zdate_to' => $input_destination_date,
-                    'zloads' => $input_loads, 'zpublic' => $input_public, 'zprice' => $price_normal, 'zsaleprice' =>$price_advance, 'zpremprice' => $price_prem,  'zstatus' => $status, 'znotes' => $fleet_notes);
-                    
-                    $where = array('zid' => $truckID);
-                    $result =  $this->global_func_query('mz_products', $data, $where,'update_single');
-                    if($result) {
-                        $msg = 'Fleet has been updated!';
-                        $success = true;
-                    }
-        }
-        echo json_encode(array('success'=>$success,'message'=> $msg,'id'=>$truckID));
-        return;
-    }
-
-
-     /* Order / Inquiry Status Change */
-     private function order_status_change(){
-        header('Content-type: application/json; charset=utf-8');
-        $success = false;
-       
-        $msg = 'Error: Something wrong on submittion...';
-        
-        $status = $this->input->post('status_id');
-        
-        $orderID = @$this->input->post('order_id');
-
-        if(!$status || !$orderID){
-            echo json_encode(array('success'=>$success,'message' => 'Error 505....')); 
-            return;
-        }
-        
-        $data = array('zstatus' => $status); 
-        $where = array('zid' => $orderID);
-
-        $result =  $this->global_func_query('mz_orders', $data, $where,'update_single');
-        if($result) {
-            $msg = 'Status has been changed!';
-            $success = true;
-        }
->>>>>>> b534c0a98cfcba2eb79875f4c8acdfc6b8b1bd52
      
         echo json_encode(array('success'=>$success,'message'=> $msg,'id'=>$orderID));
         return;
@@ -649,7 +565,6 @@ class General_callbacks extends SS_Controller {
       
         $data2 = serialize($item2);
         $cur_date = date('Y-m-d H:i:s');
-<<<<<<< HEAD
 
         if($type == 'addnew'){
             $data = array('ztitle' => $title, 'zslug' => $slug, 'zcontent' => $contents, 'ztype' => $post_type, 'zstatus' => $status, 'zdate_published' => $cur_date, 'zauthor' => $logged_id, 'zimage1' => $image);
@@ -676,34 +591,6 @@ class General_callbacks extends SS_Controller {
                 $ID = $this->input->post('post_id');
             }
 
-=======
-
-        if($type == 'addnew'){
-            $data = array('ztitle' => $title, 'zslug' => $slug, 'zcontent' => $contents, 'ztype' => $post_type, 'zstatus' => $status, 'zdate_published' => $cur_date, 'zauthor' => $logged_id, 'zimage1' => $image);
-            $trigger_operation = 'insert_single';
-            $social_where = null;
-            $where = null;
-           
-        }else{
-            $ID = $this->input->post('post_id');
-            $data = array('ztitle' => $title, 'zslug' => $slug, 'zcontent' => $contents, 'ztype' => $post_type, 'zstatus' => $status, 'zlast_author' => $logged_id, 'zimage1' => $image);
-            $where = array('zid' => $ID);
-            $trigger_operation = 'update_single';
-
-            $social_data = array('zvalue' => $data2);
-            $social_where = array('zparent' => $ID);
-        }
-
-        $ID = $this->global_func_query('mz_postmain',$data, $where, $trigger_operation);
-        
-        if($ID){
-            if($type == 'addnew'){
-                $social_data = array('zparent' => $ID,'zvalue' => $data2);
-            }else{
-                $ID = $this->input->post('post_id');
-            }
-
->>>>>>> b534c0a98cfcba2eb79875f4c8acdfc6b8b1bd52
             $this->global_func_query('mz_postsocialmedia',$social_data, $social_where, $trigger_operation);
             $success = true;
             $msg = ucwords($post_type).' has been updated!';
@@ -726,480 +613,17 @@ class General_callbacks extends SS_Controller {
             else
                 return -1;
         }
-<<<<<<< HEAD
 
         $files = glob("x_moikzz_assets/images/gallery/*.{jpg,png,jpeg}", GLOB_BRACE);
         $data = array();
         usort($files, "mtimecmp");
 
-=======
-
-        $files = glob("x_moikzz_assets/images/gallery/*.{jpg,png,jpeg}", GLOB_BRACE);
-        $data = array();
-        usort($files, "mtimecmp");
-
->>>>>>> b534c0a98cfcba2eb79875f4c8acdfc6b8b1bd52
         foreach($files AS $k => $v){
             $image_files = explode('/', $v);
             $data[$k]['url'] = base_url().$v;
             $data[$k]['title'] = end($image_files);
         }
         echo json_encode($data);
-<<<<<<< HEAD
-    }
-
-    private function ifile_upload(){
-        $image1 = @strtolower(trim($_FILES['fileupload']['name']));  
-        $inner_msg = false;
-        $uploads_dir    = getcwd()."/x_moikzz_assets/images/gallery/";
-        $msg = 'Failed to Upload!';
-
-        if (!is_dir($uploads_dir)) {
-                mkdir($uploads_dir, 0777, true); 
-        } 
-
-        if(@$image1){
-            $inner_msg = $this->file_image_upload( $image1, $_FILES['fileupload']['size'],$uploads_dir,$_FILES['fileupload']['tmp_name'] );
-        }
-        
-        if($inner_msg){
-            $msg = 'Successfully Uploaded';
-        }
-
-<<<<<<< HEAD
-        }        
-        echo json_encode(array('success'=>$success,'id'=>$studID)); 
-    }
-
-    /* This is for ordered Menu */
-    private function _mealOrders(){
-        global $_GET;
-        
-        $datas = '';
-
-        $id = $this->userID;  
-
-        $this->query_table =  $this->_table_orders .' , '. $this->_table_order_details; 
-        // Display specific student order
-        if(@$_GET['s']){
-            $datas = "ords.zauthor = ".$id." AND ords.zid = ordd.zorder_id AND ords.zorder_to =".$_GET['s'];
-        }else{
-            $datas = "ords.zauthor = ".$id;
-        }
-
-        $this->query = array( 'where' =>  $datas);
-
-        $this->jsons();
-    }
-    
-    private function get_meal_schedule($t,$w,$f){
-        $getDate = $this->global_get_title($t,$w,$f); 
-        return $getDate;
-    }
-
-    /***
-            $query = array( 'fields_listing' => array('', '') - this is for datatable field to show
-                            'fields' => array('',''),
-                            'group_by' => '' ,
-                            'where' => array('',''),
-                            'likes' => array('',''),
-                            'orlike' => array('',''),
-                            'order_by' => '',
-                            'order' => '',
-                            'limit' => 5,
-                            'offset' => 0);
-    ***/  
-
-    private function _site_settings(){
-        $this->query_table =  $this->_table_system;
-        $this->jsons();
-    }
-
-    private function _testimonials(){
-        $this->query_table =  $this->_table_testimonials;
-        $this->jsons();
-    }
-
-    private function _comments(){
-        $this->query_table =  $this->_table_comments;
-        $this->jsons();
-    }
-
-    private function _history(){
-        $this->query_table =  $this->_table_history;
-        $this->jsons();
-    }
-
-    private function _products(){
-        global $_GET;
-
-        $datas = '';
-        $currentDate = date('Y-m-d');
-        
-        // Display published products
-        if(@$_GET['p'] && @$_GET['p'] == 9 && @$_GET['o']){
-
-            $this->query = array( 'where' =>  'cats.zid = prod.zcategory AND prod.zstatus = 9 AND cats.zstatus = 9 AND prod.zorganization = "'.$_GET['o'].'" AND cats.ztype = "product" AND prod.zdate_display >= "'.$currentDate.'"',
-                                    'fields' => 'prod.*');
-        
-        // Display ALL draft, review, pending, published - all status except deleted (2)
-        }elseif(@$_GET['p'] && @$_GET['p'] == 99 && @$_GET['o']){
-
-            $this->query = array( 'where' =>  'cats.zid = prod.zcategory AND prod.zstatus != 2 AND prod.zorganization = "'.$_GET['o'].'" AND cats.zstatus = 9 AND cats.ztype = "product"',
-                                    'fields' => 'prod.*');
-        
-        // Display EITHER draft, review, pending - specific
-        }elseif(@$_GET['p'] && @$_GET['p'] <> 2 && @$_GET['o']){
-
-            $this->query = array( 'where' =>  'cats.zid = prod.zcategory AND prod.zstatus = "'.$_GET['p'].'" AND prod.zorganization = "'.$_GET['o'].'" AND cats.zstatus = 9 AND cats.ztype = "product" AND prod.zdate_display >= "'.$currentDate.'"',
-                                    'fields' => 'prod.*');
-        
-        }elseif(@$_GET['p'] && @$_GET['p'] == 'administrator'){
-            
-            // for admin
-            // Display all products except deleted
-            $this->query = array( 'where' => 'cats.zid = prod.zcategory AND prod.zstatus != 2 AND cats.ztype = "product"',
-                                    'fields' => 'prod.*');
-        }else{
-            return false;
-        }
-
-        // prod, cats
-        $this->query_table =  $this->_table_products .','. $this->_table_categories;
-        $this->jsons();
-    }
-
-    private function _orders(){
-            global $_GET;
-            $this->query_table =  $this->_table_orders .' , '. $this->_table_order_details;
-            $datas = ' AND ords.zstatus != 2';
-
-            // Display specific student order
-            if(@$_GET['s']){
-                $datas .= " AND ords.zorder_to =".$_GET['s'];
-            }
-
-            // Display all orders from children
-            if(@$_GET['x']){
-                $datas = " AND ords.zauthor =".$_GET['x'];
-            }
-
-            $this->lists =  array(  'zorder_to',
-                                    'zorganization',  
-                                    'zproduct',
-                                    'zprice',
-                                    'zdate_published',
-                                    'zstatus'
-                            );
-
-            $this->query = array( 'fields_listing' => array( 
-                                                'zorder_to',
-                                                'zorganization',  
-                                                'zproduct',
-                                                'zprice',
-                                                'zdate_published',
-                                                'zstatus'
-                                                ),
-                    'fields' => '*',
-                    'where' =>  'ords.zid = ordd.zorder_id '.$datas,
-                    'order_by' => 'LENGTH(zdate_published),zdate_published',
-                                'order' => 'DESC'); 
-            
-            $this->jsons();
-    }
-
-    // Display All organization data
-    private function _orgs($item=null,$fld=null){
-            global $_GET;
-            $this->query_table =  $this->_table_organization .' , '. $this->_table_orgsmeta;
-            $datas = ' AND orgs.zstatus != 2';
-
-            // Display specific organization data
-            if(@$_GET['s']){
-                $datas .= " AND orgs.zid =".$_GET['s'];
-            }
-
-            //For Admin - All by types - sc / comp / dept / pos / gr / sec / div
-            if(@$_GET['x']){
-                $datas .= ' AND orgs.ztype = "'.$_GET['x'].'"';
-            }
-
-            // For User/Client - Display published status
-            if(@$_GET['p'] == 9){
-                $datas .= ' AND orgs.zstatus = '.$_GET['p'];
-            }
-
-            $ntz = '';
-            $gtz = '';
-
-            if($item){
-                $ntz = ' AND orgs.zid = '.$item;
-                $fields = $fld;
-                $order_by = $fld;
-            }else{
-                $fields = 'orgs.zid AS ID, orgs.ztitle AS title, orgs.zcontent AS content, orgs.zdate_published AS published_date, orgs.zauthor AS author, orgs.zparent AS parents, orgs.zstatus AS zstatus,
-                orgm.zcountry AS country, orgm.zaddress AS address, orgm.zlink AS link, orgm.zcomp_license AS license, orgm.zcomp_vat AS vat';
-                $order_by = 'LENGTH(title),title';
-            }
-
-            if(@$_GET['g']){
-                $gtz = ' AND orgs.zparent = '.$_GET['g'];
-            }
-
-            $this->query = array( 'where' =>  'orgs.zid = orgm.zorganization '.$datas.$ntz.$gtz,
-                                'fields' => $fields,
-                                'order_by' => $order_by,
-                                'order' => 'ASC');
-
-            if($item){
-                $data =  $this->global_func_query($this->query_table, $this->query);
-                return $data[0]->$fields;
-            }else{
-                $this->jsons();
-            }
-    }
-
-    // get login profile
-    private function _profile(){
-        global $_GET;
-        $callback = '';  
-
-        $id = $this->userID;
-        $stats = 0;
-        if(@$_GET['p'] == 9){
-            $stats = $_GET['p'];
-        }
-        /* Get single profile */
-        $this->query = array( 'where' => array('zparent' => $id, 'zstatus' => $stats));
-        $this->query_table =  $this->_table_profile;
-        $this->jsons();
-    }
-
-    // display all users - profile
-    private function _users(){
-        global $_GET;
-
-        if(@$_GET['tz'] <> 214){
-            return false;
-        }
-        //uss - prof
-        $this->query_table =  $this->_table_profile .' , '. $this->_table_users;
-        $datas = '';
-
-        // Display specific user data
-        if(@$_GET['s']){
-            $datas = " AND uss.zid =".$_GET['s'];
-        }else{
-            $datas = " AND uss.zid =".$this->userID;
-        }
-
-        $this->query = array( 'where' =>  'uss.zid = prof.zparent AND uss.zstatus != 2'.$datas);
-        $this->jsons();
-    } 
-
-     // display all active complimentaries
-     private function _xtras(){
-        global $_GET;
-
-        if(@$_GET['tz'] <> 214 && !$_GET['tp']){
-            return false;
-        }
-        //uss - prof
-        $this->query_table =  $this->_table_extras;
-        $datas = array('zstatus' => 9,'ztype'=>$_GET['tp']); 
-
-        $this->query = array( 'where' =>  $datas);
-        $this->jsons();
-    } 
-
-    // display all students
-    private function _students(){
-        global $_GET;
-        $callback = '';
-        $datas = '';
-
-        $this->studz = @$_GET['z']; // for datatables
-
-        $id = $this->userID;
-
-         // Display specific user data
-        if(@$_GET['s']){ 
-            $datas = 'zid = '.$_GET['s'].' AND zparent ='.$id.' AND zstatus != 2';
-        }else{
-            $datas = 'zparent ='.$id.' AND zstatus != 2';
-        }
-
-        $this->lists =  array(  'zid',
-                                'zstatus',
-                                'zfullname',
-                                'zorganization',
-                                'zgrade',
-                                'zstate',
-                                'zvalid_id',
-                                'zbalance',
-                                'zorgID',
-                                'zdivision',
-                                'zsection',
-                                'zgradeID',
-                                'zsectionID',
-                                'zdivisionID'                               
-                                
-        );
-
-        $this->query = array( 'fields_listing' => array( 
-                                                        'zstatus',
-                                                        'zfirstname',  
-                                                        'zorganization',
-                                                        'zgrade',
-                                                        'zstate',
-                                                        'zvalid_id',
-                                                        'zbalance', 
-                                                        'zorganization'
-                                                        ),
-                              'fields' => '*',
-                              'where' => $datas);
-        $this->query_table =  $this->_table_subprofile;
-        $this->jsons();
-    }
-
-    private function jsons(){
-        $data =  $this->global_func_query($this->query_table, $this->query, $this->lists);  
-        $this->output( $data ); 
-    }   
-
-    private function output( $o ){
-        $this->output->set_content_type('application/json'); 
-        
-        $output = [];
-        $data1 = [];
-        $data2 = [];
-        $parZ =  $o;
-        $tz = [];
-         /* Run on DataTables */
-        if($o && $this->lists){
-            foreach($o['data'] as $k => $aRow){ 
-  
-                $data1[] =  (object)$aRow;
-            }
-
-            $o =$data1;
-        }
-        
-         /* Run on All */
-         if($o){
-          
-                foreach($o AS $k => $v){ 
-                    foreach($v AS $t => $z){
-                        $output[$k][$t] = $v->$t; 
-                    }
-                    if(@$v->zstatus){
-                        $output[$k]['zstatus'] = status_info_clean($v->zstatus);
-                    }else{
-                        $output[$k]['zstatus'] = '';
-                    }
-                    if(@$v->zorganization){
-                        $output[$k]['zorgID'] =  $v->zorganization;
-                        $output[$k]['zorganization'] = $this->global_get_title('mz_organization',array('zid' => $v->zorganization),'ztitle');
-
-                        /* For databales lists */
-                        if($this->studz){
-                            $output[$k]['zstate'] = $this->_orgs($v->zorganization, 'zstate');
-                        } 
-                    }else{
-                        $output[$k]['zorganization'] = '';
-                    }
-                    
-                    if(@$v->zorder_to){ 
-                        $getName = $this->global_get_title('mz_subprofile',array('zid' => $v->zorder_to),array('zfirstname','zlastname'));
-                        $output[$k]['zorder_to'] = $getName[0]->zfirstname. ' '. $getName[0]->zlastname;
-                    }
-
-                    if(@$v->zproduct){ 
-                        $output[$k]['zproductID'] = $v->zproduct;
-                        $output[$k]['zproduct'] =  $this->global_get_title('mz_products',array('zid' => $v->zproduct),'ztitle');
-                    }
-
-                    if(@$v->zgrade){
-                        $output[$k]['zgradeID'] =  $v->zgrade;
-                        $output[$k]['zgrade'] =  $this->global_get_title('mz_organization',array('zid' => $v->zgrade),'ztitle');
-                    }else{
-                        $output[$k]['zgrade'] = '';
-                        $output[$k]['zgradeID'] = '';
-                    }
-                    if(@$v->zdivision){
-                        $output[$k]['zdivisionID'] =  $v->zdivision;
-                        $output[$k]['zdivision'] = $this->global_get_title('mz_organization',array('zid' => $v->zdivision),'ztitle');
-                    }else{
-                        $output[$k]['zdivision'] = '';
-                        $output[$k]['zdivisionID'] = '';
-                    }
-                    if(@$v->zsection){
-                        $output[$k]['zsectionID'] =  $v->zsection;
-                        $output[$k]['zsection'] = $this->global_get_title('mz_organization',array('zid' => $v->zsection),'ztitle');
-                    }else{
-                        $output[$k]['zsection'] = '';
-                        $output[$k]['zsectionID'] = '';
-                    }
-                    if(@$v->zcompany){
-                        $output[$k]['zcompany'] = $this->global_get_title('mz_organization',array('zid' => $v->zcompany),'ztitle');
-                    }else{
-                        $output[$k]['zcompany'] = '';
-                    }
-                    if(@$v->zdepartment){
-                        $output[$k]['zdepartment'] = $this->global_get_title('mz_organization',array('zid' => $v->zdepartment),'ztitle');
-                    }else{
-                        $output[$k]['zdepartment'] = '';
-                    }
-                    if(@$v->zposition){
-                        $output[$k]['zposition'] = $this->global_get_title('mz_organization',array('zid' => $v->zposition),'ztitle');
-                    }else{
-                        $output[$k]['zposition'] = '';
-                    }
-                    if(@$v->zcategory){
-                        $output[$k]['zcategory'] = $this->global_get_title('mz_categories',array('zid' => $v->zcategory),'ztitle');
-                    }else{
-                        $output[$k]['zcategory'] = '';
-                    }
-                    
-                    if(@$v->zfirstname){ 
-                        $output[$k]['zfullname'] =  ucwords($v->zfirstname . " ". $v->zlastname);
-                    }                
-                }
-        }
-           
-        /* Run on DataTables */
-        if($o && $this->lists){  
-            
-            foreach($output as $k => $aRow){
-                
-                 $row = array();
-                
-                foreach ($this->lists as $col) {
-                    $row[] = $aRow[$col];
-                }
-    
-                $data2[] = $row;
-            }
-           
-            $output = array( "draw"             =>  $parZ['draw'],  
-                            "recordsTotal"      =>  $parZ['recordsTotal'],  
-                            "recordsFiltered"   =>  $parZ['recordsFiltered'],  
-                            "data"              =>  $data2  );
-        }
-        
-        $json = json_encode($output); 
-        echo $json;
-    }
-     
-=======
-        echo json_encode(array('success' => $inner_msg,'message' => $msg));
-    }
-<<<<<<< HEAD
- 
->>>>>>> Moikzz
-=======
->>>>>>> July 8
-=======
     }
 
     private function ifile_upload(){
@@ -1222,5 +646,4 @@ class General_callbacks extends SS_Controller {
 
         echo json_encode(array('success' => $inner_msg,'message' => $msg));
     }
->>>>>>> b534c0a98cfcba2eb79875f4c8acdfc6b8b1bd52
 }
