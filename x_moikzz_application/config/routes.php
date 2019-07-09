@@ -1,6 +1,5 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-
 /*
 | -------------------------------------------------------------------------
 | URI ROUTING
@@ -57,7 +56,6 @@ $route['client/page'] = 'back/General_pages';
 $route['compress/cache'] = 'back/Compress/clear_cache'; 
 $route['client/page/(:any)'] = 'back/General_pages/view/$1'; 
 $route['client/page/(:any)/(:any)'] = 'back/Page_lists/view/$1/$2'; 
-
 $route['login']  = 'front/Login'; 
 $route['login/new']  = 'front/Login/newUser'; 
 $route['log/verify'] = 'front/Login/verification';
@@ -67,7 +65,5 @@ $route['public/api/(:any)'] = 'front/Viewing_callbacks/view/$1';
 $route['(:any)'] = 'pages/view/$1';
 $route['(:any)/(:any)'] = 'pages/view/$1/$2';
 $route['(:any)/(:any)/(:any)'] = 'pages/view/$1/$2/$3';
-
-
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
