@@ -160,6 +160,7 @@ class General_pages extends SS_Controller {
         $this->page = 'templates/contents/back/'.$this->namespace;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         $this->jsCustom = 1; 
         $this->template_display(); 
     } 
@@ -167,6 +168,9 @@ class General_pages extends SS_Controller {
 =======
         $this->tableHeaders = array('ID','Status','Trucks','<p>Loads</p><small>Max cars</small>','<p>From</p> <small>Origin</small>','<p>To</p> <small>Destination</small>', '<p>N.Price</p> <small>(AED)</small>','</p>A.Price</p> <small>(AED)</small>','<p>P.Price</p> <small>(AED)</small>','Date From','Date To','Action');
 >>>>>>> Moikzz
+=======
+        $this->tableHeaders = array('ID','Status','Trucks','<p>Loads</p><small>Max cars</small>','<p>From</p> <small>Origin</small>','<p>To</p> <small>Destination</small>', '<p>N.Price</p> <small>(AED)</small>','</p>A.Price</p> <small>(AED)</small>','<p>P.Price</p> <small>(AED)</small>','Date From','Date To','Action');
+>>>>>>> b534c0a98cfcba2eb79875f4c8acdfc6b8b1bd52
         $this->jsCustom = 1;
         $this->template_display();
     }

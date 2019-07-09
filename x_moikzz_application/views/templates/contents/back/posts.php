@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 <?php defined('BASEPATH') OR exit('No direct script access allowed');?>      
 <div class="row">
     <!-- column -->
@@ -143,3 +144,6 @@
 =======
 <?php $this->load->view('templates/contents/back/tables'); ?>
 >>>>>>> Moikzz
+=======
+<?php $this->load->view('templates/contents/back/tables'); ?>
+>>>>>>> b534c0a98cfcba2eb79875f4c8acdfc6b8b1bd52

@@ -50,6 +50,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |		my-controller/my-method	-> my_controller/my_method
 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 // @jacob
 // $route['default_controller'] = 'welcome';
@@ -67,6 +68,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 // @mel
 $route['default_controller'] = 'pages/view';
 =======
+=======
+>>>>>>> b534c0a98cfcba2eb79875f4c8acdfc6b8b1bd52
 $route['default_controller'] = 'pages/view';
 $route['api/sys/(:any)'] = 'back/General_callbacks/view/$1';  
 $route['api/vw/(:any)'] = 'back/Viewing_callbacks/view/$1';  
@@ -88,6 +91,7 @@ $route['(:any)/(:any)/(:any)'] = 'pages/view/$1/$2/$3';
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> Moikzz
 $route['api/sys/(:any)'] = 'back/General_callbacks/view/$1';  
 $route['api/vw/(:any)'] = 'back/Viewing_callbacks/view/$1';  
@@ -98,6 +102,8 @@ $route['client/page/(:any)'] = 'back/General_pages/view/$1';
 $route['client/page/(:any)/(:any)'] = 'back/Page_lists/view/$1/$2'; 
 =======
 >>>>>>> July 8
+=======
+>>>>>>> b534c0a98cfcba2eb79875f4c8acdfc6b8b1bd52
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 

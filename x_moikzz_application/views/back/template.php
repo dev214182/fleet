@@ -19,7 +19,10 @@ var base_url =  '<?=base_url()?>';
 let curUrl = '<?=get_current_url()?>';
 var jsCustom =  '<?=@$jsCustom?>';
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> b534c0a98cfcba2eb79875f4c8acdfc6b8b1bd52
 var options_c =  '<?=$options?>'; 
 var userType =  '<?=$userType?>';
 var logged_id =  '<?=$userID?>';
@@ -150,6 +153,7 @@ var key =  '<?=public_key()?>';
     })();
     </script>
 <<<<<<< HEAD
+<<<<<<< HEAD
     
 
 
@@ -264,6 +268,9 @@ var key =  '<?=public_key()?>';
 =======
       
 >>>>>>> Moikzz
+=======
+      
+>>>>>>> b534c0a98cfcba2eb79875f4c8acdfc6b8b1bd52
     <!-- ============================================================== -->
     <!-- Style switcher -->
     <!-- ============================================================== -->

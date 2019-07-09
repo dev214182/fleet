@@ -1,5 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 class Login extends SS_Controller { 
 
@@ -46,10 +47,25 @@ class Login extends SS_Controller {
 =======
            $this->load->view('templates/inc/front/login', $data);
 >>>>>>> July 7
+=======
+class Login extends SS_Controller { 
+    function __construct(){ 
+       parent::__construct(); 
+   
+        $this->load->helper('form','url'); 
+        $this->load->library('form_validation'); 
+    }
+    public function index(){
+        if ( !$this->session->userdata('logged_in') ) {  
+            $data['ci_title'] = 'Login';
+            $data['pageclass'] = 'login';
+           $this->load->view('templates/inc/front/login', $data);
+>>>>>>> b534c0a98cfcba2eb79875f4c8acdfc6b8b1bd52
         }else{
             redirect('admin/dashboard');
         } 
     } 
+<<<<<<< HEAD
 <<<<<<< HEAD
 
     public function newUser(){  
@@ -57,6 +73,9 @@ class Login extends SS_Controller {
 =======
     public function newUser(){  
 >>>>>>> Moikzz
+=======
+    public function newUser(){  
+>>>>>>> b534c0a98cfcba2eb79875f4c8acdfc6b8b1bd52
             $id          = $this->input->post('id'); 
             $user     = $this->input->post('user');   
             $pass     = $this->input->post('pass');   
@@ -67,9 +86,12 @@ class Login extends SS_Controller {
             $mob     = $this->input->post('mob');   
             $registered     = $this->input->post('registered');           
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 >>>>>>> Moikzz
+=======
+>>>>>>> b534c0a98cfcba2eb79875f4c8acdfc6b8b1bd52
             $data = array( 
                 'id'  => $id,
                 'user'  => $user,
@@ -81,6 +103,7 @@ class Login extends SS_Controller {
                 'mob'  => $mob, 
                 'registered' => $registered
 <<<<<<< HEAD
+<<<<<<< HEAD
 
             ); 
 
@@ -133,6 +156,8 @@ class Login extends SS_Controller {
                         foreach($result as $row) {
 
 =======
+=======
+>>>>>>> b534c0a98cfcba2eb79875f4c8acdfc6b8b1bd52
             ); 
             $this->gm->insert_data('x_user',$data);
             
@@ -157,13 +182,17 @@ class Login extends SS_Controller {
                         
                         $sess_array = array();
                         foreach($result as $row) {
+<<<<<<< HEAD
 >>>>>>> Moikzz
+=======
+>>>>>>> b534c0a98cfcba2eb79875f4c8acdfc6b8b1bd52
                             $sess_array = array( 
                                 'ID'            => $row['ID'], 
                                 'us_user_name'   => $row['us_user_name'],
                                 'zlog_count'     => $row['zlog_count']
                             ); 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
                         } 
 
@@ -242,10 +271,38 @@ class Login extends SS_Controller {
             $this->um->update_data($data,$where); 
             $this->session->unset_userdata('logged_in');
 >>>>>>> Moikzz
+=======
+                        } 
+                        
+                            $this->session->set_userdata('logged_in', $sess_array); 
+                            $message = 'Successfully Logged In.'; 
+                            $success = true;
+                       
+                    } elseif($result =='inactive') {
+                        $message = 'Account has been suspended.';
+                        $success = false;
+                    }else { 
+                        $message = 'Sorry, Incorrect username/password.';
+                        $success = false;
+                    }    
+                } 
+                echo json_encode(array('success'=>$success,'message'=>$message, 'logged' => $result[0]['zlog_count'], 'zid' => $result[0]['ID']));
+        }
+    }
+    public function logout(){
+        //if($this->input->is_ajax_request()) { 
+            $user_info = user_info(); 
+            $user_id = $user_info['zid']; 
+            $data = array('zlogin_status' => 0);
+            $where = array('zid' => $user_id);
+            $this->um->update_data($data,$where); 
+            $this->session->unset_userdata('logged_in');
+>>>>>>> b534c0a98cfcba2eb79875f4c8acdfc6b8b1bd52
             session_destroy();
             
             redirect('login');
             
+<<<<<<< HEAD
 <<<<<<< HEAD
 
         //}
@@ -256,4 +313,8 @@ class Login extends SS_Controller {
         //}
     }
 >>>>>>> Moikzz
+=======
+        //}
+    }
+>>>>>>> b534c0a98cfcba2eb79875f4c8acdfc6b8b1bd52
 }

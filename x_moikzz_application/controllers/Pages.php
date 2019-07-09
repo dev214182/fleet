@@ -5,6 +5,7 @@
  * @author Moikzz
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 class Pages extends CI_Controller{ 
 <<<<<<< HEAD
 
@@ -30,6 +31,11 @@ include APPPATH.'core/SS_Fcontroller.php';
 class Pages extends SS_Fcontroller{ 
 
 >>>>>>> July 8
+=======
+include APPPATH.'core/SS_Fcontroller.php';
+class Pages extends SS_Fcontroller{ 
+
+>>>>>>> b534c0a98cfcba2eb79875f4c8acdfc6b8b1bd52
      protected $filter = array();
      protected $jsCustom = false;
      protected $page = 'pages';
@@ -42,6 +48,7 @@ class Pages extends SS_Fcontroller{
        	$this->load->library('user_agent');
         $this->load->helper('url');
     }
+<<<<<<< HEAD
 <<<<<<< HEAD
 	public function view( $page='home'){
        
@@ -164,6 +171,8 @@ class Pages extends SS_Fcontroller{
     } 
     private function display($p){ 
 =======
+=======
+>>>>>>> b534c0a98cfcba2eb79875f4c8acdfc6b8b1bd52
 
     function view($url='home', $sub_url="") {  
         $static_menu = array('profile','bookings','dashboard');
@@ -173,7 +182,10 @@ class Pages extends SS_Fcontroller{
             return $this->page_not_found();
 
         $result = @$query[0];
+<<<<<<< HEAD
 >>>>>>> July 8
+=======
+>>>>>>> b534c0a98cfcba2eb79875f4c8acdfc6b8b1bd52
       
         if(@$result->zslug == $url && $url == 'home'){ 
             $this->jsCustom = 1; 
@@ -198,8 +210,11 @@ class Pages extends SS_Fcontroller{
             $this->bodyClass = 'dashboard';
          
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> Moikzz
 =======
+=======
+>>>>>>> b534c0a98cfcba2eb79875f4c8acdfc6b8b1bd52
         }elseif( (@$result->zslug == $url ) || $url == 'bookings' && in_array($url,$static_menu) ){
             $this->jsCustom = 5; 
             $this->page = 'bookings';
@@ -222,11 +237,15 @@ class Pages extends SS_Fcontroller{
  
     private function display(){  
         $data['jsCustom'] = $this->jsCustom; 
+<<<<<<< HEAD
 >>>>>>> July 8
+=======
+>>>>>>> b534c0a98cfcba2eb79875f4c8acdfc6b8b1bd52
         $data['filter_css_js'] = $this->filter;
         $data['bodyClass'] =  $this->bodyClass;
         $data['pageclass'] = 'lists-'.$this->page;
  
+<<<<<<< HEAD
 <<<<<<< HEAD
         // fields - text
         // group_by - text
@@ -261,6 +280,9 @@ class Pages extends SS_Fcontroller{
 =======
         $this->template->load( 'front/template', 'front/pages/'.$this->page.'.php', $data);
 >>>>>>> Moikzz
+=======
+        $this->template->load( 'front/template', 'front/pages/'.$this->page.'.php', $data);
+>>>>>>> b534c0a98cfcba2eb79875f4c8acdfc6b8b1bd52
     }  
  
 }

@@ -80,12 +80,15 @@ class General_callbacks extends SS_Controller {
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     /* Saving cart to DB */
     private function cart_order_purchase(){
 		header('Content-type: application/json; charset=utf-8');
         $meal_details = array();
         $order_details_ID = null;
 =======
+=======
+>>>>>>> b534c0a98cfcba2eb79875f4c8acdfc6b8b1bd52
      /* New/Update Truck Fleet */
      private function admin_settings(){
         header('Content-type: application/json; charset=utf-8');
@@ -423,7 +426,10 @@ class General_callbacks extends SS_Controller {
      /* New/Update Truck Fleet */
      private function sys_fleet_info(){
         header('Content-type: application/json; charset=utf-8');
+<<<<<<< HEAD
 >>>>>>> Moikzz
+=======
+>>>>>>> b534c0a98cfcba2eb79875f4c8acdfc6b8b1bd52
         $success = false;
         $truckID = false;
         $msg = 'Error: Something wrong on submittion...';
@@ -437,6 +443,7 @@ class General_callbacks extends SS_Controller {
             return;
         }
         $cur_date = date('Y-m-d H:i:s');
+<<<<<<< HEAD
 
         $userID                     = @$this->input->post('userID');
         $input_origin_place         = @$this->input->post('input_origin_place');
@@ -518,6 +525,89 @@ class General_callbacks extends SS_Controller {
             $msg = 'Status has been changed!';
             $success = true;
         }
+=======
+
+        $userID                     = @$this->input->post('userID');
+        $input_origin_place         = @$this->input->post('input_origin_place');
+        $input_origin_date          = @$this->input->post('input_origin_date');
+        $input_destination_place    = @$this->input->post('input_destination_place');
+        $input_destination_date     = @$this->input->post('input_destination_date');
+        $input_loads                = @$this->input->post('input_loads');
+        $input_public               = @$this->input->post('input_public');
+        $price_normal               = @$this->input->post('price_normal');
+        $price_advance              = @$this->input->post('price_advance');
+        $price_prem                 = @$this->input->post('price_prem');
+        $fleet_notes                 = @$this->input->post('fleet_notes');
+
+        if(strtolower($input_public) == 'on' || $input_public == 1){
+            $input_public = 1;
+        }else{
+            $input_public = 0;
+        }
+
+        if($type == 'addnew'){  
+
+                    $data = array('zcategory' => $input_truck, 'ztravel_from' => $input_origin_place, 'ztravel_to' => $input_destination_place,'zdate_from'=> $input_origin_date,'zdate_to' => $input_destination_date,
+                    'zloads' => $input_loads, 'zpublic' => $input_public, 'zprice' => $price_normal, 'zsaleprice' =>$price_advance, 'zpremprice' => $price_prem,  'zstatus' => 9,'zauthor'=> $userID,
+                    'zdate_published' => $cur_date, 'ztype'=> 'truck', 'znotes' => $fleet_notes);
+                    
+                    $truckID =  $this->global_func_query('mz_products', $data,null,'insert_single');
+                    if($truckID) {
+                        $msg = 'New Fleet has been added.';
+                        $success = true;
+                    }
+            
+        }else{
+           
+                    $truckID                    = @$this->input->post('truckID');
+
+                    if(!$truckID){
+                        echo json_encode(array('success'=>$success,'message' => 'Error 505....')); 
+                        return;
+                    } 
+        
+                    $status                 = @$this->input->post('truck_status');
+
+                    $data = array('zcategory' => $input_truck, 'ztravel_from' => $input_origin_place, 'ztravel_to' => $input_destination_place,'zdate_from'=> $input_origin_date,'zdate_to' => $input_destination_date,
+                    'zloads' => $input_loads, 'zpublic' => $input_public, 'zprice' => $price_normal, 'zsaleprice' =>$price_advance, 'zpremprice' => $price_prem,  'zstatus' => $status, 'znotes' => $fleet_notes);
+                    
+                    $where = array('zid' => $truckID);
+                    $result =  $this->global_func_query('mz_products', $data, $where,'update_single');
+                    if($result) {
+                        $msg = 'Fleet has been updated!';
+                        $success = true;
+                    }
+        }
+        echo json_encode(array('success'=>$success,'message'=> $msg,'id'=>$truckID));
+        return;
+    }
+
+
+     /* Order / Inquiry Status Change */
+     private function order_status_change(){
+        header('Content-type: application/json; charset=utf-8');
+        $success = false;
+       
+        $msg = 'Error: Something wrong on submittion...';
+        
+        $status = $this->input->post('status_id');
+        
+        $orderID = @$this->input->post('order_id');
+
+        if(!$status || !$orderID){
+            echo json_encode(array('success'=>$success,'message' => 'Error 505....')); 
+            return;
+        }
+        
+        $data = array('zstatus' => $status); 
+        $where = array('zid' => $orderID);
+
+        $result =  $this->global_func_query('mz_orders', $data, $where,'update_single');
+        if($result) {
+            $msg = 'Status has been changed!';
+            $success = true;
+        }
+>>>>>>> b534c0a98cfcba2eb79875f4c8acdfc6b8b1bd52
      
         echo json_encode(array('success'=>$success,'message'=> $msg,'id'=>$orderID));
         return;
@@ -559,6 +649,7 @@ class General_callbacks extends SS_Controller {
       
         $data2 = serialize($item2);
         $cur_date = date('Y-m-d H:i:s');
+<<<<<<< HEAD
 
         if($type == 'addnew'){
             $data = array('ztitle' => $title, 'zslug' => $slug, 'zcontent' => $contents, 'ztype' => $post_type, 'zstatus' => $status, 'zdate_published' => $cur_date, 'zauthor' => $logged_id, 'zimage1' => $image);
@@ -585,6 +676,34 @@ class General_callbacks extends SS_Controller {
                 $ID = $this->input->post('post_id');
             }
 
+=======
+
+        if($type == 'addnew'){
+            $data = array('ztitle' => $title, 'zslug' => $slug, 'zcontent' => $contents, 'ztype' => $post_type, 'zstatus' => $status, 'zdate_published' => $cur_date, 'zauthor' => $logged_id, 'zimage1' => $image);
+            $trigger_operation = 'insert_single';
+            $social_where = null;
+            $where = null;
+           
+        }else{
+            $ID = $this->input->post('post_id');
+            $data = array('ztitle' => $title, 'zslug' => $slug, 'zcontent' => $contents, 'ztype' => $post_type, 'zstatus' => $status, 'zlast_author' => $logged_id, 'zimage1' => $image);
+            $where = array('zid' => $ID);
+            $trigger_operation = 'update_single';
+
+            $social_data = array('zvalue' => $data2);
+            $social_where = array('zparent' => $ID);
+        }
+
+        $ID = $this->global_func_query('mz_postmain',$data, $where, $trigger_operation);
+        
+        if($ID){
+            if($type == 'addnew'){
+                $social_data = array('zparent' => $ID,'zvalue' => $data2);
+            }else{
+                $ID = $this->input->post('post_id');
+            }
+
+>>>>>>> b534c0a98cfcba2eb79875f4c8acdfc6b8b1bd52
             $this->global_func_query('mz_postsocialmedia',$social_data, $social_where, $trigger_operation);
             $success = true;
             $msg = ucwords($post_type).' has been updated!';
@@ -607,17 +726,26 @@ class General_callbacks extends SS_Controller {
             else
                 return -1;
         }
+<<<<<<< HEAD
 
         $files = glob("x_moikzz_assets/images/gallery/*.{jpg,png,jpeg}", GLOB_BRACE);
         $data = array();
         usort($files, "mtimecmp");
 
+=======
+
+        $files = glob("x_moikzz_assets/images/gallery/*.{jpg,png,jpeg}", GLOB_BRACE);
+        $data = array();
+        usort($files, "mtimecmp");
+
+>>>>>>> b534c0a98cfcba2eb79875f4c8acdfc6b8b1bd52
         foreach($files AS $k => $v){
             $image_files = explode('/', $v);
             $data[$k]['url'] = base_url().$v;
             $data[$k]['title'] = end($image_files);
         }
         echo json_encode($data);
+<<<<<<< HEAD
     }
 
     private function ifile_upload(){
@@ -1071,4 +1199,28 @@ class General_callbacks extends SS_Controller {
 >>>>>>> Moikzz
 =======
 >>>>>>> July 8
+=======
+    }
+
+    private function ifile_upload(){
+        $image1 = @strtolower(trim($_FILES['fileupload']['name']));  
+        $inner_msg = false;
+        $uploads_dir    = getcwd()."/x_moikzz_assets/images/gallery/";
+        $msg = 'Failed to Upload!';
+
+        if (!is_dir($uploads_dir)) {
+                mkdir($uploads_dir, 0777, true); 
+        } 
+
+        if(@$image1){
+            $inner_msg = $this->file_image_upload( $image1, $_FILES['fileupload']['size'],$uploads_dir,$_FILES['fileupload']['tmp_name'] );
+        }
+        
+        if($inner_msg){
+            $msg = 'Successfully Uploaded';
+        }
+
+        echo json_encode(array('success' => $inner_msg,'message' => $msg));
+    }
+>>>>>>> b534c0a98cfcba2eb79875f4c8acdfc6b8b1bd52
 }

@@ -2,6 +2,7 @@
 <html lang="en">
   <head>
 <<<<<<< HEAD
+<<<<<<< HEAD
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>Gallega Global Logistics</title>
@@ -41,13 +42,18 @@
     <link href="<?=file_common_dir('front/css/compare.css')?>" rel="stylesheet" type="text/css" media="all" />
     <link href="<?=file_common_dir('back/plugins/select2/dist/css/select2.min.css');?>" rel="stylesheet"  type="text/css" data="overide"/>
 =======
+=======
+>>>>>>> b534c0a98cfcba2eb79875f4c8acdfc6b8b1bd52
 
     <?php $this->load->view('templates/inc/front/meta.html'); ?>
     <!-- SEO meta tags @mel -->
 
     <?php $this->load->view('templates/css/front/css.html'); ?>
    
+<<<<<<< HEAD
 >>>>>>> Moikzz
+=======
+>>>>>>> b534c0a98cfcba2eb79875f4c8acdfc6b8b1bd52
     <!--[if lt IE 9]>
     <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
@@ -62,6 +68,7 @@
   <body class="<?=$bodyClass?>" data-scrolling-animations="true" data-equal-height=".b-auto__main-item"> 
     <!-- Loader -->
     <div id="page-preloader"><span class="spinner"></span></div>
+<<<<<<< HEAD
 <<<<<<< HEAD
     <!-- Loader end -->
 
@@ -173,6 +180,8 @@
           </nav><!--b-nav-->
         </div><!-- .nav-fixed -->
 =======
+=======
+>>>>>>> b534c0a98cfcba2eb79875f4c8acdfc6b8b1bd52
     <!-- Loader end --> 
    
     <div class="mainNav overlay" style="background-image:url('<?php echo file_common_dir('images/backgrounds/fleet-page-banner-v3.jpg');?>');">
@@ -183,7 +192,10 @@
         
         <!-- Desktop Main Navigation -->
         <?php $this->load->view('templates/inc/front/desktop_navigation.html'); ?>
+<<<<<<< HEAD
 >>>>>>> Moikzz
+=======
+>>>>>>> b534c0a98cfcba2eb79875f4c8acdfc6b8b1bd52
 
         <?php
         if( $bodyClass === 'home m-index' ){ ?>
@@ -264,6 +276,7 @@
         </div>
       </div>
     </div>
+<<<<<<< HEAD
 <<<<<<< HEAD
 
     <?=$contents?>
@@ -511,6 +524,8 @@
     });
     </script>
 =======
+=======
+>>>>>>> b534c0a98cfcba2eb79875f4c8acdfc6b8b1bd52
       
     <!-- Contents -->
     <?=$contents?>
@@ -523,6 +538,9 @@
     <?php $this->load->view('templates/js/front/js.html'); ?>
     <?php $this->load->view('templates/js/front/default2.html'); ?> 
    
+<<<<<<< HEAD
 >>>>>>> Moikzz
+=======
+>>>>>>> b534c0a98cfcba2eb79875f4c8acdfc6b8b1bd52
   </body>
 </html>

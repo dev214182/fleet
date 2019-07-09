@@ -19,6 +19,7 @@ var app = {
     },  
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     data_country: function(){ 
 
         // country lists
@@ -145,6 +146,8 @@ var app = {
         })
     },
 =======
+=======
+>>>>>>> b534c0a98cfcba2eb79875f4c8acdfc6b8b1bd52
     data_country: function(){  
         
         if($('select').hasClass('rx-country')){
@@ -204,9 +207,12 @@ var app = {
         }); 
     },
 <<<<<<< HEAD
+<<<<<<< HEAD
  
 >>>>>>> Moikzz
 =======
+=======
+>>>>>>> b534c0a98cfcba2eb79875f4c8acdfc6b8b1bd52
 
     listingProductLayout: function(k){
         var layout =    '<div class="b-items__cars-one wow zoomInUp" data-wow-delay="0.5s">'+
@@ -300,13 +306,17 @@ var app = {
     
         return dataDetails;
     },
+<<<<<<< HEAD
 >>>>>>> July 8
+=======
+>>>>>>> b534c0a98cfcba2eb79875f4c8acdfc6b8b1bd52
     //------------------------------------------------------------------------///
     init: function () {    
                  
         // country function
         app.data_country();  
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -325,6 +335,11 @@ var app = {
 >>>>>>> Updated
      
 >>>>>>> Moikzz
+=======
+        if(jsCustom == 2)
+        app.listings_view_details();
+     
+>>>>>>> b534c0a98cfcba2eb79875f4c8acdfc6b8b1bd52
     }
 }; 
 
