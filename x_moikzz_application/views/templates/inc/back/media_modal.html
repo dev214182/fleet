@@ -1,0 +1,21 @@
+<!-- sample modal content -->
+<div id="galMediaUploader" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="vcenter" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="vcenter">Media Uploader</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                <?php $this->load->view('templates/inc/back/media_uploader.html'); ?>
+            </div>
+            <!-- <div class="modal-footer">
+                <button id="modalSelect" type="button" data-selected="" class="btn btn-sm btn-info waves-effect" data-dismiss="modal">Select File</button>
+            </div> -->
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+<input type="text" data-toggle="modal" data-target="#galMediaUploader">

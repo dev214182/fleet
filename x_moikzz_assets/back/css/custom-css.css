@@ -1,0 +1,153 @@
+.lists-profile .view-pass, .add-extras { cursor: pointer;}
+.hidden { display: none !important;}
+.fa {padding-right: 10px; cursor:pointer;}
+body.payment-account .shell {
+    position: relative;
+    line-height: 1; 
+}
+.display-2 { font-size: 5.5rem !important; }
+.display-3 { font-size: 4.5rem !important; }
+.display-4 { font-size: 3.5rem !important; }
+.display-5 { font-size: 2.5rem !important; }
+body.payment-account .shell span {
+      position: absolute;
+      left: 3px;
+      top: 2px;
+      color: red;
+      pointer-events: none;
+      z-index: -1; 
+}
+body.payment-account .shell span i {
+        /* any of these 3 will work */
+        color: transparent;
+        opacity: 0;
+        visibility: hidden; 
+}
+
+@media (min-width: 768px){
+  .label-right {text-align: right;}
+}
+
+.mytooltip { z-index: 1 !important;}
+th p {margin-bottom: 0!important;}
+body.payment-account input.masked,
+  .shell span {
+    font-size: 16px;
+    font-family: monospace;
+    padding-right: 10px;
+    background-color: transparent;
+    text-transform: uppercase; 
+}  
+
+  .amex:after,
+  .visa:after,
+  .mastercard:after,
+  .discover:after {
+    position: absolute;
+    right: 0;
+    background: black;
+    color: white;
+    padding: 0 5px; }
+  
+  .amex:after {
+    content: 'A'; }
+  
+  .visa:after {
+    content: 'V'; }
+  
+  .mastercard:after {
+    content: 'M'; }
+  
+  .discover:after {
+    content: 'D'; }
+
+.food-selection p.complimentary { font-size: 10px; color: #fff; margin-bottom: 3px;}
+.food-selection hr.complimentary { margin-bottom: 10px; margin-top:3px;border-color:rgba(11, 162, 250, 0.76)}
+.food-selection span.total-price, span.single-balance{ font-weight: bold; }
+.food-selection .div-parent{ border-top:1px solid #ccc;padding-bottom:10px;}
+.food-selection .menu-card{ background-image: url("../../../x_moikzz_assets/images/background/socialbg.jpg");background-repeat: no-repeat, repeat;background-size: cover;  }
+/* Menu-calendar and menu-meals width for mobile 32.1% */
+.food-selection .menu-calendar,.menu-category{ padding: 5px; border: 1px solid #ccc; width:12.1%; text-align:center; color:#000; font-weight: bold;font-size:13px; display: inline-block;}
+.food-selection .menu-meals{ padding: 5px 10px 10px 10px; border: 1px solid #ccc; width:12.1%; text-align:center; color:#000; font-size:13px; display: inline-block; height: 100px; max-height:100px;}
+.food-selection .menus-title{ font-weight:bold; overflow: hidden;}
+.food-selection .checkbox label { font-size:12px;}
+.food-selection span.tooltip-item{ font-size:10px; background:transparent}
+.food-selection span.tooltip-text { font-size:11px; margin-left:10px;line-height: 1.5;}
+.food-selection .meal-title { max-height:33px; overflow: hidden;}
+.food-selection .col-lg-12 { min-height: 24px; }
+.food-selection .cart-remove, .supp-remove { cursor: pointer; z-index: 9999;}
+td p { margin-bottom: 0!important;}
+.card-outline-golden .card-header{
+    background: #b8860b !important;
+    border-color: #cea644 !important;
+}
+
+/* @mel Custom CSS */
+/* M-Flex */
+.gl-flex{
+  display: flex !important;
+  flex-direction: row !important;
+}
+.gl-wrap{
+  flex-wrap: wrap !important;
+}
+/* Medial Upload */
+.media-files-container{
+  width: 100%;
+}
+.media-files-container,
+.media-file-details{
+  overflow-y: scroll;
+  height: 500px;
+  max-height: 500px;
+}
+.media-file-details img{
+  max-height: 200px;
+}
+.media-files-container .media-file-item{
+  width: 100%;
+  height: -webkit-fill-available;
+  min-height: 100px;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+.media-files-container .media-file-item.active{
+  box-shadow: 0 0 0 2px #1976d2;
+}
+.media-files-container .media-file-item:before{
+  font-size: 30px !important;
+  line-height: 30px !important;
+  position: absolute;
+  top: .3em;
+  right: .3em;
+  color: #1976d2;
+}
+.media-files-container .media-files-wrapper{
+  position: relative;
+  width: 20%;
+  min-height:120px;
+  height:120px;
+  overflow: hidden;
+}
+.gal-load-more-container{
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  text-align: center;
+}
+#loadMoreItems{
+  border-top: 1px solid #dee2e6;
+  border-left: 1px solid #dee2e6;
+  border-right: 1px solid #dee2e6;
+  border-bottom: 0;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+/* .gal-load-more-container button{
+  text-align: center;
+} */

@@ -4,3 +4,135 @@
   <!-- Sweet-Alert  -->
 <script src="<?=plugins_dir('sweetalert/sweetalert.min.js')?>"></script>
 <script src="<?=plugins_dir('sweetalert/jquery.sweet-alert.custom.js')?> "></script> 
+
+
+
+
+<!-- <link rel="stylesheet" href="../assets/plugins/dropify/dist/css/dropify.min.css"> -->
+<!-- jQuery file upload -->
+<!-- <script src="../assets/plugins/dropify/dist/js/dropify.min.js"></script> -->
+
+<!-- Dropzone Plugin JavaScript -->
+<script src="<?=plugins_dir('dropzone-master/dist/dropzone.js')?> "></script> 
+<script>
+$(document).ready(function() {
+    // // Basic
+    // $('.dropify').dropify();
+
+    // // Translated
+    // $('.dropify-fr').dropify({
+    //     messages: {
+    //         default: 'Glissez-déposez un fichier ici ou cliquez',
+    //         replace: 'Glissez-déposez un fichier ou cliquez pour remplacer',
+    //         remove: 'Supprimer',
+    //         error: 'Désolé, le fichier trop volumineux'
+    //     }
+    // });
+
+    // // Used events
+    // var drEvent = $('#input-file-events').dropify();
+
+    // drEvent.on('dropify.beforeClear', function(event, element) {
+    //     return confirm("Do you really want to delete \"" + element.file.name + "\" ?");
+    // });
+
+    // drEvent.on('dropify.afterClear', function(event, element) {
+    //     alert('File deleted');
+    // });
+
+    // drEvent.on('dropify.errors', function(event, element) {
+    //     console.log('Has Errors');
+    // });
+
+    // var drDestroy = $('#input-file-to-destroy').dropify();
+    // drDestroy = drDestroy.data('dropify')
+    // $('#toggleDropify').on('click', function(e) {
+    //     e.preventDefault();
+    //     if (drDestroy.isDropified()) {
+    //         drDestroy.destroy();
+    //     } else {
+    //         drDestroy.init();
+    //     }
+    // });
+
+
+   
+    /* Sample Data Object */
+    var mediaItems = [];
+    var data;
+    var count = 0;
+    var text = "";
+    var p = 0;
+
+    for (var i = 0; i < 100; i++) { 
+      count++;
+      mediaItems[i] = {id:count,title:"Title "+ count,alt:'The Alt Text '+ count,url:'http://localhost/fleet/x_moikzz_assets/images/backgrounds/fleet-page-banner-v3.jpg'};
+    }
+    /* Sample Data */
+
+    /* Replace the mediaIteams varialble of with the actual object */
+    /* Set the page count of items to display, Add Page Value and generate new object with new array of values */
+    var itemsPerPage = 20, pageCount = 1,
+    result = mediaItems.map((o, i) => Object.assign({}, o, { page: Math.floor(i / itemsPerPage) + 1 }));
+
+    /* Print Function */
+    function gal_print_media_fn(newobject, thepagecount){
+
+      /* Filter the object by page value */
+      const pagedMediaItems = newobject.filter(thepages => thepages.page == thepagecount);
+
+      /* Print the Paged Media Items */
+      $.each(pagedMediaItems, function(i, d){
+        text += '<div class="media-files-wrapper p-2">'+
+          '<div class="media-file-item" data-media-id="'+d.id+'" data-media-title="'+d.title+'" data-media-alt="'+d.alt+'" data-media-url="'+d.url+'" style="background-image:url('+d.url+');"></div>'+
+          '</div>';
+      });
+      if(pagedMediaItems.length > 0){
+        return $('.media-files-container').html(text);
+      }else{
+        $('.gal-load-more-container').css('display', 'none');
+        return $('.media-files-container').append('<small style="text-align:center;width:100%;">You have reached the last item.</small>');
+      }
+
+    }
+
+    gal_print_media_fn(result, pageCount);
+
+    /* Load More */
+    $('body').on('click', '#loadMoreItems', function(e) {
+      pageCount++;
+      gal_print_media_fn(result, pageCount);
+    });
+
+    /* Onscroll Not Working */
+    // $('.media-files-container').scroll(function() {
+    //   var currentScroll = 475 * pageCount;
+    //   if($('.media-files-container').scrollTop() > currentScroll ) {
+    //     $( "#loadMoreItems" ).trigger( "click" );
+    //   }
+    // });
+
+    $('body').on('click', '.media-file-item', function(e) {
+      e.preventDefault();
+      var mi = $(this);
+      var mediaID = mi.data("media-id"); 
+      var mediaTitle = mi.data("media-title"); 
+      var mediaUrl = mi.data("media-url"); 
+      var mediaAlt = mi.data("media-alt"); 
+
+      /* Remove Checked and Add Check */
+      $('.media-files-container .media-file-item.active').removeClass("active mdi mdi-checkbox-marked");
+      $(this).toggleClass("active mdi mdi-checkbox-marked");
+
+      /* Print Values in update form */
+      $('#mID').val(mediaID);
+      $('#mImage').attr("src",mediaUrl);
+      $('#mTitle').val(mediaTitle);
+      $('#mAlt').val(mediaAlt);
+      // console.log(mediaID + mediaTitle + mediaAlt + mediaUrl);
+
+      var choosebtn = '<button id="modalDataSelect" type="button" data-selected-url="'+mediaUrl+'" class="btn btn-sm btn-info waves-effect pull-right mt-3" data-dismiss="modal">Select</button>';
+      $('#selectBtn').html(choosebtn);
+    });
+});
+</script>

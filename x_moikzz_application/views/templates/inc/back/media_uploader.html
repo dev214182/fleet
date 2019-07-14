@@ -1,0 +1,78 @@
+
+<!-- Media Uploader -->
+<div class="col-xs-12 col-md-12">
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs customtab2 border-light" role="tablist">
+            <li class="nav-item"> <a class="nav-link show bg-light text-secondary active" data-toggle="tab" href="#settingsm" role="tab" aria-selected="true"><span class="sm-up"><i class="mdi mdi-camera"></i></span> <span class="hidden-xs-down">Media List</span></a></li>
+            <li class="nav-item"> <a class="nav-link show bg-light text-secondary" data-toggle="tab" href="#socialm" role="tab" aria-selected="false"><span class="sm-up"><i class="mdi mdi-cloud-upload"></i></span> <span class="hidden-xs-down">Upload</span></a></li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <div class="tab-pane show active" id="settingsm" role="tabpanel">
+                <div class="card mb-0">
+                    <div class="card-body">
+
+                        <div class="col-md-12">
+                            <div class="card-block">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h6 class="card-title font-weight-bold">Media List</h6>
+                                    </div>
+                                    <div class="col-md-9 border border-right-0">
+                                        <div class="row">
+                                            <div class="media-files-container p-2 gl-flex gl-wrap"></div>
+                                            <div class="gal-load-more-container">
+                                                <div id="loadMoreItems" class="shadow-none btn-sm waves-effect waves-light btn-secondary">Load More <i class="mdi mdi-arrow-down-bold-circle"></i></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 border p-3 media-file-details">
+                                        <form action="">
+                                            <input id="mID" type="hidden" value="">
+                                            <div class="form-group text-center border">
+                                                <img id="mImage" class="img-fluid" src="<?php echo file_common_dir('images/backgrounds/socialbg.jpg');?>" alt="Gallega Image Preview">
+                                            </div>
+                                            <div class="form-group mb-2 row">
+                                                <label for="example-text-input" class="col-3 col-form-label"><small>Title</small></label>
+                                                <div class="col-9">
+                                                    <input id="mTitle" class="form-control form-control-sm" type="text" value="Gallega Global Logistics" id="mediaID">
+                                                </div>
+                                            </div>
+                                            <div class="form-group mb-2 row">
+                                                <label for="example-text-input" class="col-3 col-form-label"><small>Alt</small></label>
+                                                <div class="col-9">
+                                                    <input id="mAlt" class="form-control form-control-sm" type="text" value="Gallega Global Logistics" id="mediaALT">
+                                                </div>
+                                            </div>
+                                            <div class="form-group mb-2 row">
+                                                <div class="col-12 text-right">
+                                                    <button type="button" class="btn waves-effect waves-light btn-sm btn-info">Update</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="selectBtn" class="col-md-12 pull-right pb-0"></div>
+                    </div>
+                </div><!-- Card -->
+            </div>
+        
+            <div class="tab-pane" id="socialm" role="tabpanel">
+                <div class="card mb-0">
+                    <div class="card-body">
+                        <h4 class="card-title">Media Uploader</h4>
+                        <h6 class="card-subtitle">Select files or drag and drop the files to upload.</h6>
+                        <form action="#" class="dropzone">
+                            <div class="fallback">
+                                <input name="file" type="file" multiple />
+                            </div>
+                        </form>
+                    </div>
+                </div><!-- card -->
+            </div>
+
+        </div><!-- tab-content -->
+    </div>

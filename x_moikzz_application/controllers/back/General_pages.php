@@ -257,6 +257,17 @@ class General_pages extends SS_Controller {
         $this->page = 'templates/contents/back/'.$this->namespace;
         $this->template_display(); 
     }
+    public function media(){
+        $this->filter = array('fileupload','lazyload');
+        $this->namespace = 'media';
+        $this->pageTitle = 'Media';
+        $this->bodyClass = 'lists-media';
+        $this->pageClass = 'lists-media';  
+        $this->jsCustom = 1; 
+        $this->pageHeaderz = "Media";
+        $this->page = 'templates/contents/back/'.$this->namespace;
+        $this->template_display(); 
+    }
 
     private function template_display(){ 
         $data['breadcrumbs'] = '<li class="breadcrumb-item active">'.ucfirst($this->namespace).'</li>';
