@@ -95,17 +95,27 @@
         <p></p>
             
                 <div class="form-group row">
-                    <label for="" class="col-sm-2  control-label col-form-label">Site Logo</label>
-                    <div class="col-sm-2 logo"></div>
-                    <div class="col-sm-8"> 
-                         <input type="file" name="sys_logo" class="form-control"> 
+                    <label for="" class="col-sm-4  control-label col-form-label">Site Logo</label>
+                    <!-- <div class="col-sm-2 logo"></div> -->
+                    <div class="col-sm-8 gal-media-uploader"> 
+                        <!-- <input type="file" name="sys_logo" class="form-control">  -->
+                        <div class="img-wrapper mb-1" style="max-height:100px;">
+                            <img class="selected-img img-fluid" style="max-height:100px;" src="<?php echo file_common_dir('images/default.png');?>" alt="Gallega Image Preview">
+                        </div>
+                        <input class="modal-media-url form-control mb-1 form-control-line" type="text" name="sys_logo">
+                        <button type="button" id="openMediaModal" class="open-media-modal btn btn-sm waves-effect waves-light btn-secondary" data-backdrop="static" data-keyboard="false" data-toggle="modal" data-target="#galMediaUploader">Media Uploader</button>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="" class="col-sm-2  control-label col-form-label">Site Icon</label>
-                    <div class="col-sm-2   icon"></div>
-                    <div class="col-sm-8">
-                        <input type="file" name="sys_icon" class="form-control">
+                    <label for="" class="col-sm-4  control-label col-form-label">Site Icon</label>
+                    <!-- <div class="col-sm-2   icon"></div> -->
+                    <div class="col-sm-8 gal-media-uploader">
+                        <!-- <input type="file" name="sys_icon" class="form-control"> -->
+                        <div class="img-wrapper mb-1" style="max-height:100px;">
+                            <img class="selected-img img-fluid" style="max-height:100px;" src="<?php echo file_common_dir('images/default.png');?>" alt="Gallega Image Preview">
+                        </div>
+                        <input class="modal-media-url form-control mb-1 form-control-line" type="text" name="sys_icon">
+                        <button type="button" id="openMediaModal" class="open-media-modal btn btn-sm waves-effect waves-light btn-secondary" data-backdrop="static" data-keyboard="false" data-toggle="modal" data-target="#galMediaUploader">Media Uploader</button>
                     </div>
                 </div>
                 <div class="form-group row">
