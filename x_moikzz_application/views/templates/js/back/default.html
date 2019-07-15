@@ -61,22 +61,22 @@ $(document).ready(function() {
     var mediaItems = [];
     var data;
     var count = 0;
-    var text = "";
     var p = 0;
-
+    
     for (var i = 0; i < 100; i++) { 
       count++;
       mediaItems[i] = {id:count,title:"Title "+ count,alt:'The Alt Text '+ count,url:'http://localhost/fleet/x_moikzz_assets/images/backgrounds/fleet-page-banner-v3.jpg'};
     }
     /* Sample Data */
-
+    
     /* Replace the `mediaIteams` varialble of with the actual object. 
      * Set the page count of items to display, Add Page Value and generate new object with new array of values 
      */
     var itemsPerPage = 15, pageCount = 1,
     result = mediaItems.map((o, i) => Object.assign({}, o, { page: Math.floor(i / itemsPerPage) + 1 }));
-
+    
     /* Print Function */
+    var text = "";
     function gal_print_media_fn(newobject, thepagecount){
 
       /* Filter the object by page value */
