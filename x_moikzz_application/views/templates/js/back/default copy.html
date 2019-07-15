@@ -70,10 +70,9 @@ $(document).ready(function() {
     }
     /* Sample Data */
 
-    /* Replace the `mediaIteams` varialble of with the actual object. 
-     * Set the page count of items to display, Add Page Value and generate new object with new array of values 
-     */
-    var itemsPerPage = 15, pageCount = 1,
+    /* Replace the mediaIteams varialble of with the actual object */
+    /* Set the page count of items to display, Add Page Value and generate new object with new array of values */
+    var itemsPerPage = 20, pageCount = 1,
     result = mediaItems.map((o, i) => Object.assign({}, o, { page: Math.floor(i / itemsPerPage) + 1 }));
 
     /* Print Function */
@@ -89,42 +88,35 @@ $(document).ready(function() {
           '</div>';
       });
       if(pagedMediaItems.length > 0){
-        setTimeout(function(){
-          return $('.media-files-container').html(text);
-        }, 500);
+        return $('.media-files-container').html(text);
       }else{
         $('.gal-load-more-container').css('display', 'none');
-        setTimeout(function(){
-          return $('.media-files-container').append('<small style="text-align:center;width:100%;">You have reached the last item.</small>');
-        }, 500);
+        return $('.media-files-container').append('<small style="text-align:center;width:100%;">You have reached the last item.</small>');
       }
 
-    }
-
-    /* If in Media List Page */
-    if( $('body').hasClass('lists-media') ){
-      gal_print_media_fn(result, pageCount);
     }
 
     //gal_print_media_fn(result, pageCount);
-    var numClick = 0;
-    $('body').on('click', '.open-media-modal', function(e) {
-      if(numClick == 0){
-        gal_print_media_fn(result, pageCount);
-        numClick++;
-      }
-      /* Add Data attribute to image preview */
-      $(this).parent().addClass('active-media-uploader');
+
+    
+    $('body').on('click', '#openMediaModal', function(e) {
+      gal_print_media_fn(result, pageCount);
     });
 
     /* Load More */
     $('body').on('click', '#loadMoreItems', function(e) {
-      // $(this).prop("disabled", true);
       pageCount++;
       gal_print_media_fn(result, pageCount);
     });
 
-    /* ---Wrap to one a function */
+    /* Onscroll Not Working */
+    // $('.media-files-container').scroll(function() {
+    //   var currentScroll = 475 * pageCount;
+    //   if($('.media-files-container').scrollTop() > currentScroll ) {
+    //     $( "#loadMoreItems" ).trigger( "click" );
+    //   }
+    // });
+
     $('body').on('click', '.media-file-item', function(e) {
       e.preventDefault();
       var mi = $(this);
@@ -142,25 +134,17 @@ $(document).ready(function() {
       $('#mImage').attr("src",mediaUrl);
       $('#mTitle').val(mediaTitle);
       $('#mAlt').val(mediaAlt);
+      // console.log(mediaID + mediaTitle + mediaAlt + mediaUrl);
 
-      /* Display the choose button */
-      if( ! $('body').hasClass('lists-media') ){
-        var choosebtn = '<button type="button" type="button" data-selected-url="'+mediaUrl+'" class="modal-data-select btn btn-info waves-effect" data-dismiss="modal">Choose</button>';
-        $('#selectBtn').html(choosebtn);
-      }
-
-    });
-
-    /* Add the selected / choose / chosen / media file to the input field */
-    $('body').on('click', '.modal-data-select, #closeModal', function(e) {
-      if( $(this).data('selected-url') ){
+      var choosebtn = '<button id="modalDataSelect" type="button" data-selected-url="'+mediaUrl+'" class="btn btn-sm btn-info waves-effect pull-right mt-3" data-dismiss="modal">Select</button>';
+      $('#selectBtn').html(choosebtn);
+      // modal-media-url
+      
+      $('body').on('click', '#modalDataSelect', function(e) {
         var theSelectedUrl = $(this).data('selected-url');
-        $('.gal-media-uploader.active-media-uploader').find('.modal-media-url').val(theSelectedUrl);
-        $('.gal-media-uploader.active-media-uploader').find('.selected-img').attr("src",theSelectedUrl);
-      }else{
-        $('.gal-media-uploader.active-media-uploader').removeClass('active-media-uploader');
-      }
+        $('.gal-media-uploader').find('.modal-media-url').val(theSelectedUrl);
+      });
+      
     });
-
 });
 </script>

@@ -102,13 +102,13 @@
                                                             <small class="help-block text-muted"><span class="count-text">0</span>/160 Maximum recommended limit</small>
                                                         </div>
                                                     </div>
-                                                    <div class="form-group">
+                                                    <div class="from-group gal-media-uploader">
                                                         <small class="font-weight-bold">Custom Image</small>
-                                                        <div class="custom-file m-t-10">
-                                                                <input type="text" class="form-control form-control-sm form-control-line" name="social_fb_image" id="facebookcustomFile" > 
-                                                          
+                                                        <div class="img-wrapper mb-3">
+                                                            <img class="selected-img img-fluid" src="<?php echo file_common_dir('images/default.png');?>" alt="Gallega Image Preview">
                                                         </div>
-                                                       
+                                                        <input name="social_fb_image" id="facebookcustomFile" class="modal-media-url form-control mb-3 form-control-line" type="text" name="aaaa">
+                                                        <button type="button" id="openMediaModal" class="open-media-modal btn waves-effect waves-light btn-secondary" data-backdrop="static" data-keyboard="false" data-toggle="modal" data-target="#galMediaUploader">Media Uploader</button>
                                                     </div>
                                                
                                             </div>
@@ -135,6 +135,15 @@
                                                         <small class="font-weight-bold">Custom Image</small>
                                                         <div class="custom-file m-t-10">
                                                                 <input type="text" class="form-control form-control-sm form-control-line" name="social_twitter_image" id="twittercustomFile" >  
+                                                                
+                                                        </div>
+                                                        <div class="from-group gal-media-uploader">
+                                                            <small class="font-weight-bold">Custom Image</small>
+                                                            <div class="img-wrapper mb-3">
+                                                                <img class="selected-img img-fluid" src="<?php echo file_common_dir('images/default.png');?>" alt="Gallega Image Preview">
+                                                            </div>
+                                                            <input class="modal-media-url form-control mb-3 form-control-line" type="text" name="aaaa">
+                                                            <button type="button" id="openMediaModal" class="open-media-modal btn waves-effect waves-light btn-secondary" data-backdrop="static" data-keyboard="false" data-toggle="modal" data-target="#galMediaUploader">Media Uploader</button>
                                                         </div>
                                                     </div>
                                               
@@ -167,13 +176,22 @@
             <div class="card-body">
                 <h5 class="card-title b-b p-b-10">Featured Image</h5>
                 <label for="input-file-now-custom-1">You can add a default value</label>
-                <input type="text" id="input-file-now-custom-1" name="input_feature_image"  />
+                <!-- <input type="text" id="input-file-now-custom-1" name="input_feature_image"  /> -->
+
+                <div class="from-group gal-media-uploader">
+                    <div class="img-wrapper mb-3">
+                        <img class="selected-img img-fluid" src="<?php echo file_common_dir('images/default.png');?>" alt="Gallega Image Preview">
+                    </div>
+                    <input class="modal-media-url form-control mb-3 form-control-line" type="text" name="aaaa">
+                    <button type="button" id="openMediaModal" class="open-media-modal btn waves-effect waves-light btn-secondary" data-toggle="modal" data-target="#galMediaUploader">Media Uploader</button>
+                </div>
+
             </div>
         </div>
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title b-b p-b-10">Category</h5>
-                <div class="input-group">
+                <div class="input-group flex-column">
                      
                                 <div class="checkbox checkbox-primary p-t-0">
                                     <input id="list-download1" type="checkbox">
