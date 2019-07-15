@@ -2415,7 +2415,8 @@ var app = {
           orderInfo.always(function(i,s){
             if(i.length == 0){ return false; }
             if(s){
-              $('button.status-active').html(i[0].zstatus.replace(/<[^>]*>?/gm, ''));
+              
+             $('button.status-active').html(i[0].zstatus.replace(/<[^>]*>?/gm, ''));
                
               if(i[0].zurgent.toLowerCase() == 'yes'){
                 $('span#urgent').addClass('text-danger');

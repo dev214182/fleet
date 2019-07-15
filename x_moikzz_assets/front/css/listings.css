@@ -360,6 +360,13 @@ select.m-select + span.fa{
     left: 10px;
     z-index: 1000;
 }
+.b-items div input[type='checkbox']{
+    position: absolute;
+    visibility: hidden;
+}
+.b-items div input[type='checkbox']:checked + .b-items__cars-one-img-check span.fa{
+    display: block;
+}
 
 .b-items form input[type='checkbox']{
     position: absolute;
@@ -509,7 +516,7 @@ select.m-select + span.fa{
     float:right;
     width:237px;
     height:208px;
-   margin: 0 0 25px 0;
+   margin: 0 15px 30px 0;
 }
 
 .m-listingsTwo .b-items__cars-one-info{
@@ -540,13 +547,13 @@ select.m-select + span.fa{
 .b-items__cars-one-info-title{
     font: 600 14px 'Open Sans',sans-serif;
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: 15px;
 }
 
 .b-items__cars-one-info-value{
     font: 400 14px 'Open Sans',sans-serif;
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: 15px;
 }
 
 .row.m-smallPadding{

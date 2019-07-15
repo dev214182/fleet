@@ -41,8 +41,8 @@ class SS_Fcontroller extends CI_Controller {
       } 
   
       // batch = null single insert to database else insert batch
-      // type = where select query or insert query
-      function global_func_query($t,$query,$s=null, $type=null){
+      // type =   select query or insert query
+      function global_func_query($t,$query=null,$s=null, $type=null){
           
           if($type == 'insert_single'){  // insert single query
                   $result = $this->gms->insert_data($t,$query);           

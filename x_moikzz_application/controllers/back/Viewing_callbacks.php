@@ -105,34 +105,8 @@ class Viewing_callbacks extends SS_Controller {
         }
 
         $this->jsons();
-    }
-
-    /* This is for ordered Menu */
-    private function _mealOrders(){
-        global $_GET;
-        
-        $datas = '';
-
-        $id = $this->userID;  
-
-        $this->query_table =  $this->_table_orders .' , '. $this->_table_order_details; 
-        // Display specific student order
-        if(@$_GET['s']){
-            $datas = "ords.zauthor = ".$id." AND ords.zid = ordd.zorder_id AND ords.zorder_to =".$_GET['s'];
-        }else{
-            $datas = "ords.zauthor = ".$id;
-        }
-
-        $this->query = array( 'where' =>  $datas);
-
-        $this->jsons();
-    }
-    
-    private function get_meal_schedule($t,$w,$f){
-        $getDate = $this->global_get_title($t,$w,$f); 
-        return $getDate;
-    }
-
+    } 
+     
     private function _site_settings(){
         global $_GET;
         $this->query_table =  $this->_table_system;
@@ -286,23 +260,21 @@ class Viewing_callbacks extends SS_Controller {
         $this->jsons();
     }
 
-    
-
-
     private function _orders(){
             global $_GET;
             $this->query_table =  $this->_table_orders .' , '. $this->_table_order_details; 
             $datas = '';
             $suc = false;
             // Display all orders from author
-            if(@$_GET['x']){ 
+            if(@$_GET['x']){
                 $datas = " AND ords.zauthor =".$_GET['x'];
                 $suc = true;
-            }elseif(@$_GET['p'] == 99){ 
+            }elseif(@$_GET['p'] == 99){
                 $suc = true;
-            } 
-            $this->order_company = true; 
-           
+            }
+
+            $this->order_company = true;
+            
             $this->lists =  array(  
                                     'zid',
                                     'zid',
@@ -321,34 +293,36 @@ class Viewing_callbacks extends SS_Controller {
             if(@$_GET['dashboard']){
                 
                 $this->lists =  array(  
-                                            'zid', 
-                                            'zauthor',  
-                                            'zcategory',
-                                            'zloads',
-                                            'ztravel_list_from',
-                                            'zurgent',
-                                            'zdate_published',
-                                            'zstatusID'
+                                        'zid', 
+                                        'zauthor',  
+                                        'zcategory',
+                                        'zloads',
+                                        'ztravel_list_from',
+                                        'zurgent',
+                                        'zdate_published',
+                                        'zstatusID'
                                     );
+
+             
             }
 
             $this->query = array(   'fields_listing' => array(
-                                                'zid',
-                                                'zauthor',  
-                                                'zcategory',
-                                                'zloads',
-                                                'ztravel_from', 
-                                                'ztravel_to',
-                                                'zcustomer_type',
-                                                'zurgent',
-                                                'zdate_from',
-                                                'zstatus',
-                                                'zdate_published'
-                                                ),
-                                    'fields' => '*,ords.zid AS zid',
+                                                                'zid',
+                                                                'zauthor',  
+                                                                'zcategory',
+                                                                'zloads',
+                                                                'ztravel_from', 
+                                                                'ztravel_to',
+                                                                'zcustomer_type',
+                                                                'zurgent',
+                                                                'zdate_from',
+                                                                'zstatus',
+                                                                'zdate_published'
+                                                                ),
+                                    'fields' => '*,ords.zid AS zid, ords.zstatus AS zstatus',
                                     'where' =>  'ords.zid = ordd.zorder_id AND ords.zstatus != 2'.$datas,
                                     'order_by' => 'LENGTH(ords.zdate_published), ords.zdate_published',
-                                                'order' => 'DESC'); 
+                                    'order' => 'DESC'); 
             
                 if(@$_GET['z'] && @$_GET['x']){
                     $suc = true;
@@ -358,7 +332,7 @@ class Viewing_callbacks extends SS_Controller {
                     if($this->userType == 6){
                         $item = $datas;
                     }
-                    $this->query = array(   'fields' => '*,ords.zid AS zid',
+                    $this->query = array(   'fields' => '*,ords.zid AS zid, ords.zstatus AS zstatus',
                                             'where' =>  'ords.zid = ordd.zorder_id AND ords.zid ='.$_GET['z']. $item
                                          ); 
                 }

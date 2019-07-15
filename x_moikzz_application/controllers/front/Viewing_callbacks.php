@@ -79,7 +79,7 @@ class Viewing_callbacks extends SS_Controller {
         $this->data_pages = $p;
         return $this->{$this->data_pages}();
     }
-    
+
     private function _testimonials(){
         $this->query_table =  $this->_table_testimonials;
         $this->jsons();
@@ -88,13 +88,20 @@ class Viewing_callbacks extends SS_Controller {
     private function _products(){
         global $_GET;
 
-        $this->query = array( 'where' => 'cats.zid = prod.zcategory AND prod.zstatus != 2 AND cats.ztype = "product" ',
-        'fields' => 'prod.*');
+        $t = @$_GET['z'] ? $zd = ' AND prod.zid ='. $_GET['z'] : $zd = '';
+        $t = @$_GET['t'] ? $type = ' AND prod.zcategory ='. $_GET['t'] : $type = '';
+        $t = @$_GET['d'] ? $ddate = ' AND prod.zdate_from >= "'. $_GET['d'].'"' : $ddate = '';
+        $t = @$_GET['o'] ? $dfrom = ' AND prod.ztravel_from ="'. $_GET['o'].'"' : $dfrom = '';
+        $t = @$_GET['x'] ? $dto = ' AND prod.ztravel_to ="'. $_GET['x'].'"' : $dto = '';
+        $t = @$_GET['l'] ? $dloads = ' AND prod.zloads >='. $_GET['l'] : $dloads = '';
+        $this->query = array( 'where' => 'cats.zid = prod.zcategory AND prod.zstatus != 2 AND cats.ztype = "product " '.$type.' '.$ddate.' '.$dfrom.' '.$dto.' '.$dloads.' '.$zd,
+                              'fields' => 'prod.*',
+                              'order_by' => 'prod.zdate_published',
+                              'order' => 'DESC',);
         // prod, cats
         $this->query_table =  $this->_table_products .','. $this->_table_categories;
         $this->jsons();
     }
-    
 
     private function _pageslist(){
         global $_GET;
@@ -104,7 +111,7 @@ class Viewing_callbacks extends SS_Controller {
            
             $this->lists = false;
             $this->query_table =  $this->_table_postmain. ', '. $this->_table_social_media;
-            $this->query = array(   'fields' => '*',
+            $this->query =  array(   'fields' => '*',
                                     'where' =>  'post.zid = socm.zparent AND post.zid ='.$_GET['z']
                                     ); 
         }else{ 
@@ -191,6 +198,7 @@ class Viewing_callbacks extends SS_Controller {
       
     private function jsons(){
         $data =  $this->global_func_query($this->query_table, $this->query, $this->lists);  
+        if($data)
         $this->output( $data );
     }   
 
@@ -216,11 +224,11 @@ class Viewing_callbacks extends SS_Controller {
             }
             
             if(@$v->ztravel_from){
-                $output[$k]['ztravel_list_from'] =  '<p>'.$v->ztravel_from . "</p><p>".date('m/d/Y', strtotime($v->zdate_from))."</p>";
+                $output[$k]['ztravel_list_from'] =  $v->ztravel_from . " - ".date('m-d-Y', strtotime($v->zdate_from));
             }
 
             if(@$v->ztravel_to){
-                $output[$k]['ztravel_list_to'] =  '<p>'.$v->ztravel_to . "</p><p>".date('m/d/Y', strtotime($v->zdate_to))."</p>";
+                $output[$k]['ztravel_list_to'] =   $v->ztravel_to . " - ".date('m-d-Y', strtotime($v->zdate_to));
             }
 
             if(@$v->zdate_published){
@@ -233,7 +241,7 @@ class Viewing_callbacks extends SS_Controller {
 
             if(@$v->zcustomer_type){
                 $output[$k]['zcustomer_typeID'] = $v->zcustomer_type; 
-                $output[$k]['zcustomer_type'] = status_info($v->zcustomer_type); 
+                $output[$k]['zcustomer_type'] = status_info_clean($v->zcustomer_type); 
             }
 
             if(@$v->ztype){
@@ -248,7 +256,7 @@ class Viewing_callbacks extends SS_Controller {
 
             if(@$v->zstatus){
                 $output[$k]['zstatusID'] = $v->zstatus;  
-                $output[$k]['zstatus'] = status_info($v->zstatus);
+                $output[$k]['zstatus'] = status_info_clean($v->zstatus);
                 
             } 
 

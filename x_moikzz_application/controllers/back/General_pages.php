@@ -246,6 +246,18 @@ class General_pages extends SS_Controller {
         $this->page = 'templates/contents/back/'.$this->namespace;
         $this->template_display(); 
     }
+    public function media(){
+        $this->filter = array();
+        $this->namespace = 'media';
+        $this->pageTitle = 'Media';
+        $this->bodyClass = 'lists-media';
+        $this->pageClass = 'lists-media';  
+        $this->jsCustom = 7; 
+        $this->pageHeaderz = "List Images";
+        $this->page = 'templates/contents/back/'.$this->namespace;
+        $this->template_display(); 
+    }
+
     public function menus(){
         $this->filter = array('nested');
         $this->namespace = 'menus';

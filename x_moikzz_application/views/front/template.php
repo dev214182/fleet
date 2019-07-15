@@ -59,7 +59,7 @@
 
       <section class="b-pageHeader">
         <div class="container">
-          <h1>CONTACT US</h1>
+          <h1><?=$breadcrumbs?></h1>
           <div class="b-pageHeader__search">
               <h3>Get In Touch With Us Now</h3>
           </div>
@@ -68,7 +68,7 @@
 
       <div class="b-breadCumbs s-shadow">
         <div class="container">
-          <a href="home.html" class="b-breadCumbs__page">Home</a><span class="fa fa-angle-right"></span><a href="<?=base_url('contact')?>" class="b-breadCumbs__page m-active">Contact Us</a>
+          <a href="<?=base_url()?>" class="b-breadCumbs__page">Home</a><span class="fa fa-angle-right"></span><span class="b-breadCumbs__page m-active"><?=$breadcrumbs?></span>
         </div>
       </div><!--b-breadCumbs-->
 
@@ -121,7 +121,6 @@
     <!--JavaScript-->   
     <?php $this->load->view('templates/js/front/default.html'); ?>
     <?php $this->load->view('templates/js/front/js.html'); ?>
-    <?php $this->load->view('templates/js/front/default2.html'); ?> 
-   
+    <?php $this->load->view('templates/js/front/default2.html'); ?>  
   </body>
 </html>

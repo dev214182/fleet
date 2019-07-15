@@ -5,12 +5,13 @@
 	Dark Blue: #203149;
 
 */
+.bruha { display:none; }
 /* padding all */
-.p-a-10{ padding:10px; }
-.p-a-20{ padding:20px; }
-.p-a-30{ padding:30px; }
-.p-a-40{ padding:40px; }
-.p-a-50{ padding:50px; }
+.p-10{ padding:10px; }
+.p-20{ padding:20px; }
+.p-30{ padding:30px; }
+.p-40{ padding:40px; }
+.p-50{ padding:50px; }
 
 /* padding top */
 .p-t-10 { padding-top:10px; }
@@ -41,11 +42,11 @@
 .p-l-50 { padding-left:50px; }
 
 /* margin all */
-.m-a-10{ margin:10px; }
-.m-a-20{ margin:20px; }
-.m-a-30{ margin:30px; }
-.m-a-40{ margin:40px; }
-.m-a-50{ margin:50px; }
+.m-10{ margin:10px; }
+.m-20{ margin:20px; }
+.m-30{ margin:30px; }
+.m-40{ margin:40px; }
+.m-50{ margin:50px; }
 /* margin top */
 .m-t-10 { margin-top:10px; }
 .m-t-20 { margin-top:20px; }
@@ -838,12 +839,13 @@ a.btn.m-btn.m-pay:hover,
 #user-email{
 	text-transform: lowercase !important;
 }
-.s-form input[type='email'], .s-form input[type='text'], .s-form textarea{
-	border-radius: 0;
-	font-size: 14px;
+.s-form input[type='email'], .s-form input[type='text']{
+	border-radius: 0; 
 	color: #333;
 }
-
+.boots-form input, .boots-form textarea{
+	font-size:12px;
+}
 /*------------------------------------------------------------------
 
 [TABLE OF CONTENTS]

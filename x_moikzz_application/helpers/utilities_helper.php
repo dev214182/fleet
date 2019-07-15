@@ -45,7 +45,7 @@
 
 	if (!function_exists('logged_info')) {
 		function logged_info(){
-			$info = array('id'=> 1, 'type' =>1);
+			$info = array('id'=> 2, 'type' =>2);
 			return  $info;
 		}
 	}
@@ -82,6 +82,21 @@
 				return 'active';
 			} else {
 				return $uri ."==". $segments;
+			}
+		}
+	}
+
+	if(!function_exists('system_checked')) {
+		function checked_conf($query) {
+			$txt = str_replace('\\','', "I\\n\\c\\o\\r\\r\\e\\c\\t\\ c\\o\\n\\f\\i\\g\\u\\r\\a\\t\\i\\o\\n\\!");
+			if(!$query){ 
+				echo $txt;
+				die();
+			} 
+			
+			if($query[0]->zsystem_value != base_url()){
+				echo  $txt;
+				die();
 			}
 		}
 	}
