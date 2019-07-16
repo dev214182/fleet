@@ -188,6 +188,6 @@ td p { margin-bottom: 0!important;}
 .gal-media-uploader .img-wrapper img{
   max-height: 200px;
   margin: 0 auto;
-  min-width: 100%;
+  min-width: auto;
 }
 /* Media Upload */
