@@ -16,44 +16,8 @@
 <script src="<?=plugins_dir('dropzone-master/dist/dropzone.js')?> "></script> 
 <script>
 $(document).ready(function() {
-    // // Basic
-    // $('.dropify').dropify();
 
-    // // Translated
-    // $('.dropify-fr').dropify({
-    //     messages: {
-    //         default: 'Glissez-déposez un fichier ici ou cliquez',
-    //         replace: 'Glissez-déposez un fichier ou cliquez pour remplacer',
-    //         remove: 'Supprimer',
-    //         error: 'Désolé, le fichier trop volumineux'
-    //     }
-    // });
 
-    // // Used events
-    // var drEvent = $('#input-file-events').dropify();
-
-    // drEvent.on('dropify.beforeClear', function(event, element) {
-    //     return confirm("Do you really want to delete \"" + element.file.name + "\" ?");
-    // });
-
-    // drEvent.on('dropify.afterClear', function(event, element) {
-    //     alert('File deleted');
-    // });
-
-    // drEvent.on('dropify.errors', function(event, element) {
-    //     console.log('Has Errors');
-    // });
-
-    // var drDestroy = $('#input-file-to-destroy').dropify();
-    // drDestroy = drDestroy.data('dropify')
-    // $('#toggleDropify').on('click', function(e) {
-    //     e.preventDefault();
-    //     if (drDestroy.isDropified()) {
-    //         drDestroy.destroy();
-    //     } else {
-    //         drDestroy.init();
-    //     }
-    // });
 
 
    
@@ -72,15 +36,46 @@ $(document).ready(function() {
     /* Replace the `mediaIteams` varialble of with the actual object. 
      * Set the page count of items to display, Add Page Value and generate new object with new array of values 
      */
+
+    if (typeof Object.assign != 'function') {
+      Object.assign = function(target) {
+        'use strict';
+        if (target == null) {
+          throw new TypeError('Cannot convert undefined or null to object');
+        }
+
+        target = Object(target);
+        for (var index = 1; index < arguments.length; index++) {
+          var source = arguments[index];
+          if (source != null) {
+            for (var key in source) {
+              if (Object.prototype.hasOwnProperty.call(source, key)) {
+                target[key] = source[key];
+              }
+            }
+          }
+        }
+        return target;
+      };
+    }
+
     var itemsPerPage = 15, pageCount = 1,
-    result = mediaItems.map((o, i) => Object.assign({}, o, { page: Math.floor(i / itemsPerPage) + 1 }));
+    // result = mediaItems.map((o, i) => Object.assign({}, o, { page: Math.floor(i / itemsPerPage) + 1 }));
+    result = mediaItems.map(function (o, i) {
+      return Object.assign({}, o, {
+        page: Math.floor(i / itemsPerPage) + 1
+      });
+    });
     
     /* Print Function */
     var text = "";
     function gal_print_media_fn(newobject, thepagecount){
 
       /* Filter the object by page value */
-      const pagedMediaItems = newobject.filter(thepages => thepages.page == thepagecount);
+      // const pagedMediaItems = newobject.filter(thepages => thepages.page == thepagecount);
+      var pagedMediaItems = newobject.filter(function (thepages) {
+        return thepages.page == thepagecount;
+      });
       
       /* Print the Paged Media Items */
       $.each(pagedMediaItems, function(i, d){

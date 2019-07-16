@@ -107,6 +107,7 @@ td p { margin-bottom: 0!important;}
 }
 .media-file-details img{
   max-height: 200px;
+  min-width: 100%;
   margin: 0 auto;
 }
 .media-files-container .media-file-item{
@@ -148,7 +149,8 @@ td p { margin-bottom: 0!important;}
 .gal-load-more-container{
   width: 100%;
   position: absolute;
-  bottom: 0;
+  bottom: 0px;
+  left:0px;
   text-align: center;
 }
 #loadMoreItems{
@@ -186,5 +188,6 @@ td p { margin-bottom: 0!important;}
 .gal-media-uploader .img-wrapper img{
   max-height: 200px;
   margin: 0 auto;
+  min-width: 100%;
 }
 /* Media Upload */
