@@ -965,12 +965,15 @@
     }
     
     .b-footer__content-nav{
-        float:left;
+        /* float:left; */
+        -webkit-box-pack: center;
+            -ms-flex-pack: center;
+                justify-content: center;
     }
     
-    /* .b-footer__content-nav ul{
+    .b-footer__content-nav ul{
         padding-left: 0;
-    } */
+    }
     
     .b-footer__content-nav ul li:first-child{
         margin-left: 0;

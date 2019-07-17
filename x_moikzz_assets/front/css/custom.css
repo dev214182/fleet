@@ -514,17 +514,25 @@ body.fixedheader .mainNav.overlay .light-logo{
 	text-align: right;
 	margin: 4% auto;
 }
-/* nav.b-footer__content-nav ul{
-	padding: auto !important;
-} */
+.b-footer__content-nav{
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-pack: right;
+	    -ms-flex-pack: right;
+	        justify-content: right;
+}
 /* Footer */
 
-@media screen and (max-width: 768px){
+@media screen and (max-width: 598px){
 	.gal-social-icons {
 		text-align: center;
 	}
-	nav.b-footer__content-nav ul{
-		padding: auto;
+	.mob-social-nav .gal-social-icons{
+		text-align: left;
+	}
+	.b-nav__logo{
+		width: 100%;
 	}
 }
 
