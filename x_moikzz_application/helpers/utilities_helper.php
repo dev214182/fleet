@@ -29,7 +29,7 @@
 
 		function media_uploader(){ ?>
 			<!-- sample modal content -->
-			<div id="galMediaUploader" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="vcenter" aria-hidden="true">
+			<div id="galMediaUploader" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="vcenter" aria-hidden="true" data-keyboard="false">
 				<div class="modal-dialog modal-dialog-centered modal-xl">
 					<div class="modal-content">
 						<div class="modal-header">

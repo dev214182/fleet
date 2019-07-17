@@ -331,8 +331,6 @@ body.fixedheader .mainNav.overlay .light-logo{
 }
 
 
-
-
 /* Mobile Navigation */
 .mobileButton {
     transform: scale(1.5);
@@ -509,6 +507,27 @@ body.fixedheader .mainNav.overlay .light-logo{
 	font-size: 18px;
 	line-height: 1.75em;
 }
+
+
+/* Footer */
+.gal-social-icons{
+	text-align: right;
+	margin: 4% auto;
+}
+/* nav.b-footer__content-nav ul{
+	padding: auto !important;
+} */
+/* Footer */
+
+@media screen and (max-width: 768px){
+	.gal-social-icons {
+		text-align: center;
+	}
+	nav.b-footer__content-nav ul{
+		padding: auto;
+	}
+}
+
 
 /* b-features */
 .b-features{

@@ -222,6 +222,18 @@ class General_pages extends SS_Controller {
     /**
      * Pages - @mel
      */
+    // public function contact_form(){
+    //     $this->filter = array('table');
+    //     $this->namespace = 'pages';
+    //     $this->pageTitle = 'Pages';
+    //     $this->bodyClass = 'page';
+    //     $this->pageClass = 'page';  
+    //     $this->jsCustom = 1; 
+    //     $this->pageHeaderz = "Pages";
+    //     $this->tableHeaders = array('Title','Author','Date','Status','','Action');
+    //     $this->page = 'templates/contents/back/'.$this->namespace;
+    //     $this->template_display(); 
+    // }
     public function pages(){
         $this->filter = array('table');
         $this->namespace = 'pages';

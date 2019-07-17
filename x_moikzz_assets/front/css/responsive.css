@@ -968,9 +968,9 @@
         float:left;
     }
     
-    .b-footer__content-nav ul{
+    /* .b-footer__content-nav ul{
         padding-left: 0;
-    }
+    } */
     
     .b-footer__content-nav ul li:first-child{
         margin-left: 0;
