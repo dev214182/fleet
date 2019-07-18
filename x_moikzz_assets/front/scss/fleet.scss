@@ -1,0 +1,34 @@
+@import 'variables';
+@import 'normalize';
+
+/* MAIN CSS */
+@import 'bootstrap';
+@import 'font-awesome';
+@import 'theme';
+@import 'home';
+/*@import url('home-2.css');*/
+@import 'listings';
+/*@import url('detail.css');*/
+/*@import url('compare.css');*/
+/*@import url('blog.css');*/
+@import 'pages';
+@import 'submits';
+
+@import 'animate';
+@import 'site-colors';
+@import 'colors-demo';
+@import 'colors';
+@import 'custom';
+
+/* PLUGIN CSS */
+// @import url('../plugins/owl-carousel/owl.carousel.css');
+// @import url('../plugins/owl-carousel/owl.theme.css');
+// @import url('../plugins/bxslider/jquery.bxslider.css');
+
+
+
+@import 'responsive';
+
+@import 'owl.carousel';
+@import 'owl.theme';
+@import 'jquery.bxslider';

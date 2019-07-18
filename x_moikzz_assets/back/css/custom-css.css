@@ -115,7 +115,8 @@ td p { margin-bottom: 0!important;}
   height: -webkit-fill-available;
   min-height: 100px;
   overflow: hidden;
-  background-size: cover;
+  border:1px solid #eee;
+  background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
   cursor: pointer;

@@ -1,19 +1,24 @@
 {
-  "name": "moikzz",
+  "name": "gallega-fleet",
   "version": "1.0.0",
-  "description": "What is CodeIgniter ###################",
+  "description": "Gallega Global Logistics Portal - Fleet",
   "main": "gulpfile.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Moikzz",
-  "license": "ISC",
+  "keywords": [
+    "Gallega",
+    "Fleet",
+    "Portal"
+  ],
+  "author": "Romel Indemne",
+  "license": "GPL-3.0",
   "devDependencies": {
     "babel-core": "^6.26.3",
     "babel-preset-env": "^1.7.0",
     "babelify": "^8.0.0",
     "browserify": "^16.2.3",
-    "gulp": "^4.0.2",
+    "gulp": "^4.0.0",
     "gulp-autoprefixer": "^6.0.0",
     "gulp-rename": "^1.4.0",
     "gulp-sass": "^4.0.2",
@@ -22,7 +27,9 @@
     "vinyl-buffer": "^1.0.1",
     "vinyl-source-stream": "^2.0.0"
   },
-  "dependencies": {
-    "express": "^4.16.4"
+  "babel": {
+    "presets": [
+      "env"
+    ]
   }
 }
