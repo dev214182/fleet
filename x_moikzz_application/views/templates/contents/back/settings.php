@@ -60,6 +60,32 @@
                         </select>
                     </div>
                 </div>
+                <div class="form-group row">
+                    <label for="" class="col-sm-4  control-label col-form-label">Staff Admin Email</label>
+                    <div class="col-sm-8">
+                        <input type="email" class="form-control" name="sys_staff_email" placeholder="staff@admin.com" value="">
+                        <small>multiple email separate it with comma</small>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="" class="col-sm-4  control-label col-form-label">Contact Number</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" name="sys_comp_number" value="">
+                        <small>multiple contact number separate it with comma</small>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="" class="col-sm-4  control-label col-form-label">Company Address</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" name="sys_com_address" value="">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="" class="col-sm-4  control-label col-form-label">Map Location</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" name="sys_map_location" placeholder="https://www.google.com/maps?q=ghassan+aboud+group&uact=5&um=1&ie=UTF-8&sa=X&ved=0ahUKEwj8hvj5ir7jAhUrSxUIHY8GCu0Q_AUIESgB" value="">
+                    </div>
+                </div>
                
         </div>
 
@@ -95,17 +121,24 @@
         <p></p>
             
                 <div class="form-group row">
-                    <label for="" class="col-sm-2  control-label col-form-label">Site Logo</label>
-                    <div class="col-sm-2 logo"></div>
-                    <div class="col-sm-8"> 
-                         <input type="file" name="sys_logo" class="form-control"> 
+                    <label for="" class="col-sm-4  control-label col-form-label">Site Logo</label>
+                    <div class="col-sm-8 gal-media-uploader">  
+                        <div class="img-wrapper mb-1" style="max-height:100px;">
+                            <img class="selected-img img-fluid" style="max-height:100px;" src="<?php echo file_common_dir('images/default.png');?>" alt="Gallega Image Preview">
+                        </div>
+                        <input class="modal-media-url form-control mb-1 form-control-line" type="text" name="sys_logo">
+                        <button type="button" id="openMediaModal" class="open-media-modal btn btn-sm waves-effect waves-light btn-secondary" data-backdrop="static" data-keyboard="false" data-toggle="modal" data-target="#galMediaUploader">Media Uploader</button>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="" class="col-sm-2  control-label col-form-label">Site Icon</label>
-                    <div class="col-sm-2   icon"></div>
-                    <div class="col-sm-8">
-                        <input type="file" name="sys_icon" class="form-control">
+                    <label for="" class="col-sm-4  control-label col-form-label">Site Icon</label>
+                    <div class="col-sm-8 gal-media-uploader">
+                    
+                        <div class="img-wrapper mb-1" style="max-height:100px;">
+                            <img class="selected-img img-fluid" style="max-height:100px;" src="<?php echo file_common_dir('images/default.png');?>" alt="Gallega Image Preview">
+                        </div>
+                        <input class="modal-media-url form-control mb-1 form-control-line" type="text" name="sys_icon">
+                        <button type="button" id="openMediaModal" class="open-media-modal btn btn-sm waves-effect waves-light btn-secondary" data-backdrop="static" data-keyboard="false" data-toggle="modal" data-target="#galMediaUploader">Media Uploader</button>
                     </div>
                 </div>
                 <div class="form-group row">

@@ -31,9 +31,7 @@ class General_pages extends SS_Controller {
 
 	    $this->load->helper('form','url');
         $this->lang_z = 'en';
-        //$this->session_activated();   
-      
-      
+        $this->session_activated();      
 	} 
 
 	public function index(){
@@ -43,6 +41,7 @@ class General_pages extends SS_Controller {
 	}
  
     public function view($page='dashboard'){
+       
         $this->userID = logged_info()['id'];
         $this->userType = logged_info()['type'];
 
@@ -247,13 +246,13 @@ class General_pages extends SS_Controller {
         $this->template_display(); 
     }
     public function media(){
-        $this->filter = array();
+        $this->filter = array('fileupload');
         $this->namespace = 'media';
         $this->pageTitle = 'Media';
         $this->bodyClass = 'lists-media';
         $this->pageClass = 'lists-media';  
-        $this->jsCustom = 7; 
-        $this->pageHeaderz = "List Images";
+        $this->jsCustom = 13; 
+        $this->pageHeaderz = "Media";
         $this->page = 'templates/contents/back/'.$this->namespace;
         $this->template_display(); 
     }

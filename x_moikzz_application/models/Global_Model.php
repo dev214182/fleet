@@ -189,12 +189,9 @@ Class Global_Model extends SS_Model {
 
   function update_data($t, $data, $w) {
     $this->table_name = $t;
-    $this->where = $w;
-
-    $record = $this->update_where_field($data);
-
-    return $record;
-
+    $this->where = $w;  
+    $record = $this->update_where_field($data); 
+    return $record; 
   }  
 
 } 

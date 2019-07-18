@@ -45,8 +45,16 @@
 
 	if (!function_exists('logged_info')) {
 		function logged_info(){
-			$info = array('id'=> 2, 'type' =>2);
-			return  $info;
+			$CI =&get_instance();
+
+			$session_data = $CI->session->userdata('logged_in');
+
+			if( $session_data ) { 
+				 
+				$info = array('id'=> $session_data['zid'], 'type' => $session_data['ztype']);
+				return  $info;
+			}
+			
 		}
 	}
 
@@ -136,17 +144,35 @@
 
 
 	if (!function_exists('user_info')) { 
-		function user_info($key=null) { 
+		function user_info() { 
 
-			$CI =&get_instance(); 
-
-			$current_user = '';
+			$CI =&get_instance();  
 
 			$session_data = $CI->session->userdata('logged_in');
 
-			if( $session_data ) { 
+			if( $session_data ) {
+			 
+			    $where = array('zparent' => $session_data['zid']); 
 
-				return $session_data;
+			    $select = '*';
+
+				$CI->db->select($select);
+
+				$CI->db->from('mz_profile');
+
+				$CI->db->where($where);
+
+				$query = $CI->db->get();
+
+				if($query->num_rows() > 0) {
+				 
+					$result = $query->result(); 
+
+					return $result[0];
+
+				} else {
+					return false;
+				}
 
 			}
 
@@ -640,4 +666,167 @@ if (!function_exists('secondsToTime')) {
 			return delete_all_between($beginning, $end, str_replace($textToDelete, '', $string)); // recursion to ensure all occurrences are replaced
 		}
 	}
+
+	if(!function_exists('modal_login')) {
+		function modal_login() { ?>
+				<div id="loginModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="vcenter" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered modal-sm" style="top:10%;">
+					<div class="modal-content">
+								<div class="p-10">  
+									<button id="closeModal" type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+								</div>
+								<div class="modal-body">
+								<div class="card-body">
+							<form class="form-horizontal form-material" id="modal_login" method="post" action="">
+								<h3 class="box-title m-b-20">Sign In</h3>
+								<div class="form-group ">
+									<div class="col-xs-12">
+										<input class="form-control" type="text" required="" name="profile_login" placeholder="Username"> </div>
+								</div>
+								<div class="form-group">
+									<div class="col-xs-12">
+										<input class="form-control" type="password" required="" name="profile_password"  placeholder="Password"> </div>
+								</div>
+							 
+								<div class="form-group text-center m-t-20">
+									<div class="col-xs-12">
+										<button class="btn btn-info btn-lg btn-block text-uppercase waves-effect waves-light" type="submit">Log In</button>
+									</div>
+								</div>
+							 
+							</form>  
+						</div>
+						</div>
+						<!-- <div id="selectBtn" class="modal-footer"></div> -->
+					</div>
+					<!-- /.modal-content -->
+				</div>
+				<!-- /.modal-dialog -->
+			</div>
+			<!-- /.modal -->
+		
+	<?php	}
+	}
+
+	if (!function_exists('media_uploader')) {
+		function media_uploader($data){ ?>
+			<!-- sample modal content -->
+			<?php if(!$data){ ?>
+			<div id="galMediaUploader" class="modal fade media-list" tabindex="-1" role="dialog" aria-labelledby="vcenter" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered modal-xl">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h4 class="modal-title" id="vcenter">Media Uploader</h4>
+							<button id="closeModal" type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+						</div>
+						<div class="modal-body">
+			<?php } ?>
+							<!-- Media Uploader -->
+							<div class="col-12 p-0">
+								<!-- Nav tabs -->
+								<ul class="nav nav-tabs customtab2 border-light" role="tablist">
+									<li class="nav-item"> <a class="nav-link f-media show bg-light text-secondary active" data-toggle="tab" href="#gallerymedia" role="tab" aria-selected="true"><span class="sm-up"><i class="mdi mdi-camera"></i></span> <span class="hidden-xs-down">Media Gallery</span></a></li>
+									<li class="nav-item"> <a class="nav-link f-dropzone show bg-light text-secondary" data-toggle="tab" href="#uploadmedia" role="tab" aria-selected="false"><span class="sm-up"><i class="mdi mdi-cloud-upload"></i></span> <span class="hidden-xs-down">Upload</span></a></li>
+								</ul>
+
+								<!-- Tab panes -->
+								<div class="tab-content media-uploader">
+									<div class="tab-pane show active" id="gallerymedia" role="tabpanel">
+										<div class="card mb-0">
+											<div class="card-body">
+			
+												<div class="col-md-12">
+													<div class="card-block">
+														<div class="row">                                       
+															<div class="col-8">
+																<div class="row">
+																	<h4 class="card-title" style="width:100%;">Media Gallery</h4>
+																	<h6 class="card-subtitle">Select the file and click choose to use the file.</h6>
+																</div>
+															</div>
+															<div class="col-4">
+																<div class="row pull-right">
+																	<div id="selectBtn"></div>
+																</div>
+															</div>
+															<div class="col-md-9 border border-right-0">
+																<div class="row">
+																	<div class="media-files-container p-2 gl-flex gl-wrap">
+																		<div class="spinner-border" role="status"></div>
+																	</div>
+																	<div class="gal-load-more-container"> 
+																		<input type='hidden' hidden class="hidden" value="1" id="counter">
+																		<button type="button" id="loadMoreItems" class="shadow-none btn-sm waves-effect waves-light btn-secondary">Load More <i class="mdi mdi-arrow-down-bold-circle"></i></button>
+																	</div>
+																</div>
+															</div>
+															<div class="col-md-3 border p-3 media-file-details">
+																<form action="" method="post" id="form-media">
+																	<input id="mID" name="image_id" type="hidden" value="">
+																	<div class="form-group gal-selected-img-container text-center border">
+																		<img id="mImage" class="img-fluid" src="<?php echo file_common_dir('images/users/me.jpg');?>" alt="Gallega Image Preview">
+																	</div>
+																	<div class="form-group mb-2 row">
+																		<label for="example-text-input" class="col-3 col-form-label"><small>Title</small></label>
+																		<div class="col-9">
+																			<input id="mTitle" name="image_title" class="form-control form-control-sm" type="text">
+																		</div>
+																	</div>
+																	<div class="form-group mb-2 row">
+																		<label for="example-text-input" class="col-3 col-form-label"><small>Alt</small></label>
+																		<div class="col-9">
+																			<input id="mAlt" name="image_alt" class="form-control form-control-sm" type="text">
+																		</div>
+																	</div>
+																	<div class="form-group mb-2 row">
+																		<div class="col-12 text-right"> 
+																			<button type="button" class="btn media-update waves-effect waves-light btn-sm btn-info">Update</button>
+																		</div>
+																	</div>
+																</form>
+															</div>
+														</div>
+													</div>
+												</div>
+
+											</div>
+										</div><!-- Card -->
+									</div>
+								
+									<div class="tab-pane" id="uploadmedia" role="tabpanel">
+										<div class="card mb-0">
+											<div class="card-body">
+												<h4 class="card-title">Media Uploader</h4>
+												<h6 class="card-subtitle">Select files or drag and drop the files to upload.</h6>
+												<form action="#" method="post" id="mdropzone" class="mdropzone dropzone" enctype="multipart/form-data">
+													<div class="fallback">
+														<input name="file" type="file" multiple />
+													</div>
+												 
+												</form>
+
+												<div class="progress-bars">
+												</div>
+											</div>
+										</div><!-- card -->
+									</div>
+
+								</div><!-- tab-content -->
+							</div><!-- Media Uploader -->
+				<?php if(!$data){ ?>
+						</div>
+						<!-- <div id="selectBtn" class="modal-footer"></div> -->
+					</div>
+					<!-- /.modal-content -->
+				</div>
+				<!-- /.modal-dialog -->
+			</div>
+			<!-- /.modal -->
+
+		<?php 
+			} 
+		}
+
+	}
+	/* Media Uploader */
 ?>

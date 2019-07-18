@@ -85,21 +85,20 @@
             <p>contact us</p>
             <div class="b-info__contacts-item">
               <span class="fa fa-map-marker"></span>
-              <em>Street N405, Gate 4 JAFZA jebel ali, Dubai
-                P.O Box 17146</em>
+              <em> <?=@$meta[26]->zsystem_value?></em>
             </div>
             <div class="b-info__contacts-item">
               <span class="fa fa-phone"></span>
-              <em>Phone:  +971 4 821 5099</em>
+              <em>Phone: <?=@$meta[25]->zsystem_value?></em>
             </div>
              
             <div class="b-info__contacts-item">
               <span class="fa fa-envelope"></span>
-              <em><a href="#">Email:  info@gallega.com</a></em>
+              <em><a href="<?=@$meta[28]->zsystem_value?>">Email:  <?=@$meta[28]->zsystem_value?></a></em>
             </div>
           </address>
           <address class="b-info__map">
-            <a href="contacts.html">Open Location Map</a>
+            <a href="<?=@$meta[27]->zsystem_value?>">Open Location Map</a>
           </address>
         </div>
       </div>
@@ -123,11 +122,17 @@
         <div class="col-xs-8">
           <div class="b-footer__content">
             <div class="gal-social-icons text-right">  
-              <a href="#"><span class="gi-facebook font-grey"></span></a>
-              <a href="#"><span class="gi-twitter font-grey"></span></a>
-              <a href="#"><span class="gi-instagram font-grey"></span></a>
-              <a href="#"><span class="gi-linkedin font-grey"></span></a>
-              <a href="#"><span class="gi-youtube font-grey"></span></a>
+                <?php if($meta[20]->zsystem_value){?>
+                  <a href="<?=@$meta[20]->zsystem_value?>"><span class="gi-facebook font-light"></span></a>
+                  <?php } if($meta[23]->zsystem_value){?>
+                  <a href="<?=@$meta[23]->zsystem_value?>"><span class="gi-twitter font-light"></span></a>
+                  <?php } if($meta[21]->zsystem_value){?>
+                  <a href="<?=@$meta[21]->zsystem_value?>"><span class="gi-instagram font-light"></span></a>
+                  <?php } if($meta[22]->zsystem_value){?>
+                  <a href="<?=@$meta[22]->zsystem_value?>"><span class="gi-linkedin font-light"></span></a>
+                  <?php } if($meta[24]->zsystem_value){?>
+                  <a href="<?=@$meta[24]->zsystem_value?>"><span class="gi-youtube font-light"></span></a>
+                  <?php } ?>
             </div>
             <nav class="b-footer__content-nav">
               <ul>

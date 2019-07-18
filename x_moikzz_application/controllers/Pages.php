@@ -10,6 +10,7 @@ class Pages extends SS_Fcontroller{
      protected $filter = array();
      protected $jsCustom = false;
      protected $slug = false;
+     protected $pageType;
      protected $rs = false;
      protected $page = 'pages';
      protected $bodyClass = 'front';
@@ -39,18 +40,18 @@ class Pages extends SS_Fcontroller{
             $this->filter = array('carousel','slider','select2');
             $this->page = 'home';
             $this->bodyClass = 'home m-index'; 
-
+            $this->pageType = 'website';
         }elseif(@$result->zslug == $url && $url == 'search'){ 
             $this->jsCustom = 2; 
             $this->filter = array('select2');
             $this->page = 'listings';
             $this->bodyClass = 'm-listingsTwo search-page';
-          
+            $this->pageType = 'booking';
         }elseif(@$result->zslug == $url && $url == 'about-us'){  
             $this->jsCustom = 3; 
             $this->page = 'about';
             $this->bodyClass = 'about';
-         
+            $this->pageType = 'portfolio';
         }elseif( @$result->zslug == $url  && $url == 'dashboard' ){
             $this->jsCustom = 4; 
             $this->page = 'dashboard';
@@ -60,19 +61,21 @@ class Pages extends SS_Fcontroller{
             $this->jsCustom = 5; 
             $this->page = 'bookings';
             $this->bodyClass = 'bookings'; 
-
+            $this->pageType = 'bookings';
         }elseif(@$result->zslug == $url && $url == 'profile'){
             $this->jsCustom = 6; 
             $this->page = 'profile';
             $this->bodyClass = 'profile'; 
-
+            $this->pageType = 'profile';
         }elseif(@$result->zslug == $url && $url == 'cart'){
             $this->jsCustom = 7; 
             $this->page = $url;
             $this->bodyClass = $url;  
+            $this->pageType = 'cart';
         }else{  
             $this->page = $url;
             $this->bodyClass = $url;
+            $this->pageType = 'website';
         }
        
         $this->slug = @$result->zslug ?  @$result->zslug : $url;
@@ -99,8 +102,8 @@ class Pages extends SS_Fcontroller{
         $data['pageclass'] = 'lists-'.$this->page;
         $data['meta'] = $this->rs;
         $data['breadcrumbs'] = ucwords(str_replace('-',' ',strtolower($this->slug)));
- 
-        $this->template->load( 'front/template', 'front/pages/'.$this->page.'.php', $data);
+        $data['pageType'] = $this->pageType;
+        $this->template->load( 'front/template', 'front/pages/'.$this->page, $data);
     }  
  
 }

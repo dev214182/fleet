@@ -26,6 +26,7 @@ var key =  '<?=public_key()?>';
 </head>
 
 <body  class="fix-header fix-sidebar card-no-border <?=$bodyClass?>" data-spy="scroll" data-namespace="<?=$bodyClass?>" data-namepage="<?=$pages?>">  
+ 
 <div class="preloader">
     <svg class="circular" viewBox="25 25 50 50">
         <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"></circle></svg>
@@ -80,6 +81,15 @@ var key =  '<?=public_key()?>';
                 <!-- Start Page Content -->
                 <!-- ============================================================== -->
                 <?=$contents?>
+                <?php
+                    if(@$filter_css_js && in_array('fileupload', $filter_css_js)){ 
+                        $d = false;  
+                        if($pageclass == 'lists-media'){
+                            $d = 1;
+                        }
+                            media_uploader($d);
+                    }
+                    ?> 
                 <!-- ============================================================== -->
                 <!-- End PAge Content -->
                 <!-- ============================================================== -->
@@ -113,7 +123,7 @@ var key =  '<?=public_key()?>';
     </div>
     <!-- ============================================================== -->
     <!-- End Wrapper -->
-    
+   
     <!-- All Jquery -->
     <!-- ============================================================== -->
     
@@ -153,5 +163,7 @@ var key =  '<?=public_key()?>';
     <script src="<?=plugins_dir('styleswitcher/jQuery.style.switcher.js?v=1.0.1')?>"></script>
     </div>
     </div>
+<!-- Media Uploader Modal -->
+
 </body>
 </html>

@@ -1,4 +1,7 @@
 <link href="<?=file_common_dir_back('css/master.css?v=1.0.3')?>" rel="stylesheet"> 
+<?php if(@$filter_css_js && in_array('fileupload', $filter_css_js)){ ?>  
+<link href="<?=plugins_dir('dropzone-master/dist/dropzone.css')?>" rel="stylesheet" type="text/css" />
+<?php } ?>
 <?php if(@$filter_css_js && in_array('formpicker', $filter_css_js)){ ?>   
 <link href="<?=plugins_dir('bootstrap/css/bootstrap.min.css')?>" rel="stylesheet" type="text/css"> 
 <link href="<?=plugins_dir('bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css')?>" rel="stylesheet" type="text/css"> 

@@ -1,6 +1,51 @@
-<script src="<?=plugins_dir('jquery/jquery.min.js')?>"></script>
 <script src="<?=file_common_dir_back('js/master.js?v=1.0.8')?>"></script>
-<script src="<?=file_common_dir_back('js/gag-admin.js?v=1.0.9')?>"></script>
+
+<script src="<?=file_common_dir_back('js/gag-admin.js?v=1.0.9')?>"></script> 
+ 
   <!-- Sweet-Alert  -->
 <script src="<?=plugins_dir('sweetalert/sweetalert.min.js')?>"></script>
 <script src="<?=plugins_dir('sweetalert/jquery.sweet-alert.custom.js')?> "></script> 
+<?php if(@$filter_css_js && in_array('fileupload', $filter_css_js)){ ?>  
+
+  <script src="<?=plugins_dir('dropzone-master/dist/dropzone.js')?> "></script> 
+<script>
+  Dropzone.autoDiscover = false;
+
+jQuery(document).ready(function($) {    
+    /* ---Wrap to one a function */
+    $('body').on('click', '.media-file-item', function(e) {
+      e.preventDefault();
+      var mi = $(this);
+      var mediaID = mi.data("media-id");
+      var mediaTitle = mi.data("media-title"); 
+      var mediaUrl = mi.data("media-url");
+      var mediaAlt = mi.data("media-alt"); 
+      /* Remove Checked and Add Check */
+      $('.media-files-container .media-file-item.active').removeClass("active mdi mdi-checkbox-marked");
+      $(this).toggleClass("active mdi mdi-checkbox-marked");
+      /* Print Values in update form */
+      $('#mID').val(mediaID);
+      $('#mImage').attr("src",mediaUrl);
+      $('#mTitle').val(mediaTitle);
+      $('#mAlt').val(mediaAlt);
+      /* Display the choose button */
+      if( ! $('body').hasClass('lists-media') ){
+        var choosebtn = '<button type="button" type="button" data-selected-url="'+mediaUrl+'" class="modal-data-select btn btn-info waves-effect" data-dismiss="modal">Choose</button>';
+        $('#selectBtn').html(choosebtn);
+      }
+    });
+    /* Add the selected / choose / chosen / media file to the input field */
+    $('body').on('click', '.modal-data-select, #closeModal', function(e) {
+      if( $(this).data('selected-url') ){
+        var theSelectedUrl = $(this).data('selected-url');
+        $('.gal-media-uploader.active-media-uploader').find('.modal-media-url').val(theSelectedUrl);
+        $('.gal-media-uploader.active-media-uploader').find('.selected-img').attr("src",theSelectedUrl);
+      }else{
+        $('.gal-media-uploader.active-media-uploader').removeClass('active-media-uploader');
+      }
+    });
+});
+</script>
+
+<?php } ?>
+<!-- End fileupload -->

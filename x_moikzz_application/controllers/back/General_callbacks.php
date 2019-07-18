@@ -59,7 +59,7 @@ class General_callbacks extends SS_Controller {
     function __construct(){  
         parent::__construct(); 
         $this->load->helper('url'); 
-       // $this->session_activated();
+        $this->session_activated(); 
     } 
 
     public function index(){
@@ -71,7 +71,10 @@ class General_callbacks extends SS_Controller {
     public function view($page='404'){ 
 
         $key = public_key();
-        
+        /*  if(!$array || !$this->input->is_ajax_request() || $array->key !== $key ){
+            echo json_encode(array('success' => false,'message' => 'Error')); 
+           return false;
+        }  */
         if(@$_GET['k'] == $key/*  && $this->input->is_ajax_request() */){
             if (!method_exists($this, $page)){
                 $this->page_not_found();
@@ -93,6 +96,56 @@ class General_callbacks extends SS_Controller {
         return $this->{$this->data_pages}();
     }
 
+    private function dropzone(){
+        header('Content-type: application/json; charset=utf-8');
+        $array = json_decode(file_get_contents('php://input'));
+        if(!$_FILES) {  echo json_encode(array('message' => "")); return false;}
+
+        
+        $tmp_file = $_FILES['file']['tmp_name']; 
+        $file = $_FILES['file']['name']; 
+        
+        $uploads_dir    = "x_moikzz_assets/images/media";
+
+        if (!is_dir($uploads_dir)) {
+                mkdir($uploads_dir, 0777, true); 
+        }
+
+        $cur_date = date('Y-m-d H:i:s');
+        foreach($file AS $k => $v){
+            $fname = strtolower($v);
+            $tname = explode('.',$fname);
+            $location = $uploads_dir.'/'.$fname; 
+            if (file_exists($location)) {
+               /*  $time_min = date('ds');  
+                $location = $uploads_dir.'/copy_'.$time_min.'_'.strtolower($v);  */
+            }else{
+                $data[] = array('zimage' => $fname, 'ztitle'=> $tname[0], 'zdate_published' => $cur_date);
+            }
+            move_uploaded_file($tmp_file[$k], $location); 
+        } 
+        if(@$data){
+            $this->global_func_query('mz_media',$data,'', 'insert_batch'); 
+        }
+        echo json_encode(array('message' => $data));
+    }
+
+    private function global_update(){
+        header('Content-type: application/json; charset=utf-8');
+        $array = json_decode(file_get_contents('php://input')); 
+        
+        $where = array('zid' => $array->image_id);
+
+        $query = array('ztitle' => $array->image_title, 'zalt' =>  $array->image_alt);
+        $rs = $this->global_func_query($array->table,$query, $where, 'update_single');
+        if(!$rs){
+            echo json_encode(array('success' => false,'message' => "Failed to update")); 
+            return false;
+        }
+
+        echo json_encode(array('success' => true,'message' => 'Updated')); 
+    }
+
      /* New/Update Truck Fleet */
      private function admin_settings(){
         header('Content-type: application/json; charset=utf-8');
@@ -111,6 +164,11 @@ class General_callbacks extends SS_Controller {
         $sys_site_description       = @$this->input->post('sys_site_description'); 
         $sys_site_register          = @$this->input->post('sys_site_register');
         $sys_site_language          = @$this->input->post('sys_site_language');
+
+        $sys_staff_email          = @$this->input->post('sys_staff_email');
+        $sys_comp_number          = @$this->input->post('sys_comp_number');
+        $sys_com_address          = @$this->input->post('sys_com_address');
+        $sys_map_location          = @$this->input->post('sys_map_location');
 
         $sys_logo                   = @$this->input->post('sys_logo');
         $sys_icon                   = @$this->input->post('sys_icon');
@@ -131,31 +189,35 @@ class General_callbacks extends SS_Controller {
         
         if($sys_logo && $sys_icon){
             $fields_total = array('site_title','site_content','users_can_register','admin_email','site_logo','site_icon','site_meta_title','site_meta_desc','site_meta_keywords','site_analytics','site_language_default',
-            'n_pricing','a_pricing','p_pricing', 'social_fb', 'social_insta', 'social_linkedin', 'social_twitter');
+            'n_pricing','a_pricing','p_pricing', 'social_fb', 'social_insta', 'social_linkedin', 'social_twitter','staff_email','website_phone','website_address','map_location');
             
             $fields = array($sys_site_title, $sys_site_description, $sys_site_register, $sys_site_email, $sys_logo, $sys_icon, $sys_site_meta_title, $sys_site_meta_description, $sys_site_meta_keyword,
-                            $sys_site_script, $sys_site_language, $sys_normal_pricing, $sys_advance_pricing, $sys_premium_pricing, $sys_social_fb, $sys_social_instagram, $sys_social_linkedin, $sys_social_twitter);
+                            $sys_site_script, $sys_site_language, $sys_normal_pricing, $sys_advance_pricing, $sys_premium_pricing, $sys_social_fb, $sys_social_instagram, $sys_social_linkedin, $sys_social_twitter,
+                        $sys_staff_email, $sys_comp_number, $sys_com_address, $sys_map_location);
             
         }elseif($sys_logo && !$sys_icon){
             $fields_total = array('site_title','site_content','users_can_register','admin_email','site_logo','site_meta_title','site_meta_desc','site_meta_keywords','site_analytics','site_language_default',
-            'n_pricing','a_pricing','p_pricing', 'social_fb', 'social_insta', 'social_linkedin', 'social_twitter');
+            'n_pricing','a_pricing','p_pricing', 'social_fb', 'social_insta', 'social_linkedin', 'social_twitter','staff_email','website_phone','website_address','map_location');
             
             $fields = array($sys_site_title, $sys_site_description, $sys_site_register, $sys_site_email, $sys_logo, $sys_site_meta_title, $sys_site_meta_description, $sys_site_meta_keyword,
-                            $sys_site_script, $sys_site_language, $sys_normal_pricing, $sys_advance_pricing, $sys_premium_pricing, $sys_social_fb, $sys_social_instagram, $sys_social_linkedin, $sys_social_twitter);
+                            $sys_site_script, $sys_site_language, $sys_normal_pricing, $sys_advance_pricing, $sys_premium_pricing, $sys_social_fb, $sys_social_instagram, $sys_social_linkedin, $sys_social_twitter,
+                            $sys_staff_email, $sys_comp_number, $sys_com_address, $sys_map_location);
             
         }elseif(!$sys_logo && $sys_icon){
             $fields_total = array('site_title','site_content','users_can_register','admin_email','site_icon','site_meta_title','site_meta_desc','site_meta_keywords','site_analytics','site_language_default',
-            'n_pricing','a_pricing','p_pricing', 'social_fb', 'social_insta', 'social_linkedin', 'social_twitter');
+            'n_pricing','a_pricing','p_pricing', 'social_fb', 'social_insta', 'social_linkedin', 'social_twitter','staff_email','website_phone','website_address','map_location');
             
             $fields = array($sys_site_title, $sys_site_description, $sys_site_register, $sys_site_email, $sys_icon, $sys_site_meta_title, $sys_site_meta_description, $sys_site_meta_keyword,
-                            $sys_site_script, $sys_site_language, $sys_normal_pricing, $sys_advance_pricing, $sys_premium_pricing, $sys_social_fb, $sys_social_instagram, $sys_social_linkedin, $sys_social_twitter);
+                            $sys_site_script, $sys_site_language, $sys_normal_pricing, $sys_advance_pricing, $sys_premium_pricing, $sys_social_fb, $sys_social_instagram, $sys_social_linkedin, $sys_social_twitter,
+                            $sys_staff_email, $sys_comp_number, $sys_com_address, $sys_map_location);
                             
         }else{
             $fields_total = array('site_title','site_content','users_can_register','admin_email','site_meta_title','site_meta_desc','site_meta_keywords','site_analytics','site_language_default',
-            'n_pricing','a_pricing','p_pricing', 'social_fb', 'social_insta', 'social_linkedin', 'social_twitter');
+            'n_pricing','a_pricing','p_pricing', 'social_fb', 'social_insta', 'social_linkedin', 'social_twitter','staff_email','website_phone','website_address','map_location');
             
             $fields = array($sys_site_title, $sys_site_description, $sys_site_register, $sys_site_email, $sys_site_meta_title, $sys_site_meta_description, $sys_site_meta_keyword,
-                            $sys_site_script, $sys_site_language, $sys_normal_pricing, $sys_advance_pricing, $sys_premium_pricing, $sys_social_fb, $sys_social_instagram, $sys_social_linkedin, $sys_social_twitter);
+                            $sys_site_script, $sys_site_language, $sys_normal_pricing, $sys_advance_pricing, $sys_premium_pricing, $sys_social_fb, $sys_social_instagram, $sys_social_linkedin, $sys_social_twitter,
+                            $sys_staff_email, $sys_comp_number, $sys_com_address, $sys_map_location);
                             
         }
 
@@ -540,10 +602,11 @@ class General_callbacks extends SS_Controller {
             return;
         }
 
+       
         $status         = @$this->input->post('input_status');
         $post_type      = @$this->input->post('post_type');         /* post_type : either its Page or Posts */
         $title          = @$this->input->post('input_title');
-        $slug           = @$this->input->post('input_slug');
+        $slug           = @$this->input->post('input_slug'); 
         $image          = @$this->input->post('input_feature_image');
         $contents       = @base64_encode($this->input->post('cmsEditor'));
 
@@ -614,7 +677,7 @@ class General_callbacks extends SS_Controller {
                 return -1;
         }
 
-        $files = glob("x_moikzz_assets/images/gallery/*.{jpg,png,jpeg}", GLOB_BRACE);
+        $files = glob("x_moikzz_assets/images/media/*.{jpg,png,jpeg}", GLOB_BRACE);
         $data = array();
         usort($files, "mtimecmp");
 

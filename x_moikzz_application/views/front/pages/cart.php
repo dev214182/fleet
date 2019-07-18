@@ -1,3 +1,4 @@
+<?php $user_info = @user_info();?>
 <form id="form-cart" novalidate="" class="boots-form wow zoomInUp" data-wow-delay="0.5s">
 <div class="b-items">
     <div class="cart-wrapper container">
@@ -25,6 +26,9 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-8 col-xs-12">  
+                                    <?php if(@$user_info){?>
+                                        <input type="hidden" class="form-control user-id hidden" value="<?=@$user_info->zparent?>" name="user-id" hidden required> 
+                                    <?php }else{?>
                                     <div class="form-group" > 
                                             <input type="text" class="form-control user-name" placeholder="*NAME" value="" name="user-name" id="name" required>
                                     </div>
@@ -34,14 +38,14 @@
                                     <div class="form-group" >
                                             <input type="text" class="form-control user-phone" placeholder="*PHONE NO" value="" name="user-phone" id="user-phone" required>   
                                     </div>
-
+                                    <?php } ?>
                                     <div class="form-group">
                                         <label>Your Message</label>
                                         <textarea id="user-message" class="form-control user-message" name="user-message" rows="10" placeholder="Your message and propose price."></textarea>
                                     </div>
-
-                                    <small>Already have account? Click <a href="<?=site_url('login')?>"> Login</a></small> 
-                                
+                                    <?php if(!$user_info){?>
+                                    <small>Already have account? Click <a href="#" class=""  data-toggle="modal" data-target="#loginModal"> Login</a></small> 
+                                    <?php } ?>
                                 </div>
                                 
                             </div>
@@ -68,3 +72,4 @@
     </div>
 </div><!--b-items-->
 </form>
+<?php modal_login(); ?>

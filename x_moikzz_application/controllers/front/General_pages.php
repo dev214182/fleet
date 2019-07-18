@@ -5,6 +5,7 @@ class General_pages extends SS_Controller {
  
     protected $query_table; 
     
+    protected $_table_media = 'mz_media';
     protected $_table_orders = 'mz_orders';
     protected $_table_order_details = 'mz_orderdetails'; 
     protected $_table_users = 'mz_users'; 
@@ -19,52 +20,55 @@ class General_pages extends SS_Controller {
     
     public function index(){ 
         $this->page_not_found(); 
-    }
+    } 
 
     public function inquiries_submission(){
         header('Content-type: application/json; charset=utf-8');
         $array = json_decode(file_get_contents('php://input'));
         $success = false;
-       /*  if(!$array && !$this->input->is_ajax_request() || $array->key !== private_key() ){
+        /* if(!$array && !$this->input->is_ajax_request() || $array->key !== private_key() ){
             echo json_encode(false);   
-            die();
-        }elseif(!$array->client_name || !$array->client_mail || !$array->client_num){
+            return false;
+        }elseif(!$array->client_name && !$array->client_mail && !$array->client_num && !$array->logid){
             echo json_encode(false);
-            die();
+            return false;
         } */
-
-        $new = 'new1001';
+        $rs = $array->logid;
         $cur_date = date('Y-m-d H:i:s');
+        if(!$array->logid){
+                $new = 'new1001';
 
-        /* Users table */
-        $query = array('zusername' => $array->client_mail, 'zpassword' => $new, 'ztype' => 6, 'zcustomer_type' => 19, 'zstatus' => 15);
-        $rs = $this->global_func_query($this->_table_users,$query,'', 'insert_single');
-        if(!$rs){
-            echo json_encode(false);
-            die();
-        }
+                $password = password_hash($new, PASSWORD_DEFAULT); 
+                /* Users table */
+                $query = array('zusername' => $array->client_mail, 'zpassword' => $password, 'ztype' => 6, 'zcustomer_type' => 19, 'zstatus' => 15);
+                $rs = $this->global_func_query($this->_table_users,$query,'', 'insert_single');
+                if(!$rs){
+                    echo json_encode(false);
+                    return false;
+                }
 
-        $name = explode(" ",$array->client_name);
-        if(count($name) > 2){
-            $lnn = end($name);
-            $mnn = $name[1];
-            $fnn = $name[0];
-        }else{
-            $lnn = end($name);
-            $mnn = '';
-            $fnn = $name[0];
-        }
+                $name = explode(" ",$array->client_name);
+                if(count($name) > 2){
+                    $lnn = strtolower(end($name));
+                    $mnn = strtolower($name[1]);
+                    $fnn = strtolower($name[0]);
+                }else{
+                    $lnn = '';
+                    $mnn = '';
+                    $fnn = strtolower($name[0]);
+                }
 
-        /* Profile table */
-        $query = array('zparent' => $rs, 'zstatus' => 15, 'zfirstname' => $fnn, 'zmiddlename'=> $mnn, 'zlastname' => $lnn, 'zdate_published' => $cur_date,
-                        'zemail' => $array->client_mail);
-        $result = $this->global_func_query($this->_table_profile,$query,'', 'insert_single');
-        if(!$result){
-            echo json_encode(false);
-            die();
-        }
+                /* Profile table */
+                $query = array('zparent' => $rs, 'zstatus' => 15,'zphone_num'=> $array->client_num, 'zfirstname' => $fnn, 'zmiddlename'=> $mnn, 'zlastname' => $lnn, 'zdate_published' => $cur_date,
+                                'zemail' => $array->client_mail);
+                $result = $this->global_func_query($this->_table_profile,$query,'', 'insert_single');
+                if(!$result){
+                    echo json_encode(false);
+                    return false;
+                }
+        } // end array->logid
 
-        if($array->client_num){
+        if($array->urgent){
             $urgent = 1;
         }else{
             $urgent = 0;
@@ -76,7 +80,7 @@ class General_pages extends SS_Controller {
         
         if(!$ord_query){
             echo json_encode(false);
-            die();
+           return false;
         }
 
         $trucks = $array->trucks;
@@ -86,10 +90,12 @@ class General_pages extends SS_Controller {
         $date_from = @$array->date_from;
         $date_to = @$array->date_to;
         $price = $array->price;
+        $catID = $array->category;
 
         $cur_date = date('Y-m-d');
         foreach($trucks AS $k => $v){
             $data[] = array('zorder_id' => $ord_query, 
+                            'zcategory' =>    $catID[$k],
                             'zproduct' =>   (int)$v,
                             'zdate_published'  => $cur_date,
                             'zloads'  => $loads[$k],
@@ -109,7 +115,9 @@ class General_pages extends SS_Controller {
             die();
         }
 
-        $msg = '<p>Inquiry has been sent...</p><p>One of our staff will contact you shortly</p>';
+        $msg = "Inquiry has been sent...";
+        $msg .= "\n\r";
+        $msg .= "One of our staff will contact you shortly";
         $success = true;
 
         echo json_encode(array('success' => $success, 'message' => $msg));   

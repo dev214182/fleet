@@ -1,4 +1,5 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');?>
+<?php $user_info = user_info(); ?>
 <aside class="left-sidebar">
     <!-- Sidebar scroll-->
     <div class="scroll-sidebar">
@@ -11,10 +12,10 @@
             </div>
             <!-- User profile text-->
             <div class="profile-text">
-                <h5>Steve Ayala</h5>
+                <h5><?=ucwords($user_info->zfirstname)?> <?=ucwords(@$user_info->zlastname)?></h5>
                 <a href="<?=site_url('client/page/profile/')?>" aria-expanded="true"><i class="mdi mdi-account"></i></a>
                 
-                <a href="pages-login.html" class="" data-toggle="tooltip" title="Logout"><i class="mdi mdi-power"></i></a>
+                <a href="<?=site_url('log/logout')?>" class="" data-toggle="tooltip" title="Logout"><i class="mdi mdi-power"></i></a>
                 
             </div>
         </div> 

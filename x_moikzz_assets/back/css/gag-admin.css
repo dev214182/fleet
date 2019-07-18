@@ -81,3 +81,116 @@ td p { margin-bottom: 0!important;}
     background: #b8860b !important;
     border-color: #cea644 !important;
 }
+/* @mel Custom CSS */
+/* M-Flex */
+.gl-flex{
+  display: -webkit-box !important;
+  display: -ms-flexbox !important;
+  display: flex !important;
+  -webkit-box-orient: horizontal !important;
+  -webkit-box-direction: normal !important;
+      -ms-flex-direction: row !important;
+          flex-direction: row !important;
+}
+.gl-wrap{
+  -ms-flex-wrap: wrap !important;
+      flex-wrap: wrap !important;
+}
+/* Medial Upload */
+.tab-content.media-uploader .tab-pane .card{
+  min-height: 520px;
+}
+
+.media-files-container{
+  width: 100%;
+}
+.media-files-container,
+.media-file-details{
+  overflow-y: scroll;
+  height: 390px;
+  max-height: 390px;
+}
+.media-file-details img{
+  max-height: 200px;
+  margin: 0 auto;
+}
+.media-files-container .media-file-item{
+  width: 100%;
+  height: -webkit-fill-available;
+  min-height: 100px;
+  overflow: hidden;
+  background-size: contain;
+  border: 1px solid #eee;
+  background-position: center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+.media-files-container .media-file-item.active{
+  box-shadow: 0 0 0 2px #1976d2;
+}
+.media-files-container .media-file-item:before{
+  font-size: 30px !important;
+  line-height: 30px !important;
+  position: absolute;
+  top: .3em;
+  right: .3em;
+  color: #1976d2;
+}
+.media-files-container .media-files-wrapper{
+  position: relative;
+  width: 20%;
+  min-height:120px;
+  height:120px;
+  overflow: hidden;
+}
+.media-files-container .spinner-border{
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+  width: 2rem;
+  height: 2rem;
+  margin: 0 auto;
+}
+.gal-load-more-container{
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  text-align: center;
+}
+#loadMoreItems{
+  border-top: 1px solid #dee2e6;
+  border-left: 1px solid #dee2e6;
+  border-right: 1px solid #dee2e6;
+  border-bottom: 0;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+.gal-selected-img-container{
+  height: 200px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+/* Input tag */
+.gal-media-uploader .img-wrapper{
+  max-width: 400px;
+  height: 200px;
+  border: 1px solid #dee2e6;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+.gal-media-uploader .img-wrapper img{
+  max-height: 200px;
+  margin: 0 auto;
+}
+/* Media Upload */

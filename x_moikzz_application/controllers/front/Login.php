@@ -7,50 +7,37 @@ class Login extends SS_Controller {
         $this->load->library('form_validation'); 
     }
     public function index(){
+        $query3 = $this->global_func_query('mz_system', array('where' =>array('zid !=' =>0))); 
+       // session_destroy();  
+
+        checked_conf($query3); 
         if ( !$this->session->userdata('logged_in') ) {  
+            
             $data['ci_title'] = 'Login';
             $data['pageclass'] = 'login';
-           $this->load->view('templates/inc/front/login', $data);
+            $data['jsCustom'] = ''; 
+            $data['filter_css_js'] = '';
+            $data['bodyClass'] =  'login'; 
+            $data['meta'] = $query3;
+            $data['pageType'] = 'login';
+         
+            $this->load->view('front/pages/login', $data);
+         
         }else{
-            redirect('admin/dashboard');
+            redirect('client/page/dashboard/');
         } 
     } 
-    public function newUser(){  
-            $id          = $this->input->post('id'); 
-            $user     = $this->input->post('user');   
-            $pass     = $this->input->post('pass');   
-            $firstname     = $this->input->post('firstname');   
-            $lastname     = $this->input->post('lastname');   
-            $gender     = $this->input->post('gender');   
-            $email     = $this->input->post('email');   
-            $mob     = $this->input->post('mob');   
-            $registered     = $this->input->post('registered');           
-            $data = array( 
-                'id'  => $id,
-                'user'  => $user,
-                'pass'  => $pass,
-                'firstname'  => $firstname,
-                'lastname'  => $lastname,
-                'gender'  => $gender,
-                'email'  => $email,
-                'mob'  => $mob, 
-                'registered' => $registered
-            ); 
-            $this->gm->insert_data('x_user',$data);
-            
-            echo json_encode(array('success'=>true,'message'=>$data) ); 
-    }
+    
     public function verification(){ 
-        if($this->input->is_ajax_request()) {
-            $username = $this->input->post('profile-login');
-            $password = $this->input->post('profile-password');
-            $login = '';
-               $this->form_validation->set_rules('profile-login', 'Username', 'trim|required');
-               $this->form_validation->set_rules('profile-password', 'Password', 'trim|required');
-                
-                if ($this->form_validation->run() == FALSE) {
-                        $message    =  validation_errors();  
-                        $success = false;
+        $array = json_decode(file_get_contents('php://input'));
+        if($array && $this->input->is_ajax_request() && $array->key == private_key() ){
+            $this->load->model('User_Model', 'um');
+            $username = trim($array->profile_login);
+            $password = $array->profile_password;
+            $success = false;
+            $message = 'No response!';   
+                if (!$username || !$password) {
+                        $message    =  'Username and Password are required!'; 
                 } else {
                     /*If fields not empty, verify inputs */
                     $result = $this->um->logins($username,$password);
@@ -60,39 +47,33 @@ class Login extends SS_Controller {
                         $sess_array = array();
                         foreach($result as $row) {
                             $sess_array = array( 
-                                'ID'            => $row['ID'], 
-                                'us_user_name'   => $row['us_user_name'],
-                                'zlog_count'     => $row['zlog_count']
+                                'zid'            => $row['zid'], 
+                                'zusername'   => $row['zusername'],
+                                'ztype'   => $row['ztype'] 
                             ); 
                         } 
                         
-                            $this->session->set_userdata('logged_in', $sess_array); 
-                            $message = 'Successfully Logged In.'; 
-                            $success = true;
+                        $sess = $this->session->set_userdata('logged_in', $sess_array); 
+                       
+                        $message = 'Successfully Logged In.'; 
+                        $success = true; 
                        
                     } elseif($result =='inactive') {
-                        $message = 'Account has been suspended.';
-                        $success = false;
+                        $message = 'Account is not active/suspended.'; 
                     }else { 
-                        $message = 'Sorry, Incorrect username/password.';
-                        $success = false;
+                        $message = 'Sorry, Incorrect username/password.'; 
                     }    
                 } 
-                echo json_encode(array('success'=>$success,'message'=>$message, 'logged' => $result[0]['zlog_count'], 'zid' => $result[0]['ID']));
+                echo json_encode(array('success'=>$success,'message'=>$message));
         }
     }
-    public function logout(){
-        //if($this->input->is_ajax_request()) { 
-            $user_info = user_info(); 
-            $user_id = $user_info['zid']; 
-            $data = array('zlogin_status' => 0);
-            $where = array('zid' => $user_id);
-            $this->um->update_data($data,$where); 
+    public function logout(){ 
+            
             $this->session->unset_userdata('logged_in');
             session_destroy();
             
             redirect('login');
             
-        //}
+        
     }
 }

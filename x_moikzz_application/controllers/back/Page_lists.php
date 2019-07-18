@@ -29,7 +29,7 @@ class Page_lists extends SS_Controller {
         parent::__construct();
         $this->load->helper('url');
         $this->lang_z = 'en'; 
-        
+        $this->session_activated();
     } 
 
     public function index(){
@@ -159,6 +159,8 @@ class Page_lists extends SS_Controller {
             $this->postType = 'posts';
             $this->pageTitle = 'Add New';
             $this->pages_info();
+        }elseif($this->controller == 'inquiries'){
+            redirect('search');
         }
 
     }
@@ -245,7 +247,7 @@ class Page_lists extends SS_Controller {
         
         $v = $this->controller;
        
-        $this->filter = array('ckeditor'); 
+        $this->filter = array('ckeditor','fileupload'); 
         
         $this->title = 'Page'; 
         $this->bodyClass = $v;

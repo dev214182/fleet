@@ -62,7 +62,7 @@ class Viewing_callbacks extends SS_Controller {
     function __construct(){  
         parent::__construct(); 
         $this->load->helper('url'); 
-       // $this->session_activated();
+        $this->session_activated();
     } 
 
     public function index(){
@@ -103,6 +103,14 @@ class Viewing_callbacks extends SS_Controller {
         }else{ 
             $this->query = array( 'where' =>  'zid  != 1');
         }
+
+        $this->jsons();
+    }
+
+    private function _media(){
+        global $_GET;
+        $this->query_table = $this->_table_media; 
+        $this->query =    array( 'order_by' => 'zid','order' => 'DESC');
 
         $this->jsons();
     } 
@@ -610,6 +618,14 @@ class Viewing_callbacks extends SS_Controller {
                         $output[$k]['zurgent'] = yes_no( $v->zurgent);
                     }
 
+                    if(@$v->zimage1){
+                        $mediaInfo = $this->global_func_query('mz_media',array("where" => array('zid' => $v->zimage1)));
+                        $output[$k]['imgID'] = $v->zimage1;
+                        $output[$k]['zimage'] = $mediaInfo[0]->zimage;
+                        $output[$k]['zimageTitle'] = $mediaInfo[0]->ztitle;
+                        $output[$k]['zalt'] = $mediaInfo[0]->zalt; 
+                    }
+
                     if(@$v->zstatus){
                         $output[$k]['zstatusID'] = $v->zstatus;  
                         $output[$k]['zstatus'] = status_info($v->zstatus);
@@ -635,8 +651,10 @@ class Viewing_callbacks extends SS_Controller {
                     }
 
                     if(@$v->zauthor){ 
-                        $getName = $this->global_get_title('mz_profile',array('zid' => $v->zauthor),array('zfirstname','zlastname','zcompany','zemail','zphone_num'));
+                        $fields =  array('zfirstname','zlastname','zcompany','zemail','zphone_num');
+                        $getName = $this->global_get_title('mz_profile',array('zparent' =>$v->zauthor), $fields);
                         $output[$k]['zauthorID'] = $v->zauthor;
+                       
                         $output[$k]['zauthor'] = $getName[0]->zfirstname. ' '. $getName[0]->zlastname;
 
                         if($this->order_company){

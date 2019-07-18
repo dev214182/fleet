@@ -1,38 +1,53 @@
+<?php $user_info = @user_info();?>
 <div class="nav-fixed">
     <header class="b-topBar">
       <div class="container">
         <div class="row">
           <div class="col-md-2 col-xs-6">
             <div class="b-topBar__addr">
-              <div class="gal-header-social-icons">  
-                <a href="#"><span class="gi-facebook font-light"></span></a>
-                <a href="#"><span class="gi-twitter font-light"></span></a>
-                <a href="#"><span class="gi-instagram font-light"></span></a>
-                <a href="#"><span class="gi-linkedin font-light"></span></a>
-                <a href="#"><span class="gi-youtube font-light"></span></a>
+              <div class="gal-header-social-icons"> 
+                <?php if($meta[20]->zsystem_value){?>
+                <a href="<?=@$meta[20]->zsystem_value?>"><span class="gi-facebook font-light"></span></a>
+                <?php } if($meta[23]->zsystem_value){?>
+                <a href="<?=@$meta[23]->zsystem_value?>"><span class="gi-twitter font-light"></span></a>
+                <?php } if($meta[21]->zsystem_value){?>
+                <a href="<?=@$meta[21]->zsystem_value?>"><span class="gi-instagram font-light"></span></a>
+                <?php } if($meta[22]->zsystem_value){?>
+                <a href="<?=@$meta[22]->zsystem_value?>"><span class="gi-linkedin font-light"></span></a>
+                <?php } if($meta[24]->zsystem_value){?>
+                <a href="<?=@$meta[24]->zsystem_value?>"><span class="gi-youtube font-light"></span></a>
+                <?php } ?>
               </div>
             </div>
           </div>
           <div class="col-md-4 col-xs-6 gal-contact-container">  
             <div class="b-topBar__tel">
               <span class="fa fa-envelope"></span>
-                <a href="mailto:info@gallega.com">Email:  info@gallega.com</a> 
-              <span class="pull-right p-r-20"><a href="tel:+97148215099"> +971 48 215 099</a></span>
+                <a href="mailto:<?=@$meta[28]->zsystem_value?>">Email:  <?=@$meta[28]->zsystem_value?></a> 
+              <span class="pull-right p-r-20"><a href="tel:<?=@$meta[25]->zsystem_value?>"> <?=@$meta[25]->zsystem_value?></a></span>
             </div>
           </div>
 
           <div class="col-md-4 col-xs-6 gal-acount-container"> 
             <nav class="b-topBar__nav">
               <ul style="color:#FFFFFF;"> 
-                <li><a href="#">Register</a></li>
+               
+                <?php if(@$user_info){ ?>
+                  <li><a href="<?=site_url('client/page/dashboard/')?>">Dashboard</a>  </li>
+                <?php }else{ ?>
+                  <li><a href="#">Register</a></li>
                 <li><a href="<?=site_url('login')?>">Login</a></li>
+
+                <?php } ?>
+                
                 <li><a href="<?=site_url('search')?>">Search</a></li>
               </ul>
             </nav>
           </div>
           <div class="col-md-2 col-xs-6 gal-lang-container">
             <div class="b-topBar__lang">
-              <div class="dropdown">
+                <a href="#"><?=@$user_info->zfirstname?></a> 
+            <!--   <div class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle='dropdown'>Language</a>
                 <a class="m-langLink dropdown-toggle" data-toggle='dropdown' href="#"><span class="b-topBar__lang-flag m-en"></span>EN<span class="fa fa-caret-down"></span></a>
                 <ul class="dropdown-menu h-lang">
@@ -41,7 +56,7 @@
                   <li><a class="m-langLink dropdown-toggle" data-toggle='dropdown' href="#"><span class="b-topBar__lang-flag m-de"></span>DE</a></li>
                   <li><a class="m-langLink dropdown-toggle" data-toggle='dropdown' href="#"><span class="b-topBar__lang-flag m-fr"></span>FR</a></li>
                 </ul>
-              </div>
+              </div> -->
 
             </div>
           </div>

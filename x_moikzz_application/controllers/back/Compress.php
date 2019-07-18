@@ -4,7 +4,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Compress extends CI_Controller { 
 
 	function __construct() {
-		parent::__construct(); 
+        parent::__construct(); 
+        $this->session_activated();
 	}
 
 	public function index() {} 
@@ -12,7 +13,7 @@ class Compress extends CI_Controller {
 	public function clear_cache(){
         header('Content-type: application/json; charset=utf-8');
         $update = true;
-        $css1 = file_get_contents(plugins_dir('bootstrap/css/bootstrap.min.css'));
+        $css1 = file_get_contents('https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css');
         $css2 = file_get_contents(plugins_dir('morrisjs/morris.css')); 
         $css3 = file_get_contents(file_common_dir_back('css/gag-admin.css')); 
         
@@ -22,7 +23,7 @@ class Compress extends CI_Controller {
         $css .= "\n"; 
         $css .=  $css2;    
         
-        $css =  trim(preg_replace('/(?![ ])\s+/', ' ', $css));  
+        //$css .=  trim(preg_replace('/(?![ ])\s+/', ' ', $css));  
         $css .= "\n"; 
         $css .=  $css3;
 
@@ -36,29 +37,32 @@ class Compress extends CI_Controller {
         /* JavaScript */
         $folder = getcwd().'/x_moikzz_assets/back/js';
         /* Default JS */
-                $update = false;
-               /*  $js1 = file_get_contents(plugins_dir('jquery/jquery.min.js')); */
-                $js2 = file_get_contents(plugins_dir('bootstrap/js/popper.min.js'));
-                $js3 = file_get_contents(plugins_dir('bootstrap/js/bootstrap.min.js'));
+                $update = true; 
+                $js1 = file_get_contents('https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js');
+                $js2 = file_get_contents('https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js');
+                $js3 = file_get_contents('https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js');
                 $js4 = file_get_contents(file_common_dir_back('js/jquery.slimscroll.js'));
-                $js5 = file_get_contents(file_common_dir_back('js/waves.js'));
-                $js6 = file_get_contents(file_common_dir_back('js/sidebarmenu.js'));
+                $js5 = file_get_contents(file_common_dir_back('js/waves.js')); 
                 $js7 = file_get_contents(plugins_dir('sticky-kit-master/dist/sticky-kit.min.js'));
                 $js8 = file_get_contents(file_common_dir_back('js/custom.min.js'));
                 $js9 = file_get_contents(file_common_dir_back('js/gag-admin.js'));  
                 
-                $jsq =   $js4." ".$js5." ".$js6." ".$js7." ".$js8;
+                $jsq =   $js4."\n\n".$js5."\n\n".$js7."\n\n".$js8;
                 
                 $jsq =  trim(preg_replace('/(?![ ])\s+/', ' ', $jsq)); 
 
-               /*  $js = $js1;
-                $js .= "\n"; */
-                $js = $js2;
+                $js = $js1; 
+                $js .= "\n";
+                $js .= "\n";
+                $js .= $js2;
+                $js .= "\n";
                 $js .= "\n";
                 $js .= $js3;
                 $js .= "\n";
+                $js .= "\n";
                 $js .= $jsq;
                 $js .= "\n";
+               
 
                 $jsq9 =  trim(preg_replace('~//?\s*\*[\s\S]*?\*\s*//?~', '', $js9)); 
                 $jsq9 =  preg_replace('/(?![ ])\s+/', ' ', $jsq9); 
@@ -66,8 +70,10 @@ class Compress extends CI_Controller {
                 //$js .= $jsq9;  
                 $file = 'master.js';
                 $contents = $js;
+                
                 if($update)
-                    file_put_contents($folder.'/'. $file, $contents); 
+                    file_put_contents($folder.'/'. $file, $contents);
+            
         /* End Default */ 
 
         /* Datatables JS */

@@ -18,28 +18,41 @@ var app = {
         return true ? $('body').hasClass('rtl') : false;
     },  
 
-    ajax_load_info: function ajax_load_info(txt,namepage, dataItems, controller, classID, fields, typ) {   
+    ajax_load_info: function ajax_load_info(dataItems, controller,page) {   
         $.ajax({ 
                 type: "POST",
                 url: controller, 
                 cache: false, 
                 contentType: "application/json",
                 data: dataItems,
-                beforeSend: function(xhr){ 
+                beforeSend: function(xhr){
                     $("button[type='submit']").attr("disabled", true);
                 },
                 success: function success(data) {
+                    if(page == 'login'){
+                        data = JSON.parse(data);
+                    }
+                    
                     if(data.success){
                         swal("Success!", data.message, "success");
-                        app.clearCart();
 
-                        setTimeout(function(){  
-                        window.location.href = base_url+"search";
-                        }, 3500); 
+                        if(page == 'search'){
+                            app.clearCart();
+                            $('form#form-cart')[0].remove();
+                            setTimeout(function(){  
+                            window.location.href = base_url+"search";
+                            }, 4000); 
+                        }else{
+                            setTimeout(function(){  
+                                location.reload();
+                            }, 500); 
+                        }
+                    }else{
+                        swal("Error!", data.message, "error"); 
                     }
                 },
                 error: function(){ 
-                    
+                    swal("Error!", 'Kindly refresh the page.', "error"); 
                 }
         }).done( function(){
           $("button[type='submit']").attr("disabled", false);
@@ -343,6 +356,8 @@ var app = {
     },
 
     cartTrucks: function cartTrucks(){
+        app.verify_login();
+
         var items = app.itemStorage();
         var data = ''; 
         if(items && items.length > 0){  
@@ -377,6 +392,7 @@ var app = {
             e.stopImmediatePropagation();
             txt = 'Inquiries submitted'; 
             var controller = 'public/callback/inquiries_submission';
+            var categoryID =  $("input.cart-category"); 
             var trucks =  $("input.cart-items"); 
             var tload =  $("input.cart-load"); 
             var travfrom =  $("input.cart-from"); 
@@ -384,6 +400,7 @@ var app = {
             var datefrom =  $("input.cart-datefrom"); 
             var dateto =  $("input.cart-dateto"); 
             var price =  $("input.cart-price"); 
+            var cat_info = [];
             var truck_info = [];
             var load_info = [];
             var travf_info = [];
@@ -392,6 +409,9 @@ var app = {
             var datet_info = [];
             var price_info = []; 
             
+            $.each(categoryID, function(i,o){ 
+                cat_info[i] = $(o).val(); 
+            });
             $.each(trucks, function(i,o){ 
                 truck_info[i] = $(o).val(); 
             });
@@ -415,15 +435,16 @@ var app = {
             });
            
            
+            var pzid =  $("input.user-id").val(); 
             var pname =  $("input.user-name").val(); 
             var pemail = $("input.user-email").val(); 
             var pnum =  $("input.user-phone").val(); 
             var pmsg =  $("textarea.user-message").val();
             var urge =  $("input.urgent").val();
             
-            var data =  JSON.stringify({"trucks": truck_info,'loads' : load_info,'travel_from' : travf_info,'travel_to' : travt_info,'date_from' : datef_info,'date_to' : datet_info,'price' : price_info, 'client_name' : pname, 'client_mail' : pemail, 'client_num':pnum, 'client_msg' : pmsg,'urgent' : urge, 'key' : key});
-           
-            app.ajax_load_info(txt, '',data, controller, false, false, 'cart');
+            var data =  JSON.stringify({"logid": pzid,"trucks": truck_info,'category':cat_info,'loads' : load_info,'travel_from' : travf_info,'travel_to' : travt_info,'date_from' : datef_info,'date_to' : datet_info,'price' : price_info, 'client_name' : pname, 'client_mail' : pemail, 'client_num':pnum, 'client_msg' : pmsg,'urgent' : urge, 'key' : key});
+            
+            app.ajax_load_info(data, controller,'search');
         });
     },
 
@@ -433,7 +454,7 @@ var app = {
         
         processData = app.productApi + '?'+app.keyApi+'&z='+id; 
         var dataInfo = app.orderStatuses(processData);   
-         dataInfo.done(function(data, textStatus, jqXHR){ 
+         dataInfo.always(function(data, textStatus, jqXHR){ 
            
              var pricing = '';
              var price = 0;
@@ -449,6 +470,7 @@ var app = {
                 price = data[0].zprice;
              }
             var layout = '<div class="b-items__cars-one " data-wow-delay="0.5s">'+
+            '<input type="hidden"   class="cart-category" value="'+data[0].zcategoryID+'" hidden>'+
             '<input type="hidden"   class="cart-items" value="'+id+'" hidden>'+
             '<input type="hidden"   class="cart-load" value="'+data[0].zloads+'" hidden>'+
             '<input type="hidden"   class="cart-from" value="'+data[0].ztravel_from+'" hidden>'+
@@ -492,9 +514,27 @@ var app = {
         '</div>'; 
         
         $('.b-items__cars').append(layout);
-        }); 
-        
-           
+        });  
+    },
+    verify_login: function verify_login(){
+        $('body.cart').on('submit','form#modal_login',function(e){
+            e.preventDefault();
+            
+            txt = 'You are now Logged In'; 
+            var controller = 'log/verify';
+             
+            var dvalue = $(this).serializeArray();
+            var cvalue  = {};
+            $.each(dvalue, function(i,o){ 
+                cvalue['key'] = key;
+                cvalue[o.name] = o.value;
+            });
+            cvalue = JSON.stringify(cvalue); 
+            
+            var data = cvalue;
+       
+          app.ajax_load_info(data, controller,'login');
+        });
     },
     //------------------------------------------------------------------------///
     init: function () {   

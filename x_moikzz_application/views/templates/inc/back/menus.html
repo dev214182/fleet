@@ -20,13 +20,17 @@ $menus = array( array('title' =>'Dashboard','id' => 'dashboard','icon' => 'mdi m
 
 $menu_active= @unserialize($active_menus[0]->zvalue);
 $active_pages = $menu_active['pages'];
+
 foreach($menus AS $k => $v){
     if (@$userType == 1 || in_array($v['id'], $active_pages)){
 ?>
 <li class="<?=current_uri_segments($v['id'])?>"> <a class="waves-effect waves-dark <?=current_uri_segments($v['id'])?>" href="<?=site_url('client/page/'.$v['id'])?>/" aria-expanded="false"><i class="mdi <?=$v['icon']?>"></i><span class="hide-menu"><?=$v['title']?> </span></a> </li>
 <?php } }?>
+<?php  if (@$userType == 1 || in_array('users', $active_pages)){ ?>
 <li class="nav-small-cap">Administrator</li>
+
 <li class="<?=current_uri_segments('users')?>"> <a class="waves-effect waves-dark <?=current_uri_segments('users')?>" href="<?=site_url('client/page/users/')?>" aria-expanded="false"><i class="mdi mdi-account-multiple"></i><span class="hide-menu">Users </span></a> </li>
+<?php } ?>
 <?php  if( $userType == 1 ){?>
 <li class="<?=current_uri_segments('system')?>"> <a class="waves-effect waves-dark <?=current_uri_segments('system')?>" href="<?=site_url('client/page/system/')?>" aria-expanded="false"><i class="mdi mdi-lock-pattern"></i><span class="hide-menu">System</span></a> </li>
 <?php } ?>
