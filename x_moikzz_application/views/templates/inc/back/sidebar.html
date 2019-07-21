@@ -1,15 +1,24 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');?>
-<?php $user_info = user_info(); ?>
+<?php $user_info = user_info();  ?>
 <aside class="left-sidebar">
     <!-- Sidebar scroll-->
     <div class="scroll-sidebar">
         <!-- User profile -->
         <div class="user-profile">
             <!-- User profile image -->
-            <div class="profile-img"> <img src="<?=imgs_dir('users/profile.png')?>" alt="user" />
+            <?php 
+            $prof_pic = @$user_info->zimage1 ? $prof_pic = $user_info->zimage1 : $prof_pic = 'me.jpg';
+            $date = date('ymdhms');
+            ?>
+            <div class="profile-img"> <span class="span-profile"><img src="<?=imgs_dir('users/'.$prof_pic)?>?v=<?=$date?>" id="u-profile" alt="user" style="height:70px;cursor:pointer;" /></span>
+                
                 <!-- this is blinking heartbit-->   
                 <div class="notify setpos"> <span class="heartbit"></span> <span class="point"></span> </div>
             </div>
+            <form action="#" method="post" id="form-image" enctype="multipart/form-data">
+            <input type="file"  class="prof-img file hidden" hidden id="file" name="file">
+            <input type="submit" class="hidden" id="submit-profile" hidden>
+            </form>
             <!-- User profile text-->
             <div class="profile-text">
                 <h5><?=ucwords($user_info->zfirstname)?> <?=ucwords(@$user_info->zlastname)?></h5>
@@ -34,5 +43,6 @@
         </nav>
         <!-- End Sidebar navigation -->
     </div>
+  
     <!-- End Sidebar scroll-->
 </aside>

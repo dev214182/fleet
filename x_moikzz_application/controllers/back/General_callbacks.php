@@ -98,7 +98,7 @@ class General_callbacks extends SS_Controller {
 
     private function dropzone(){
         header('Content-type: application/json; charset=utf-8');
-        $array = json_decode(file_get_contents('php://input'));
+        //$array = json_decode(file_get_contents('php://input'));
         if(!$_FILES) {  echo json_encode(array('message' => "")); return false;}
 
         
@@ -133,11 +133,55 @@ class General_callbacks extends SS_Controller {
     private function global_update(){
         header('Content-type: application/json; charset=utf-8');
         $array = json_decode(file_get_contents('php://input')); 
-        
-        $where = array('zid' => $array->image_id);
+        $copy_img = true;
 
-        $query = array('ztitle' => $array->image_title, 'zalt' =>  $array->image_alt);
-        $rs = $this->global_func_query($array->table,$query, $where, 'update_single');
+        
+        if(@$array->table == 'mz_media'){
+            $where = array('zid' => $array->image_id); 
+            $query = array('ztitle' => $array->image_title, 'zalt' =>  $array->image_alt);
+            $dir    = "media";
+            $table = $array->table;
+            $copy_img = false;
+        }else{
+            // profile picture
+
+            $user_id = logged_info();
+            $user_id = $user_id['id'];
+           
+            $where = array('zid' => $user_id); 
+
+            $image1 = @strtolower(trim($_FILES['file']['name']));
+
+            if(!$image1) {
+                echo json_encode(array('success' => false,'message' => 'No Image')); 
+                return false;
+            }
+
+            $image1 = str_replace(' ', '_', $image1);
+
+            $image1 = explode('.',$image1);
+
+            $image1 = $user_id.".".$image1[1];
+            $query = array('zimage1' => $image1);  
+            $dir    = "users";
+            $table = 'mz_profile';
+
+            $msg = 'Failed to Upload!';
+            $uploads_dir    = getcwd()."/x_moikzz_assets/images/".$dir;
+
+            if (!is_dir($uploads_dir)) {
+                    mkdir($uploads_dir, 0777, true); 
+            }
+            
+            $inner_msg = $this->file_image_upload( $image1, $_FILES['file']['size'],$uploads_dir,$_FILES['file']['tmp_name'], $copy_img); 
+            
+            if(!$inner_msg){
+                echo json_encode(array('success' => false,'message' => $msg)); 
+                return false;
+            }
+        } 
+        
+        $rs = $this->global_func_query($table,$query, $where, 'update_single');
         if(!$rs){
             echo json_encode(array('success' => false,'message' => "Failed to update")); 
             return false;
@@ -268,9 +312,7 @@ class General_callbacks extends SS_Controller {
         $msg = '';
         $email = $this->input->post('profile_email');
 
-        $options = [
-            'moikzz' => 12,
-        ];
+        $options = [ 'moikzz' => 12 ];
 
         if(!$email) {
             echo json_encode(array('success'=>$success,'message' => 'Error 505....')); 
@@ -389,12 +431,14 @@ class General_callbacks extends SS_Controller {
 
                     if(!$profile_only && @$fname && @$email){
 
-                            $field1 = 'zemail ="'.$email. '" AND zparent !='.$userID;
-                            
-                            $chking =  $this->global_func_query('mz_profile', $field1,null,'check_duplicate');
-                            if($chking) {
-                                echo json_encode(array('success'=>$success,'message' => 'Email is already been registered.')); 
-                                return;
+                            if(@$old_email != @$email){
+                                $field1 = 'zemail ="'.$email. '" AND zparent !='.$userID;
+                                
+                                $chking =  $this->global_func_query('mz_profile', $field1,null,'check_duplicate');
+                                if($chking) {
+                                    echo json_encode(array('success'=>$success,'message' => 'Email is already been registered.')); 
+                                    return;
+                                }
                             }
 
                             $data1 = array('zparent' => $userID, 'zemail'=> $email, 'zstatus' => $status, 'zfirstname' => $arr_name1, 'zlastname' => $lname, 'zdate_published' => $cur_date,

@@ -55,8 +55,7 @@ class Pages extends SS_Fcontroller{
         }elseif( @$result->zslug == $url  && $url == 'dashboard' ){
             $this->jsCustom = 4; 
             $this->page = 'dashboard';
-            $this->bodyClass = 'dashboard';
-         
+            $this->bodyClass = 'dashboard'; 
         }elseif(@$result->zslug == $url  && $url == 'bookings' ){
             $this->jsCustom = 5; 
             $this->page = 'bookings';
@@ -100,7 +99,9 @@ class Pages extends SS_Fcontroller{
         $data['filter_css_js'] = $this->filter;
         $data['bodyClass'] =  $this->bodyClass;
         $data['pageclass'] = 'lists-'.$this->page;
+        $data['page'] = $this->page;
         $data['meta'] = $this->rs;
+        $data['slug'] = $this->slug;
         $data['breadcrumbs'] = ucwords(str_replace('-',' ',strtolower($this->slug)));
         $data['pageType'] = $this->pageType;
         $this->template->load( 'front/template', 'front/pages/'.$this->page, $data);

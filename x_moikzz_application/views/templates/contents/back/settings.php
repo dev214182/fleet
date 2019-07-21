@@ -123,7 +123,7 @@
                 <div class="form-group row">
                     <label for="" class="col-sm-4  control-label col-form-label">Site Logo</label>
                     <div class="col-sm-8 gal-media-uploader">  
-                        <div class="img-wrapper mb-1" style="max-height:100px;">
+                        <div class="img-wrapper mb-1 logo" style="max-height:100px;">
                             <img class="selected-img img-fluid" style="max-height:100px;" src="<?php echo file_common_dir('images/default.png');?>" alt="Gallega Image Preview">
                         </div>
                         <input class="modal-media-url form-control mb-1 form-control-line" type="text" name="sys_logo">
@@ -134,7 +134,7 @@
                     <label for="" class="col-sm-4  control-label col-form-label">Site Icon</label>
                     <div class="col-sm-8 gal-media-uploader">
                     
-                        <div class="img-wrapper mb-1" style="max-height:100px;">
+                        <div class="img-wrapper mb-1 icon" style="max-height:100px;">
                             <img class="selected-img img-fluid" style="max-height:100px;" src="<?php echo file_common_dir('images/default.png');?>" alt="Gallega Image Preview">
                         </div>
                         <input class="modal-media-url form-control mb-1 form-control-line" type="text" name="sys_icon">

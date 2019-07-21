@@ -62,12 +62,12 @@ var key =  '<?=public_key()?>';
                 </div>
                 <div class="col-md-7 align-self-center">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+                        <li class="breadcrumb-item"><a href="<?=site_url('client/page/dashboard/')?>">Home</a></li>
                         <?=$breadcrumbs?>
                     </ol>
                 </div>
                 <div>
-                    <button class="right-side-toggle waves-effect waves-light btn-inverse btn btn-circle btn-sm pull-right m-l-10"><i class="ti-settings text-white"></i></button>
+                  <!--   <button class="right-side-toggle waves-effect waves-light btn-inverse btn btn-circle btn-sm pull-right m-l-10"><i class="ti-settings text-white"></i></button> -->
                 </div>
             </div>
             <!-- ============================================================== -->
@@ -111,7 +111,7 @@ var key =  '<?=public_key()?>';
             <!-- footer -->
             <!-- ============================================================== -->
             <footer class="footer">
-                © 2019 Moikzz
+                © 2019 Ghassan Aboud Group
             </footer>
             <!-- ============================================================== -->
             <!-- End footer -->

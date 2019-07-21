@@ -84,6 +84,15 @@ class Viewing_callbacks extends SS_Controller {
         $this->query_table =  $this->_table_testimonials;
         $this->jsons();
     }
+
+    private function _media(){
+        global $_GET;
+        if(!$_GET['s'])return false;
+
+        $this->query_table =  $this->_table_media.", ".$this->_table_postmain;
+        $this->query = array( 'where' => 'post.zimage1 = med.zid AND post.zslug ="'.$_GET['s'].'"');
+        $this->jsons();
+    }
     
     private function _products(){
         global $_GET;

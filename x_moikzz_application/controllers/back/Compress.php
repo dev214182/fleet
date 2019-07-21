@@ -5,7 +5,7 @@ class Compress extends CI_Controller {
 
 	function __construct() {
         parent::__construct(); 
-        $this->session_activated();
+     //   $this->session_activated();
 	}
 
 	public function index() {} 

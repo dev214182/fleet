@@ -193,7 +193,7 @@ class General_pages extends SS_Controller {
     }
 
     private function settings(){
-        $this->filter = array('form');
+        $this->filter = array('form','fileupload');
         $this->namespace = 'settings';
         $this->pageTitle = 'System Settings';
         $this->bodyClass = 'lists-settings';

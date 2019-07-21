@@ -13,6 +13,7 @@ var app = {
       },
     pagesApi: base_url  + 'public/api/_pageslist',
     productApi: base_url  + 'public/api/_products',
+    mediaApi: base_url  + 'public/api/_media',
 
     lang: function () {
         return true ? $('body').hasClass('rtl') : false;
@@ -108,24 +109,12 @@ var app = {
         });
     },
 
-    listings_view_details: function(){ 
-        
-        $('form#form-search').on('click','#clear-search', function(e){
-            e.preventDefault();
-            $('#form-search select').val(null).trigger('change');
-            $(this).parents('form')[0].reset();
-        });
-
-        var truckDefault = $('input:radio[name=truck_type]:checked').val();
-
-        var processData = app.productApi + '?'+app.keyApi+'&t='+truckDefault; 
-        var dataInfo = app.orderStatuses(processData); 
-
-        app.update_listings(dataInfo, truckDefault);
-
+    search_func: function search_func(){
+       
         $('body').on('submit', 'form#form-search', function(e){
             e.preventDefault();
-
+            var target = $(this);
+            $(target).attr('id',null);
             $("button[type='submit']").attr("disabled", true);
 
             var truck_type = $(this).find('input:radio[name=truck_type]:checked').val();
@@ -134,14 +123,48 @@ var app = {
             var truck_dest = $(this).find('select.search-to').val();
             var truck_load = $(this).find('input:text[name=search-load]').val();
             processData = app.productApi + '?'+app.keyApi+'&t='+truck_type+'&d='+truck_date+'&o='+truck_origin+'&x='+truck_dest+'&l='+truck_load; 
+            if(jsCustom == 1){
+                var ls = localStorage; 
+                ls.setItem('search', processData); 
+                window.location.href = 'search';
+            } 
+           
             dataInfo = app.orderStatuses(processData);  
             app.update_listings(dataInfo, $(this).val());
 
             setTimeout(function(){
                 $("button[type='submit']").attr("disabled", false);
+                $(target).attr('id','form-search');
             }, 4000);
            
         }); 
+    },
+
+    listings_view_details: function(){ 
+        var ls = localStorage; 
+
+        $('form#form-search').on('click','#clear-search', function(e){
+            e.preventDefault();
+            $('#form-search select').val(null).trigger('change');
+            $(this).parents('form')[0].reset();
+        });
+
+        var truckDefault = $('input:radio[name=truck_type]:checked').val();
+
+        var sc = ls.getItem('search');
+       
+        if(sc){
+            var processData = sc;
+           
+        }else{
+            var processData = app.productApi + '?'+app.keyApi+'&t='+truckDefault; 
+        }
+
+        var dataInfo = app.orderStatuses(processData); 
+
+        app.update_listings(dataInfo, truckDefault);
+       
+        app.search_func();
       
         $('body').on('click', '.listing-details', function(e){
             e.preventDefault();
@@ -154,14 +177,13 @@ var app = {
         var items = [];
         var data = '';
         
+        ls.setItem('search', ''); 
 
         $('body').on('click','.add-cart', function(e){
             items = app.itemStorage();
             if(!items){
                 items  = [];
-            }
-
-           
+            } 
            
             data = $(this).parents('.c-items').find('span.item-hidden_val').data('val'); 
             
@@ -191,10 +213,12 @@ var app = {
                 }
             });
         });
+
+        
     },
 
     emptyProduct: function(){
-        var layout = '<div class="b-items__cars-one wow zoomInUp" data-wow-delay="0.5s"><div class=""><header class="p-20"><h1>No Records Found.</h1> </header></div></div>';
+        var layout = '<div class="b-items__cars-one wow zoomInUp" data-wow-delay="0.5s"><div class=""><header class="p-20"><h1>No Records Found.</h1>  </header></div></div>';
         return layout;
     },
     
@@ -238,6 +262,9 @@ var app = {
         if( z > 4){
             b = "bruha";
         }
+         
+        console.log(k.zcategoryID);
+      
         var pricing = '';
         if(k.zpublic == 1){
             pricing =       '<div class="col-md-3 col-xs-12">'+
@@ -263,10 +290,13 @@ var app = {
            
         }
 
+        var category_img = k.zcategory.toLowerCase();
+          category_img =category_img.replace(" ","_");
+
         var layout =    '<div class="b-items__cars-one wow zoomInUp" id="trk'+z+'" data-wow-delay="0.5s">'+
                         '<div class="c-items '+b+'">'+
                         '<div class="b-items__cars-one-img">'+
-                            '<img src="'+images_dir+'media/237x202/toyota.jpg" alt="toyota"/>'+
+                            '<img src="'+images_dir+'gallery/'+category_img+'.svg" height="140" width="100%" alt="toyota"/>'+
                             '<span class="b-items__cars-one-img-type m-premium">PREMIUM</span>'+
                             '<div class="b-items__cars-one-info-header   m-t-10 m-r-10">'+
                                 '<span class="item-hidden_val hidden" data-val="'+k.zid+'" style="display: none!important;" hidden></span>'+
@@ -367,7 +397,7 @@ var app = {
             $('.cart-submit').attr('type','submit');
             $('.cart-submit').removeAttr('disabled');
         }else{
-            data = '<h1 class="m-b-40"> No records. </h1>';
+            data = '<h1 class="m-b-40"> No records. </h1><h4><a href="search">BOOK NOW</a></h4>';
             $('.b-items__cars').html(data);
         }
 
@@ -381,7 +411,7 @@ var app = {
             var nt = app.itemStorage();
             
             if(nt.length < 1){ 
-                $('.b-items__cars').html('<h1 class="m-b-40"> No records. </h1>');
+                $('.b-items__cars').html('<h1 class="m-b-40"> No records. </h1><h4><a href="search">BOOK NOW</a></h4>');
                 $('#form-cart .cart-submit').attr('type','button');
                 $('#form-cart .cart-submit').attr('disabled','disabled');
             } 
@@ -455,7 +485,7 @@ var app = {
         processData = app.productApi + '?'+app.keyApi+'&z='+id; 
         var dataInfo = app.orderStatuses(processData);   
          dataInfo.always(function(data, textStatus, jqXHR){ 
-           
+            
              var pricing = '';
              var price = 0;
              if(data[0].zpublic == 1){
@@ -469,6 +499,10 @@ var app = {
                         '</div>';
                 price = data[0].zprice;
              }
+            
+             var category_img = data[0].zcategory.toLowerCase();
+            category_img =category_img.replace(" ","_");
+
             var layout = '<div class="b-items__cars-one " data-wow-delay="0.5s">'+
             '<input type="hidden"   class="cart-category" value="'+data[0].zcategoryID+'" hidden>'+
             '<input type="hidden"   class="cart-items" value="'+id+'" hidden>'+
@@ -479,7 +513,7 @@ var app = {
             '<input type="hidden"   class="cart-dateto" value="'+data[0].zdate_to+'" hidden>'+
             '<input type="hidden"   class="cart-price" value="'+price+'" hidden>'+
             '<div class="b-items__cars-one-img">'+
-                '<img src="'+base_url+'x_moikzz_assets/images/media/237x202/toyota.jpg" alt="toyota" height="150"/>'+
+                '<img src="'+base_url+'x_moikzz_assets/images/gallery/'+category_img+'.svg" alt="toyota" height="155" width="160"/>'+
              /*    '<span class="b-items__cars-one-img-type m-premium">PREMIUM</span> '+ */
             '</div>'+
             '<div class="b-items__cars-one-info">'+
@@ -536,12 +570,28 @@ var app = {
           app.ajax_load_info(data, controller,'login');
         });
     },
+
+    defaultBackground: function defaultBackground(){
+        var media = app.mediaApi + '?'+app.keyApi+'&s='+slug;
+        var dataInfo = app.orderStatuses(media);   
+        dataInfo.always(function(data, textStatus, jqXHR){ 
+            if(data[0]){
+            $('div.mainNav.overlay').css('background-image',"url("+images_dir+'media/'+data[0].zimage+")");
+            }
+        });
+         
+    },
     //------------------------------------------------------------------------///
     init: function () {   
          
         /* localStorage.clear(); */
-        // country function
-        app.data_country();  
+        /*  country function */
+        app.data_country();
+
+        /* get featured image background */
+        app.defaultBackground(); 
+       
+        app.search_func();
 
         if(jsCustom == 2)
         app.listings_view_details();

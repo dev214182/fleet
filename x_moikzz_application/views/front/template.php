@@ -16,13 +16,14 @@
     var images_dir =   '<?=front_images_dir()?>';
     var jsCustom =  '<?=@$jsCustom?>';
     var key =  '<?=private_key()?>';
+    var slug =  '<?=@$slug?>';
     </script>
   </head>
-  <body class="<?=$bodyClass?>" data-scrolling-animations="true" data-equal-height=".b-auto__main-item"> 
+  <body class="<?=@$bodyClass?> <?=@$page?>" data-scrolling-animations="true" data-equal-height=".b-auto__main-item"> 
     <!-- Loader -->
     <div id="page-preloader"><span class="spinner"></span></div>
     <!-- Loader end --> 
-   
+
     <div class="mainNav overlay" style="background-image:url('<?php echo file_common_dir('images/backgrounds/fleet-page-banner-v3.jpg');?>');">
 
     <!-- Top Navigation -->
@@ -41,8 +42,8 @@
                   <h1>Welcome to Gallega Global Logistics</h1>
                   <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptas quia modi exercitationem dolorem quibusdam ad quidem excepturi maxime dolores molestiae! Culpa officiis odit earum cum vitae et tenetur delectus sed.</p>
                   <div class="s-form">
-                    <button type="submit" class="btn m-btn">BOOK NOW<span class="fa fa-angle-right"></span></button>
-                    <button type="submit" class="btn m-btn">SIGNUP<span class="fa fa-angle-right"></span></button>
+                    <a href="search" class="btn m-btn">BOOK NOW<span class="fa fa-angle-right"></span></a>
+                    <a href="register" class="btn m-btn">GET STARTED<span class="fa fa-angle-right"></span></a>
                   </div>
                 </div>
               </div>
@@ -51,7 +52,6 @@
         <?php } ?>
 
       </div><!-- .nav-overlay -->
-
 
       <?php
 

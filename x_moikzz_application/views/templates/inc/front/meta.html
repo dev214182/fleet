@@ -1,6 +1,6 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title><?=@$meta['general']['title'] ? $meta['general']['title'] :  $meta[1]->zsystem_value;?></title>
+<title><?=@$meta['general']['title'] ." ".  @$meta[1]->zsystem_value;?></title>
 <link rel="canonical" href="<?=get_current_url()?>">
 <link rel="shortcut icon" type="image/x-icon" href="<?=$meta[6]->zsystem_value?>" /> 
 <meta name="keywords" content="<?=@$meta['general']['keywords'] ? $meta['general']['keywords'] :  $meta[9]->zsystem_value; ?>">

@@ -26,6 +26,7 @@ $pcode = array('id' => 'inputpostal', 'placeholder' => 'Postal Code', 'class' =>
         <h4 class="m-b-0 text-white text-uppercase"><?=@$title?> Information</h4>                  
         </div>
         <div class="card card-body"> 
+          
             <form class="needs-validation" novalidate="" id="form-users">
                 <div class="form-row">
                 <div class="col-md-6">

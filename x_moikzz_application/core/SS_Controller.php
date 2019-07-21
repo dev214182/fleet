@@ -83,7 +83,7 @@ class SS_Controller extends CI_Controller {
 
     } 
 
-    public function file_image_upload($filename, $filesize, $uploads_dir, $tmp_file){ 
+    public function file_image_upload($filename, $filesize, $uploads_dir, $tmp_file,$no_copy=null){ 
         $userfile_size  = $filesize;
 
         $allowed =  array('jpeg','png' ,'jpg'); 
@@ -97,17 +97,19 @@ class SS_Controller extends CI_Controller {
         }else{   
                 if($userfile_size < 2000000){  
 
-                    if (file_exists($uploads_dir ."\\". $filename)) {
-
-                        $time_min = date('ymdis');  
-
-                        $newfile =  'copy_'.$time_min.'_'.$filename; 
-
-                    }else{
-
                         $newfile = $filename;
 
-                    }
+                        if($no_copy){ 
+                            
+                        }else{
+                            if (file_exists($uploads_dir ."\\". $filename)) {
+
+                                $time_min = date('ymdis');  
+
+                                $newfile =  'copy_'.$time_min.'_'.$filename; 
+
+                            } 
+                        }
 
                     if(move_uploaded_file($tmp_file,$uploads_dir.'/'.$newfile)){  
                           $success = true;  

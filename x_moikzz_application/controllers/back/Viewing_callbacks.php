@@ -558,7 +558,8 @@ class Viewing_callbacks extends SS_Controller {
         
         
          /* Run on DataTables */
-        if($o && $this->lists){
+        if(@$o['recordsTotal'] > 0 && $this->lists){
+           
             foreach($o['data'] as $k => $aRow){ 
   
                 $data1[] =  (object)$aRow;
@@ -567,8 +568,20 @@ class Viewing_callbacks extends SS_Controller {
             $o =$data1;
         }
         
+       
          /* Run on All */
-         if($o){
+         if($o){ 
+           
+            if(@$o['recordsTotal'] === 0 ){ 
+                $output = array( "draw"             =>  0,  
+                                "recordsTotal"      =>  0,  
+                                "recordsFiltered"   =>  0,  
+                                "data"              =>  0  );
+                $json = json_encode($output);  
+                echo $json;
+                return false;
+                
+            } 
           
                 foreach($o AS $k => $v){ 
                     foreach($v AS $t => $z){
@@ -621,9 +634,9 @@ class Viewing_callbacks extends SS_Controller {
                     if(@$v->zimage1){
                         $mediaInfo = $this->global_func_query('mz_media',array("where" => array('zid' => $v->zimage1)));
                         $output[$k]['imgID'] = $v->zimage1;
-                        $output[$k]['zimage'] = $mediaInfo[0]->zimage;
-                        $output[$k]['zimageTitle'] = $mediaInfo[0]->ztitle;
-                        $output[$k]['zalt'] = $mediaInfo[0]->zalt; 
+                        $output[$k]['zimage'] = @$mediaInfo[0]->zimage;
+                        $output[$k]['zimageTitle'] = @$mediaInfo[0]->ztitle;
+                        $output[$k]['zalt'] = @$mediaInfo[0]->zalt; 
                     }
 
                     if(@$v->zstatus){
@@ -655,12 +668,12 @@ class Viewing_callbacks extends SS_Controller {
                         $getName = $this->global_get_title('mz_profile',array('zparent' =>$v->zauthor), $fields);
                         $output[$k]['zauthorID'] = $v->zauthor;
                        
-                        $output[$k]['zauthor'] = $getName[0]->zfirstname. ' '. $getName[0]->zlastname;
+                        $output[$k]['zauthor'] = @$getName[0]->zfirstname. ' '. @$getName[0]->zlastname;
 
                         if($this->order_company){
-                            $output[$k]['zcompany'] = $getName[0]->zcompany;
-                            $output[$k]['zemail'] = $getName[0]->zemail;
-                            $output[$k]['zphone_num'] = $getName[0]->zphone_num;
+                            $output[$k]['zcompany'] = @$getName[0]->zcompany;
+                            $output[$k]['zemail'] = @$getName[0]->zemail;
+                            $output[$k]['zphone_num'] = @$getName[0]->zphone_num;
                         }
                     }
 
@@ -747,11 +760,10 @@ class Viewing_callbacks extends SS_Controller {
                             "recordsFiltered"   =>  $parZ['recordsFiltered'],  
                             "data"              =>  $data2  );
         } 
-        
-        
+       
         $json = json_encode($output);  
         echo $json;
-        
+        return false;
     }
      
 }
