@@ -7,18 +7,19 @@
  <script src="//cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js"></script>
  <script type="text/javascript">
  jQuery(document).ready(function($) { 
-  
 
-   // && window.pageYOffset >= 500
-   $(window).scroll(function() {    
-     var scroll = $(window).scrollTop();
-     if (scroll >= 400) {
-       $("body").addClass("fixedheader");
-     }else{
-       $("body").removeClass("fixedheader");  
-     }
-  
-   }); //missing );
+  // var navfixed = $('.nav-fixed').outerHeight();
+  // $('.homepage-cta').css('padding-top',navfixed);
+
+  // && window.pageYOffset >= 500
+  $(window).scroll(function() {    
+    var scroll = $(window).scrollTop();
+    if (scroll >= 150) {
+      $("body").addClass("fixedheader");
+    }else if(scroll > 0){
+      $("body").removeClass("fixedheader");  
+    }
+  }); //missing );
 
    /* GSAP */
    var navSpeed = 0.2;

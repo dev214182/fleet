@@ -48,10 +48,10 @@
     <section class="b-search">
       <div class="container">
         <form action="search" method="POST" class="b-search__main">
-          <div class="b-search__main-title wow zoomInUp" data-wow-delay="0.3s">
+          <div class="b-search__main-title">
             <h2>LOOKING FOR A TRUCK? FIND IT HERE</h2>
           </div>
-          <div class="b-search__main-type wow zoomInUp" data-wow-delay="0.3s">
+          <div class="b-search__main-type">
             <div class="col-xs-12 col-md-2 s-noLeftPadding">
               <h4>Select truck type</h4>
             </div>
@@ -327,7 +327,7 @@
               </div>
             </div>
           </div>
-          <div class="b-search__main-form wow zoomInUp" data-wow-delay="0.3s">
+          <div class="b-search__main-form">
             <div class="row">
               <div class="col-xs-12 col-md-12">
                 <div class="m-firstSelects">

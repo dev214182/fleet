@@ -36,17 +36,33 @@
         if( $bodyClass === 'home m-index' ){ ?>
           <section class="homepage-cta">
             <div class="container">
-              <div class="col-xs-12">
+              <div class="col-md-7 col-xs-12 homepage-banner-cta-container">
                 <div class="homepage-cta-wrapper">
-                  <h1>Welcome to Gallega Global Logistics</h1>
-                  <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptas quia modi exercitationem dolorem quibusdam ad quidem excepturi maxime dolores molestiae! Culpa officiis odit earum cum vitae et tenetur delectus sed.</p>
+                  <h1>Welcome to Shipping</h1>
+                  <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptas quia modi exercitationem dolorem quibusdam ad quidem excepturi maxime dolores molestiae! Culpa officiis odit earum cum vitae et tenetur delectus sed. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptas quia modi exercitationem dolorem quibusdam ad quidem excepturi maxime dolores molestiae! Culpa officiis odit earum cum vitae et tenetur delectus sed.
+                  </p>
                   <div class="s-form">
-                    <button type="submit" class="btn m-btn">BOOK NOW<span class="fa fa-angle-right"></span></button>
-                    <button type="submit" class="btn m-btn">SIGNUP<span class="fa fa-angle-right"></span></button>
+                    <a href="#" class="gal-btn btn-blue">BOOK NOW<span class="fa fa-angle-right"></span></a>
+                    <a href="#" class="gal-btn">SIGNUP<span class="fa fa-angle-right"></span></a>
                   </div>
                 </div>
               </div>
+              <div class="col-md-5 col-xs-12 homepage-banner-form-container">
+                <div class="homepage-form-wrapper">
+                  <h2 class="home-form-title">SEND US YOUR INQUERY</h2>
+                  <p>Feel free to send us your inquiries and we'll get back to you.</p>
+                  <div id="success"></div>
+                  <form id="contactForm" novalidate class="s-form">
+                    <input type="text" placeholder="YOUR NAME" value="" name="user-name" id="user-name" />
+                    <input type="text" placeholder="EMAIL ADDRESS %" value="" name="user-email" id="user-email" />
+                    <input type="text" placeholder="PHONE NO." value="" name="user-phone" id="user-phone" />
+                    <textarea id="user-message" name="user-message" placeholder="COMMENT/SUGGESTIONS/FEEDBACK"></textarea>
+                    <button type="submit" class="gal-btn btn-blue mt-0">SUBMIT NOW<span class="fa fa-angle-right"></span></button>
+                  </form>
+                </div>
+              </div>
             </div>
+
           </section><!--b-pageHeader-->
         <?php } ?>
 
@@ -122,6 +138,5 @@
     <?php $this->load->view('templates/js/front/default.html'); ?>
     <?php $this->load->view('templates/js/front/js.html'); ?>
     <?php $this->load->view('templates/js/front/default2.html'); ?> 
-   
   </body>
 </html>

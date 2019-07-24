@@ -185,8 +185,19 @@
 }
 /*768-991*/
 @media screen and (max-width:991px){
+    body.fixedheader .mainNav.overlay .b-topBar,
+    body.fixedheader .mainNav.overlay .b-nav{
+        background-color:transparent;
+        border-bottom: 0;
+    }
+    .home.m-index .homepage-cta .homepage-banner-form-container{
+        margin-top: 10%;
+        .homepage-form-wrapper{
+            width: 100%;
+        }
+    }
     .home.m-index .homepage-cta{
-        padding-top: 8%;
+        padding-top: 0;
     }
     .home.m-index .homepage-cta-wrapper{
         width: 100%;

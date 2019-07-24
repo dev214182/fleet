@@ -1,0 +1,76 @@
+/* BUttons */
+.gal-btn{
+    display: inline-block;
+    font: 700 12px 'Avenir';
+    padding: 5px 5px 5px 20px;
+    margin-top: 25px;
+    border-radius:50px;
+    border: 0;
+    line-height: normal;
+    text-transform: uppercase;
+    margin-right:10px;
+    transition: .3s ease;
+    
+    /* Default - White */
+    background-color:#ffffff;
+    color: #555555;
+    span{
+        width: 25px;
+        height: 25px;
+        padding: 3px 3px 3px 10px;
+        font-size: 16px;
+        margin-left: 10px;
+        border-radius: 100%;
+        display: inline-block;
+        transition: .3s ease;
+
+
+        /* Default */
+        background-color: $lightblue;
+        color:#FFFFFF;
+    }
+    &:active,&:focus,&:hover{
+        color: #FFFFFF;
+        background-color: $lightblue;
+        text-decoration: none;
+        opacity: 1;
+        span{
+            background-color: #FFFFFF;
+            color:#555555;
+        }
+    }
+    /* Blue */
+    &.btn-blue{
+        color: #FFFFFF;
+        background-color: $lightblue;
+        span{                    
+            background-color:#FFFFFF;
+            color: #555555;
+        }
+        &:active,&:focus,&:hover{
+            color: #FFFFFF;
+            background-color: $blue;
+            span{
+                background-color: $lightblue;
+                color: white;
+            }
+        }
+    }
+    &.btn-dark{
+        color:#ffffff;
+        background-color:#555555;
+        span{
+            background-color:$lightblue;
+            color:#ffffff;
+        }
+        &:active,&:focus,&:hover{
+            color: #FFFFFF;
+            background-color: $blue;
+            span{
+                background-color: $lightblue;
+                color: white;
+            }
+        }
+    }
+    
+}

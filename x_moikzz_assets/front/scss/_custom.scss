@@ -483,15 +483,38 @@ body.fixedheader .mainNav.overlay .light-logo{
 
 /* Homepage */
 .home.m-index .mainNav .nav-overlay{
-	height: 100vh;
+	height: auto;
+	// min-height: 100vh;
+	padding-bottom:100px;;
 }
 .home.m-index .homepage-cta{
-	padding-top: 12%;
+	height: 100%;
+	padding-top:150px;
+}
+.home.m-index .homepage-cta .homepage-banner-cta-container,
+.home.m-index .homepage-cta .homepage-banner-form-container{
+	height: 100%;
+	padding-top: 6%;
+}
+.home.m-index .homepage-cta .homepage-banner-form-container .homepage-form-wrapper{
+	// margin: 0 auto;
+	// width: 90%;
+	padding: 30px;
+	background-color: #ffffff;
+	.home-form-title{
+		text-transform: uppercase;
+		margin-top:0;
+		font-size: 2em;
+		color: #555555;
+		font-weight: bold;
+	}
+	.btn.m-btn{
+		margin-top: 0;
+	}
 }
 .home.m-index .homepage-cta-wrapper{
-	width: 60%;
-	margin:0 auto;
-	text-align: center;
+	width: 100%;
+	text-align: left;
 }
 .home.m-index .homepage-cta-wrapper h1,
 .home.m-index .homepage-cta-wrapper p{
